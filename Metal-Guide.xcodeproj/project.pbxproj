@@ -11,6 +11,7 @@
 		3E581F1629871D3000E5CDF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1529871D3000E5CDF6 /* QuartzCore.framework */; };
 		3E581F1829871D3400E5CDF6 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1729871D3400E5CDF6 /* Metal.framework */; };
 		3E581F1A29871D4300E5CDF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1929871D4300E5CDF6 /* Foundation.framework */; };
+		3E69B2312989F21B0012094B /* mtl_implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E69B2302989F21B0012094B /* mtl_implementation.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,7 @@
 		3E581F1529871D3000E5CDF6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3E581F1729871D3400E5CDF6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		3E581F1929871D4300E5CDF6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3E69B2302989F21B0012094B /* mtl_implementation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mtl_implementation.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				3E56AB66297E0E6E00DB5F4F /* main.cpp */,
+				3E69B2302989F21B0012094B /* mtl_implementation.cpp */,
 			);
 			path = "Metal-Guide";
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E56AB67297E0E6E00DB5F4F /* main.cpp in Sources */,
+				3E69B2312989F21B0012094B /* mtl_implementation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
