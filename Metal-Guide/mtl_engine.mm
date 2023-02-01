@@ -71,8 +71,6 @@ void MTLEngine::createRenderPipeline() {
     renderPipelineDescriptor->setLabel(NS::String::string("Rendering Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setVertexFunction(vertexShader);
     renderPipelineDescriptor->setFragmentFunction(fragmentShader);
-//    renderPipelineDescriptor->setSampleCount(2);
-//    renderPipelineDescriptor->setRasterSampleCount(2);
     
     assert(renderPipelineDescriptor);
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
