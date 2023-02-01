@@ -2,8 +2,6 @@
 //  triangle.metal
 //  Metal-Guide
 //
-//  Created by Will Martin on 1/29/23.
-//
 
 #include <metal_stdlib>
 using namespace metal;
