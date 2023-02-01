@@ -3,8 +3,6 @@
 //  Metal-Guide
 //
 
-#include <iostream>
-
 #include "mtl_engine.hpp"
 
 int main() {
