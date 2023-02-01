@@ -1,9 +1,7 @@
 //
-//  main.cpp
+//  main.mm
 //  Metal-Guide
 //
-
-#include <iostream>
 
 #include "mtl_engine.hpp"
 

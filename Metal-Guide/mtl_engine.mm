@@ -1,5 +1,5 @@
 //
-//  mtl_engine.cpp
+//  mtl_engine.mm
 //  Metal-Guide
 //
 
@@ -24,7 +24,7 @@ void MTLEngine::run() {
 }
 
 void MTLEngine::cleanup() {
-    // ...
+    glfwTerminate();
 }
 
 void MTLEngine::initDevice() {
