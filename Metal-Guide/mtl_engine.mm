@@ -4,6 +4,7 @@
 //
 
 #include "mtl_engine.hpp"
+#include <iostream>
 
 void MTLEngine::init() {
     initDevice();
@@ -12,12 +13,13 @@ void MTLEngine::init() {
 
 void MTLEngine::run() {
     while (!glfwWindowShouldClose(glfwWindow)) {
+        
         glfwPollEvents();
     }
 }
 
 void MTLEngine::cleanup() {
-    // ...
+    glfwTerminate();
 }
 
 void MTLEngine::initDevice() {
@@ -27,7 +29,7 @@ void MTLEngine::initDevice() {
 void MTLEngine::initWindow() {
     glfwInit();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindow = glfwCreateWindow(800, 800, "Metal Engine", NULL, NULL);
+    glfwWindow = glfwCreateWindow(800, 600, "Metal Engine", NULL, NULL);
     if (!glfwWindow) {
         glfwTerminate();
         exit(EXIT_FAILURE);
