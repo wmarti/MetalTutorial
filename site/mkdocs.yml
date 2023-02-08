@@ -1,0 +1,32 @@
+site_name: My Docs
+theme:
+  name: material
+
+  palette: 
+      
+    # Palette toggle for light mode
+    - scheme: default
+      primary: teal
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: teal
+      accent: light blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      
+  - pymdownx.superfences
+
+extra_css:
+  - stylesheets/extra.css
+      
