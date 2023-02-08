@@ -1,7 +1,9 @@
 site_name: Metal Tutorial
 theme:
   name: material
-
+  logo: /images/metal-logo-2.png
+  favicon: /images/metal-logo-2.png
+  
   palette: 
       
     # Palette toggle for light mode
@@ -29,4 +31,5 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/extra.css
-      
+    
+
