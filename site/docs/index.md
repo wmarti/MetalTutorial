@@ -1,17 +1,3 @@
 # Welcome to Metal
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+Welcome to the Metal Tutorial. This tutorial will teach you the basics of the Metal graphics and compute API, and help you understand how to use it in C++ via the `metal-cpp` library that Apple has now officially released. The documentation for it is non-existant, and it is missing some key features, so I'll show you how to work around those in the following chapters. This will not necessarily serve as a guide or introduction to Computer Graphics, but more as a way to get up and running with Metal using C++. For those who are completely new, I'll try to go over everything in as much detail as I possibly can, and link to other existing guides when needed. I hope that this can be of useful to you. If you'd like to contribute your own content to the tutorial series, or correct any mistakes that I've made, you can find the github repository [here](https://github.com/wmarti/MetalTutorial).
