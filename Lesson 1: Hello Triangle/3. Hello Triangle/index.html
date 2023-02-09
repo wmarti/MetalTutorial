@@ -329,15 +329,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#command-queues-and-command-buffers" class="md-nav__link">
-    Command Queues and Command Buffers
+  <a href="#the-metal-flow" class="md-nav__link">
+    The Metal Flow
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-metal-flow" class="md-nav__link">
-    The Metal Flow
+  <a href="#command-queues-and-command-buffers" class="md-nav__link">
+    Command Queues and Command Buffers
   </a>
   
 </li>
@@ -384,15 +384,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#command-queues-and-command-buffers" class="md-nav__link">
-    Command Queues and Command Buffers
+  <a href="#the-metal-flow" class="md-nav__link">
+    The Metal Flow
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-metal-flow" class="md-nav__link">
-    The Metal Flow
+  <a href="#command-queues-and-command-buffers" class="md-nav__link">
+    Command Queues and Command Buffers
   </a>
   
 </li>
@@ -488,7 +488,25 @@ Here are the member functions and variables that we'll be adding to our MTLEngin
 <a id="__codelineno-2-62" name="__codelineno-2-62"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 This goes into our <code>init()</code> function after we initialize our Metal device and GLFW window. Given that our goal is to render a triangle, we first define some triangle vertices. We then ask our Metal device to create a new Metal Buffer, copying our triangle vertices over to the GPU for later use in our Metal Shaders. </p>
-<p>Speaking of Shaders, let's write what we'll need to render our triangle. We'll create a new file in our Xcode project called <code>triangle.metal</code>. In here, we're going to write two shader functions, correspondingly titled <code>vertexShader()</code> and <code>fragmentShader()</code>:
+<h3 id="the-metal-flow">The Metal Flow</h3>
+<p><img alt="metalFlow" src="/images/metalFlow.png" />
+The Metal flow, or any Graphics Pipeline for that matter, can be (very) generalised into three parts:</p>
+<ol>
+<li>The Application Stage: This is where all of our MTLEngine code comes into play. Initialising our Device, setting up a GLFW window, grabbing our Shader code and compiling it into a Library, creating our Command Buffers, encoding draw commands, the render loop, and so on and so forth. It's the C++ side of things -- we're doing a bunch of setup to allow us to encode GPU commands for either rendering or compute tasks.</li>
+<li>GPU Shaders: To program a GPU, we use a GPU-specific program called a "Shader". Shaders are specifically designed to take advantage of GPU architecture, specifically their parellel nature. GPUs, unlike CPUs, have thousands of cores for executing instructions simultaneously. In Metal, as well as all of the other modern Graphics APIs, there are three main types of shaders: <ul>
+<li>Vertex Shaders: A Vertex Shader is a program that operates on vertices, which are the data structures that represent the shape of 3D models in a 3D scene. The Vertex Shader's main purpose is to transform the 3D position of each vertex into 2D Coordinates on your screen, and to interpolate the vertex properties such as color and texture coordinates, to be passed on to the Rasterisation stage of the rendering pipeline.</li>
+<li>Fragment Shaders: A Fragment Shader is a program that runs on each pixel (fragment) of a rasterised triangle. Its main function is to compute the final color of the pixel by performing operations such as texturing, lighting and shading.</li>
+<li>Compute Shaders: A Compute Shader is a program that runs on the GPU, seperate from the traditional rendering pipeline. It is used to perform general-purpose computational tasks that are generally (but not always) unrelated to rendering, such as image and audio processing, phsysics simulation, and machine learning. Compute shaders provide for an incredibly high degree of parallelism, and allow a user to perform parallel operations and algorithms much faster than on the CPU.</li>
+</ul>
+</li>
+<li>Presenting the Framebuffer: I'm generalising here, and skipping over some detaily bits, but essentially at the end we'll have a complete image that we'll present to our window.</li>
+</ol>
+<!-- ![renderPipeline](/images/metal-render-pipeline.png) -->
+<!-- ![commandEncoder](/images/command-encoder.png) -->
+
+<p>Enough with this explanation stuff! You want to see a triangle rendered to your window? Get on with it you say? Get on with it we will.</p>
+<p>Now that I've described these things called Shaders, let's get to writing some.</p>
+<p>To render our triangle, we'll need to create a new shader file in our Xcode project called <code>triangle.metal</code>. In here, we're going to write two shader functions, correspondingly titled <code>vertexShader()</code> and <code>fragmentShader()</code>:
 <div class="highlight"><span class="filename">triangle.metal</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;metal_stdlib&gt;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">metal</span><span class="p">;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -582,24 +600,6 @@ Within a Command Queue, you might have multiple Command Buffers. Why might we wa
 <li>Increased Flexibility: Using multiple Command Buffers allows you to have more control over the order in which commands are executed and to organize your commands in a way that makes sense for your application. This can make it easier to debug and optimize.</li>
 <li>Render Pass Management: In Metal, a render pass is a sequence of render commands that defines the rendering of a single frame. By using multiple Command Buffers, you can define multiple render passes that are executed in parallel, which can result in improved performance and reduced memory usage. For example, you could have one render pass for calculating shadows, one for reflections, and one for post-processing such as motion-blur.</li>
 </ul>
-<h3 id="the-metal-flow">The Metal Flow</h3>
-<p><img alt="metalFlow" src="/images/metalFlow.png" />
-The Metal flow, or any Graphics Pipeline for that matter, can be (very) generalised into three parts:</p>
-<ol>
-<li>The Application Stage: This is where all of our MTLEngine code comes into play. Initialising our Device, setting up a GLFW window, grabbing our Shader code and compiling it into a Library, creating our Command Buffers, encoding draw commands, the render loop, and so on and so forth. It's the C++ side of things -- we're doing a bunch of setup to allow us to encode GPU commands for either rendering or compute tasks.</li>
-<li>GPU Shaders: To program a GPU, we use a GPU-specific program called a "Shader". Shaders are specifically designed to take advantage of GPU architecture, specifically their parellel nature. GPUs, unlike CPUs, have thousands of cores for executing instructions simultaneously. In Metal, as well as all of the other modern Graphics APIs, there are three main types of shaders: <ul>
-<li>Vertex Shaders: A Vertex Shader is a program that operates on vertices, which are the data structures that represent the shape of 3D models in a 3D scene. The Vertex Shader's main purpose is to transform the 3D position of each vertex into 2D Coordinates on your screen, and to interpolate the vertex properties such as color and texture coordinates, to be passed on to the Rasterisation stage of the rendering pipeline.</li>
-<li>Fragment Shaders: A Fragment Shader is a program that runs on each pixel (fragment) of a rasterised triangle. Its main function is to compute the final color of the pixel by performing operations such as texturing, lighting and shading.</li>
-<li>Compute Shaders: A Compute Shader is a program that runs on the GPU, seperate from the traditional rendering pipeline. It is used to perform general-purpose computational tasks that are generally (but not always) unrelated to rendering, such as image and audio processing, phsysics simulation, and machine learning. Compute shaders provide for an incredibly high degree of parallelism, and allow a user to perform parallel operations and algorithms much faster than on the CPU.</li>
-</ul>
-</li>
-<li>Presenting the Framebuffer: I'm generalising here, and skipping over some detaily bits, but essentially at the end we'll have a complete image that we'll present to our window.</li>
-</ol>
-<!-- ![renderPipeline](/images/metal-render-pipeline.png) -->
-<!-- ![commandEncoder](/images/command-encoder.png) -->
-
-<p>Enough with this explanation stuff! You want to see a triangle rendered to your window? Get on with it you say? Get on with it we will.</p>
-<p>Now that I've described these things called Shaders, let's get to writing some.....</p>
 <p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mtl_engine.mm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-8-10">10</a></span>
@@ -658,7 +658,7 @@ The Metal flow, or any Graphics Pipeline for that matter, can be (very) generali
 <a id="__codelineno-9-80" name="__codelineno-9-80"></a><span class="w">    </span><span class="n">metalRenderPSO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalDevice</span><span class="o">-&gt;</span><span class="n">newRenderPipelineState</span><span class="p">(</span><span class="n">renderPipelineDescriptor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">error</span><span class="p">);</span>
 <a id="__codelineno-9-81" name="__codelineno-9-81"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-... More documentation to come! For now, here's the final result!
+... More documentation to come! Check back in tomorrow. For now, here's the final result!
 <img alt="triangle" src="/images/triangle.png" /></p>
 
 
