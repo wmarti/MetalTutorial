@@ -35,8 +35,8 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CSF+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"SF Mono"}</style>
       
     
     
@@ -355,42 +355,41 @@
 
 <h1 id="rendering-a-triangle-to-the-screen">Rendering a Triangle to the Screen</h1>
 <p>In this chapter, we'll finally be getting to render something to the screen! Exciting stuff. We're going to start with something simple: a triangle!
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// mtl_engine.hpp</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">MTLEngine</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">public</span><span class="o">:</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">init</span><span class="p">();</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">();</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">();</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">private</span><span class="o">:</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">initDevice</span><span class="p">();</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">initWindow</span><span class="p">();</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createDefaultLibrary</span><span class="p">();</span>
-</span><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createCommandQueue</span><span class="p">();</span>
-</span><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createRenderPipeline</span><span class="p">();</span>
-</span><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createTriangle</span><span class="p">();</span>
-</span><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">encodeRenderCommand</span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderCommandEncoder</span><span class="o">*</span><span class="w"> </span><span class="n">renderEncoder</span><span class="p">);</span>
-</span><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">sendRenderCommand</span><span class="p">();</span>
-</span><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">draw</span><span class="p">();</span>
-</span><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Device</span><span class="o">*</span><span class="w"> </span><span class="n">metalDevice</span><span class="p">;</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">glfwWindow</span><span class="p">;</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="n">NSWindow</span><span class="o">*</span><span class="w"> </span><span class="n">metalWindow</span><span class="p">;</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="n">CAMetalLayer</span><span class="o">*</span><span class="w"> </span><span class="n">metalLayer</span><span class="p">;</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="hll"><span class="w">    </span><span class="n">CA</span><span class="o">::</span><span class="n">MetalDrawable</span><span class="o">*</span><span class="w"> </span><span class="n">metalDrawable</span><span class="p">;</span>
-</span><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Library</span><span class="o">*</span><span class="w"> </span><span class="n">metalDefaultLibrary</span><span class="p">;</span>
-</span><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">CommandQueue</span><span class="o">*</span><span class="w"> </span><span class="n">metalCommandQueue</span><span class="p">;</span>
-</span><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">CommandBuffer</span><span class="o">*</span><span class="w"> </span><span class="n">metalCommandBuffer</span><span class="p">;</span>
-</span><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPipelineState</span><span class="o">*</span><span class="w"> </span><span class="n">metalRenderPSO</span><span class="p">;</span>
-</span><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Buffer</span><span class="o">*</span><span class="w"> </span><span class="n">triangleVertexBuffer</span><span class="p">;</span>
-</span><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="p">};</span>
-</code></pre></div>
+<div class="highlight"><span class="filename">mtl_engine.hpp</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">MTLEngine</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">();</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">();</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">initDevice</span><span class="p">();</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">initWindow</span><span class="p">();</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createDefaultLibrary</span><span class="p">();</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createCommandQueue</span><span class="p">();</span>
+</span><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createRenderPipeline</span><span class="p">();</span>
+</span><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createTriangle</span><span class="p">();</span>
+</span><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="hll">
+</span><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">encodeRenderCommand</span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderCommandEncoder</span><span class="o">*</span><span class="w"> </span><span class="n">renderEncoder</span><span class="p">);</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">sendRenderCommand</span><span class="p">();</span>
+</span><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">draw</span><span class="p">();</span>
+</span><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="hll">
+</span><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Device</span><span class="o">*</span><span class="w"> </span><span class="n">metalDevice</span><span class="p">;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">glfwWindow</span><span class="p">;</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="n">NSWindow</span><span class="o">*</span><span class="w"> </span><span class="n">metalWindow</span><span class="p">;</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="n">CAMetalLayer</span><span class="o">*</span><span class="w"> </span><span class="n">metalLayer</span><span class="p">;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="n">CA</span><span class="o">::</span><span class="n">MetalDrawable</span><span class="o">*</span><span class="w"> </span><span class="n">metalDrawable</span><span class="p">;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="hll">
+</span><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Library</span><span class="o">*</span><span class="w"> </span><span class="n">metalDefaultLibrary</span><span class="p">;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">CommandQueue</span><span class="o">*</span><span class="w"> </span><span class="n">metalCommandQueue</span><span class="p">;</span>
+</span><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">CommandBuffer</span><span class="o">*</span><span class="w"> </span><span class="n">metalCommandBuffer</span><span class="p">;</span>
+</span><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPipelineState</span><span class="o">*</span><span class="w"> </span><span class="n">metalRenderPSO</span><span class="p">;</span>
+</span><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Buffer</span><span class="o">*</span><span class="w"> </span><span class="n">triangleVertexBuffer</span><span class="p">;</span>
+</span><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="hll"><span class="p">};</span>
+</span></code></pre></div>
 Here are the member functions and variables that we'll be adding to our MTLEngine. It may seem like quite a lot of stuff is required to render a simple triangle, and in the grand scheme of things it is. But, I assure you, the effort required in Metal is far less than the other modern Graphics APIs, being DirectX12 and Vulkan. In Vulkan, it typically takes about 1000 lines of code to render a single triangle 😱. With Metal, it will only take us about 100 lines of code to get there, and we've already got 40 of them :). Get your boots strapped ladies and gentleman, it's time to dive in.</p>
 <p>The first addition is <code>createDefaultLibrary()</code>:
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mtl_engine.mm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-1-10">10</a></span>
@@ -423,7 +422,7 @@ Here are the member functions and variables that we'll be adding to our MTLEngin
 <a id="__codelineno-2-58" name="__codelineno-2-58"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 This goes into our <code>init()</code> function after we initialize our Metal device and GLFW window. The first thing we're going to do is access our <code>metalDevice</code> to create a new default library. Xcode automatically compiles all Metal source files (ending in <code>.metal</code>) within an Xcode project into a single default library upon project compilation. In our case, because we're not compiling our Metal source code at runtime, our <code>MTL::Library*</code> object will give us access to all of our Metal source code from a single source, making it very simple to access and manage. If for any reason we're unable to load our compiled Metal binaries, we'll exit. If for any reason later on you get any errors here, make sure that your Metal source files are added as compile targets in the <code>Build Phases</code> section of the project.</p>
-<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mtl_engine.mm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-3-10">10</a></span>
@@ -453,6 +452,54 @@ This goes into our <code>init()</code> function after we initialize our Metal de
 
 
 
+
+  <h2 id="__comments">Comments</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+  data-repo="wmarti/MetalTutorial"
+  data-repo-id="R_kgDOI3W6fQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOI3W6fc4CUFgH"
+  data-mapping="pathname"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="top"
+  data-theme="preferred_color_scheme"
+  data-lang="en"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async>
+</script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
 
                 
               </article>
@@ -486,7 +533,7 @@ This goes into our <code>init()</code> function after we initialize our Metal de
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy"], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
