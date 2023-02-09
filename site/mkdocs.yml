@@ -3,6 +3,11 @@ theme:
   name: material
   logo: /images/metal-logo-2.png
   favicon: /images/metal-logo-2.png
+  custom_dir: overrides
+  features:
+    - content.code.copy
+  font:
+    code: "SF Mono"
   
   palette: 
       
@@ -24,12 +29,12 @@ theme:
 markdown_extensions:
   - attr_list
   - md_in_html
+  - pymdownx.keys
   - pymdownx.highlight:
       anchor_linenums: true
       
   - pymdownx.superfences
+    
 
 extra_css:
   - stylesheets/extra.css
-    
-

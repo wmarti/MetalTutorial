@@ -1,4 +1,5 @@
 title: Lesson 0: Setup
+comments: true
 
 # Setting up Xcode for use with `metal-cpp`
 
