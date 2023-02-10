@@ -6,7 +6,6 @@
 #include <metal_stdlib>
 using namespace metal;
 
-
 vertex float4
 vertexShader(uint vertexID [[vertex_id]],
              constant simd::float3* vertexPositions)

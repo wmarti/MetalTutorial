@@ -56,7 +56,7 @@ void MTLEngine::createTriangle() {
     simd::float3 triangleVertices[] = {
         {-0.5f, -0.5f, 0.0f},
         { 0.5f, -0.5f, 0.0f},
-        {0.0f,  0.5f, 0.0f}
+        { 0.0f,  0.5f, 0.0f}
     };
     
     triangleVertexBuffer = metalDevice->newBuffer(&triangleVertices, sizeof(triangleVertices), MTL::ResourceStorageModeShared);
