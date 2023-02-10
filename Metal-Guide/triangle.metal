@@ -9,9 +9,12 @@ using namespace metal;
 
 vertex float4
 vertexShader(uint vertexID [[vertex_id]],
-             constant float* vertexPositions)
+             constant simd::float3* vertexPositions)
 {
-    float4 vertexOutPositions = float4(vertexPositions[vertexID*3+0], vertexPositions[vertexID*3+1], vertexPositions[vertexID*3+2], 1.0f);
+    float4 vertexOutPositions = float4(vertexPositions[vertexID][0],
+                                       vertexPositions[vertexID][1],
+                                       vertexPositions[vertexID][2],
+                                       1.0f);
     return vertexOutPositions;
 }
 

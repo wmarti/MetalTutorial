@@ -15,6 +15,8 @@
 #include <QuartzCore/CAMetalLayer.hpp>
 #include <QuartzCore/CAMetalLayer.h>
 #include <QuartzCore/QuartzCore.hpp>
+#include <simd/simd.h>
+
 
 #include <iostream>
 
