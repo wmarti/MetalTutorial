@@ -1,6 +1,6 @@
 //
 //  triangle.metal
-//  Metal-Guide
+//  MetalTutorial
 //
 
 #include <metal_stdlib>
@@ -9,8 +9,7 @@ using namespace metal;
 
 vertex float4
 vertexShader(uint vertexID [[vertex_id]],
-             constant float* vertexPositions,
-             constant vector_uint2* viewportSizePointer)
+             constant float* vertexPositions)
 {
     float4 vertexOutPositions = float4(vertexPositions[vertexID*3+0], vertexPositions[vertexID*3+1], vertexPositions[vertexID*3+2], 1.0f);
     return vertexOutPositions;

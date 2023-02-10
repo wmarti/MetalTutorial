@@ -311,6 +311,7 @@
 					"$(inherited)",
 					/opt/homebrew/Cellar/glfw/3.3.8/lib,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -1,6 +1,6 @@
 //
 //  mtl_engine.hpp
-//  Metal-Guide
+//  MetalTutorial
 //
 
 #pragma once
@@ -28,10 +28,10 @@ private:
     void initDevice();
     void initWindow();
     
+    void createTriangle();
     void createDefaultLibrary();
     void createCommandQueue();
     void createRenderPipeline();
-    void createTriangle();
     
     void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
     void sendRenderCommand();

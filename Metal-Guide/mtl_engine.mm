@@ -1,6 +1,6 @@
 //
 //  mtl_engine.mm
-//  Metal-Guide
+//  MetalTutorial
 //
 
 #include "mtl_engine.hpp"
@@ -9,6 +9,7 @@ void MTLEngine::init() {
     initDevice();
     initWindow();
     
+    createTriangle();
     createDefaultLibrary();
     createCommandQueue();
     createRenderPipeline();
@@ -16,15 +17,17 @@ void MTLEngine::init() {
 
 void MTLEngine::run() {
     while (!glfwWindowShouldClose(glfwWindow)) {
-        metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
-        createTriangle();
-        draw();
+        @autoreleasepool {
+            metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
+            draw();
+        }
         glfwPollEvents();
     }
 }
 
 void MTLEngine::cleanup() {
     glfwTerminate();
+    metalDevice->release();
 }
 
 void MTLEngine::initDevice() {
@@ -49,6 +52,16 @@ void MTLEngine::initWindow() {
     metalWindow.contentView.wantsLayer = YES;
 }
 
+void MTLEngine::createTriangle() {
+    float triangleVertices[] = {
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+         0.0f,  0.5f, 0.0f
+    };
+    
+    triangleVertexBuffer = metalDevice->newBuffer(&triangleVertices, sizeof(triangleVertices), MTL::ResourceStorageModeShared);
+}
+
 void MTLEngine::createDefaultLibrary() {
     metalDefaultLibrary = metalDevice->newDefaultLibrary();
     if(!metalDefaultLibrary){
@@ -71,42 +84,35 @@ void MTLEngine::createRenderPipeline() {
     renderPipelineDescriptor->setLabel(NS::String::string("Rendering Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setVertexFunction(vertexShader);
     renderPipelineDescriptor->setFragmentFunction(fragmentShader);
-    
     assert(renderPipelineDescriptor);
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
-    
+        
     NS::Error* error;
     metalRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
-}
-
-void MTLEngine::createTriangle() {
-    float triangleVertices[] = {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
-    };
     
-    triangleVertexBuffer = metalDevice->newBuffer(&triangleVertices, sizeof(triangleVertices), MTL::ResourceStorageModeShared);
-    
+    renderPipelineDescriptor->release();
 }
 
 void MTLEngine::sendRenderCommand() {
     metalCommandBuffer = metalCommandQueue->commandBuffer();
     
     MTL::RenderPassDescriptor* renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
-    MTL::RenderPassColorAttachmentDescriptor* cd = renderPassDescriptor->colorAttachments()->init()->object(0);
+    MTL::RenderPassColorAttachmentDescriptor* cd = renderPassDescriptor->colorAttachments()->object(0);
     cd->setTexture(metalDrawable->texture());
     cd->setLoadAction(MTL::LoadActionClear);
     cd->setClearColor(MTL::ClearColor(41.0f/255.0f, 42.0f/255.0f, 48.0f/255.0f, 1.0));
     cd->setStoreAction(MTL::StoreActionStore);
-    MTL::RenderCommandEncoder* renderEncoder = metalCommandBuffer->renderCommandEncoder(renderPassDescriptor);
-    encodeRenderCommand(renderEncoder);
-    renderEncoder->endEncoding();
+    
+    MTL::RenderCommandEncoder* renderCommandEncoder = metalCommandBuffer->renderCommandEncoder(renderPassDescriptor);
+    encodeRenderCommand(renderCommandEncoder);
+    renderCommandEncoder->endEncoding();
     
     metalCommandBuffer->presentDrawable(metalDrawable);
     metalCommandBuffer->commit();
     metalCommandBuffer->waitUntilCompleted();
+    
+    renderPassDescriptor->release();
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder) {

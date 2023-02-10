@@ -1,6 +1,6 @@
 //
 //  mtl_implementation.cpp
-//  Metal-Guide
+//  MetalTutorial
 //
 
 #define NS_PRIVATE_IMPLEMENTATION
