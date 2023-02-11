@@ -292,9 +292,40 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          2. Hello Window
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         2. Hello Window
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#resource-management-with-metal-cpp" class="md-nav__link">
+    Resource Management with metal-cpp
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -340,6 +371,21 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#resource-management-with-metal-cpp" class="md-nav__link">
+    Resource Management with metal-cpp
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -427,7 +473,8 @@ We have three public functions that will be driven in our applications <code>mai
 <span class="normal"><a href="#__codelineno-2-34">34</a></span>
 <span class="normal"><a href="#__codelineno-2-35">35</a></span>
 <span class="normal"><a href="#__codelineno-2-36">36</a></span>
-<span class="normal"><a href="#__codelineno-2-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;mtl_engine.hpp&quot;</span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;mtl_engine.hpp&quot;</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="n">initDevice</span><span class="p">();</span>
@@ -442,28 +489,29 @@ We have three public functions that will be driven in our applications <code>mai
 <a id="__codelineno-2-13" name="__codelineno-2-13"></a>
 <a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::cleanup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">    </span><span class="n">glfwTerminate</span><span class="p">();</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="p">}</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::initDevice</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="n">metalDevice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTL</span><span class="o">::</span><span class="n">CreateSystemDefaultDevice</span><span class="p">();</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="p">}</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::initWindow</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">    </span><span class="n">glfwInit</span><span class="p">();</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CLIENT_API</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_NO_API</span><span class="p">);</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="n">glfwWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwCreateWindow</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Metal Engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">glfwWindow</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">        </span><span class="n">glfwTerminate</span><span class="p">();</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a>
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">    </span><span class="n">metalWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetCocoaWindow</span><span class="p">(</span><span class="n">glfwWindow</span><span class="p">);</span>
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="w">    </span><span class="n">metalLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">CAMetalLayer</span><span class="w"> </span><span class="n">layer</span><span class="p">];</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">    </span><span class="n">metalLayer</span><span class="p">.</span><span class="n">device</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">__bridge</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;</span><span class="n">MTLDevice</span><span class="o">&gt;</span><span class="p">)</span><span class="n">metalDevice</span><span class="p">;</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="w">    </span><span class="n">metalLayer</span><span class="p">.</span><span class="n">pixelFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTLPixelFormatBGRA8Unorm</span><span class="p">;</span>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="w">    </span><span class="n">metalWindow</span><span class="p">.</span><span class="n">contentView</span><span class="p">.</span><span class="n">layer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalLayer</span><span class="p">;</span>
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="w">    </span><span class="n">metalWindow</span><span class="p">.</span><span class="n">contentView</span><span class="p">.</span><span class="n">wantsLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">YES</span><span class="p">;</span>
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="p">}</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">    </span><span class="n">metalDevice</span><span class="o">-&gt;</span><span class="n">release</span><span class="p">();</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="p">}</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::initDevice</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">    </span><span class="n">metalDevice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTL</span><span class="o">::</span><span class="n">CreateSystemDefaultDevice</span><span class="p">();</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="p">}</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::initWindow</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">    </span><span class="n">glfwInit</span><span class="p">();</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CLIENT_API</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_NO_API</span><span class="p">);</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">    </span><span class="n">glfwWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwCreateWindow</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Metal Engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">glfwWindow</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">        </span><span class="n">glfwTerminate</span><span class="p">();</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="w">    </span><span class="n">metalWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetCocoaWindow</span><span class="p">(</span><span class="n">glfwWindow</span><span class="p">);</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">    </span><span class="n">metalLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">CAMetalLayer</span><span class="w"> </span><span class="n">layer</span><span class="p">];</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="w">    </span><span class="n">metalLayer</span><span class="p">.</span><span class="n">device</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">__bridge</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;</span><span class="n">MTLDevice</span><span class="o">&gt;</span><span class="p">)</span><span class="n">metalDevice</span><span class="p">;</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="w">    </span><span class="n">metalLayer</span><span class="p">.</span><span class="n">pixelFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTLPixelFormatBGRA8Unorm</span><span class="p">;</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="w">    </span><span class="n">metalWindow</span><span class="p">.</span><span class="n">contentView</span><span class="p">.</span><span class="n">layer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalLayer</span><span class="p">;</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="w">    </span><span class="n">metalWindow</span><span class="p">.</span><span class="n">contentView</span><span class="p">.</span><span class="n">wantsLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">YES</span><span class="p">;</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 It's only 38 lines, so it shouldn't be terribly confusing.</p>
 <p><div class="highlight"><span class="filename">mtl_engine.mm</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -514,7 +562,9 @@ Next, we have the <code>run()</code> function, which will eventually be our main
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="n">glfwTerminate</span><span class="p">();</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">}</span>
 </code></pre></div>
-Our last function is the <code>cleanup()</code> function, where we'll eventually be handling our de-initiallisation and de-allocation of resources upon program close. For now, this will just include one command, <code>glfwTerminate()</code>.</p>
+Our last function is the <code>cleanup()</code> function, where we'll eventually be handling our de-initiallisation and de-allocation of resources upon program close. For now, this will just include these two commands, <code>glfwTerminate()</code>, and <code>metalDevice-&gt;release()</code>. What is <code>release()</code> for? Glad you asked.</p>
+<h2 id="resource-management-with-metal-cpp">Resource Management with metal-cpp</h2>
+<p>It's very important to understand how resource allocation works with metal-cpp. Any object created with a method whose name's begin with <code>alloc</code>, <code>new</code>, <code>copy</code>, <code>mutableCopy</code>, or <code>Create</code>, is owned by <em>you</em>. This means that you're responsible for de-allocation of the resource after you're done with it. Whenever an object is created using one of these aforementioned functions, it is assigned by default a <code>retainCount</code> of 1. When an objects <code>retainCount</code> becomes 0, the object is deallocated. Since we previously created our metalDevice with MTL::CreateSystemDefaultDevice, we're owners of the object, and we must release it when we're done with it. If you don't handle resource allocation properly, you can encounter crashes and memory-leaks. Bad stuff. You can read more about <code>metal-cpp's</code> memory allocation rules and policies in the <code>README.md</code> located in the <code>metal-cpp</code> folder, and the documentation it links to <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmRules.html">here</a> and <a href="https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFMemoryMgmt/Concepts/Ownership.html">here</a>.</p>
 <p>In order to instantiate our <code>MTLEngine</code>, head in to <code>main.mm</code> include the <code>mtl_engine.hpp</code> header, and create the engine:
 <div class="highlight"><span class="filename">main.mm</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;mtl_engine.hpp&quot;</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
