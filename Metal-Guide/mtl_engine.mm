@@ -81,7 +81,6 @@ void MTLEngine::createRenderPipeline() {
     assert(fragmentShader);
     
     MTL::RenderPipelineDescriptor* renderPipelineDescriptor = MTL::RenderPipelineDescriptor::alloc()->init();
-    renderPipelineDescriptor->setLabel(NS::String::string("Rendering Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setVertexFunction(vertexShader);
     renderPipelineDescriptor->setFragmentFunction(fragmentShader);
     assert(renderPipelineDescriptor);
@@ -92,6 +91,10 @@ void MTLEngine::createRenderPipeline() {
     metalRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
     
     renderPipelineDescriptor->release();
+}
+
+void MTLEngine::draw() {
+    sendRenderCommand();
 }
 
 void MTLEngine::sendRenderCommand() {
@@ -107,7 +110,7 @@ void MTLEngine::sendRenderCommand() {
     MTL::RenderCommandEncoder* renderCommandEncoder = metalCommandBuffer->renderCommandEncoder(renderPassDescriptor);
     encodeRenderCommand(renderCommandEncoder);
     renderCommandEncoder->endEncoding();
-    
+
     metalCommandBuffer->presentDrawable(metalDrawable);
     metalCommandBuffer->commit();
     metalCommandBuffer->waitUntilCompleted();
@@ -115,15 +118,11 @@ void MTLEngine::sendRenderCommand() {
     renderPassDescriptor->release();
 }
 
-void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder) {
-    renderEncoder->setRenderPipelineState(metalRenderPSO);
-    renderEncoder->setVertexBuffer(triangleVertexBuffer, 0, 0);
+void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
+    renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
+    renderCommandEncoder->setVertexBuffer(triangleVertexBuffer, 0, 0);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
     NS::UInteger vertexCount = 3;
-    renderEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
-}
-
-void MTLEngine::draw() {
-    sendRenderCommand();
+    renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
 }
