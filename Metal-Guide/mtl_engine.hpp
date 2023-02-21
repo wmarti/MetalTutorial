@@ -18,7 +18,12 @@
 #include <simd/simd.h>
 
 
+#include "VertexData.hpp"
+#include "Texture.hpp"
+#include <stb/stb_image.h>
+
 #include <iostream>
+#include <filesystem>
 
 class MTLEngine {
 public:
@@ -30,7 +35,7 @@ private:
     void initDevice();
     void initWindow();
     
-    void createTriangle();
+    void createSquare();
     void createDefaultLibrary();
     void createCommandQueue();
     void createRenderPipeline();
@@ -50,4 +55,6 @@ private:
     MTL::CommandBuffer* metalCommandBuffer;
     MTL::RenderPipelineState* metalRenderPSO;
     MTL::Buffer* triangleVertexBuffer;
+    
+    Texture* grassTexture;
 };

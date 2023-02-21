@@ -9,7 +9,7 @@ void MTLEngine::init() {
     initDevice();
     initWindow();
     
-    createTriangle();
+    createSquare();
     createDefaultLibrary();
     createCommandQueue();
     createRenderPipeline();
@@ -28,6 +28,7 @@ void MTLEngine::run() {
 void MTLEngine::cleanup() {
     glfwTerminate();
     metalDevice->release();
+    delete grassTexture;
 }
 
 void MTLEngine::initDevice() {
@@ -52,14 +53,21 @@ void MTLEngine::initWindow() {
     metalWindow.contentView.wantsLayer = YES;
 }
 
-void MTLEngine::createTriangle() {
-    simd::float3 triangleVertices[] = {
-        {-0.5f, -0.5f, 0.0f},
-        { 0.5f, -0.5f, 0.0f},
-        { 0.0f,  0.5f, 0.0f}
+void MTLEngine::createSquare() {
+    VertexData squareVertices[] {
+        {{-0.5, -0.5,  0.5, 1.0f}, {0.0f, 0.0f}},
+        {{-0.5,  0.5,  0.5, 1.0f}, {0.0f, 1.0f}},
+        {{ 0.5,  0.5,  0.5, 1.0f}, {1.0f, 1.0f}},
+        {{-0.5, -0.5,  0.5, 1.0f}, {0.0f, 0.0f}},
+        {{ 0.5,  0.5,  0.5, 1.0f}, {1.0f, 1.0f}},
+        {{ 0.5, -0.5,  0.5, 1.0f}, {1.0f, 0.0f}}
     };
     
-    triangleVertexBuffer = metalDevice->newBuffer(&triangleVertices, sizeof(triangleVertices), MTL::ResourceStorageModeShared);
+    triangleVertexBuffer = metalDevice->newBuffer(&squareVertices, sizeof(squareVertices), MTL::ResourceStorageModeShared);
+
+    // Make sure to change working directory to Metal-Tutorial root
+    // directory via Product -> Scheme -> Edit Scheme -> Run -> Options
+    grassTexture = new Texture("assets/mc_grass.jpeg", metalDevice);
 }
 
 void MTLEngine::createDefaultLibrary() {
@@ -123,6 +131,7 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setVertexBuffer(triangleVertexBuffer, 0, 0);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
-    NS::UInteger vertexCount = 3;
+    NS::UInteger vertexCount = 6;
+    renderCommandEncoder->setFragmentTexture(grassTexture->texture, 0);
     renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
 }
