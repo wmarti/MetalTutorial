@@ -38,6 +38,7 @@ void MTLEngine::initDevice() {
 void MTLEngine::initWindow() {
     glfwInit();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindow = glfwCreateWindow(800, 600, "Metal Engine", NULL, NULL);
     
     if (!glfwWindow) {
@@ -94,6 +95,7 @@ void MTLEngine::createRenderPipeline() {
     assert(renderPipelineDescriptor);
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
+    renderPipelineDescriptor->setSampleCount(4);
         
     NS::Error* error;
     metalRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
@@ -110,10 +112,22 @@ void MTLEngine::sendRenderCommand() {
     
     MTL::RenderPassDescriptor* renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
     MTL::RenderPassColorAttachmentDescriptor* cd = renderPassDescriptor->colorAttachments()->object(0);
-    cd->setTexture(metalDrawable->texture());
+    
+    MTL::TextureDescriptor* msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
+    msaaTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
+    msaaTextureDescriptor->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
+    msaaTextureDescriptor->setWidth(metalDrawable->texture()->width());
+    msaaTextureDescriptor->setHeight(metalDrawable->texture()->height());
+    msaaTextureDescriptor->setSampleCount(4);
+    msaaTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
+    
+    MTL::Texture* msaaRenderTargetTexture = metalDevice->newTexture(msaaTextureDescriptor);
+    
+    cd->setTexture(msaaRenderTargetTexture);
+    cd->setResolveTexture(metalDrawable->texture());
     cd->setLoadAction(MTL::LoadActionClear);
     cd->setClearColor(MTL::ClearColor(41.0f/255.0f, 42.0f/255.0f, 48.0f/255.0f, 1.0));
-    cd->setStoreAction(MTL::StoreActionStore);
+    cd->setStoreAction(MTL::StoreActionMultisampleResolve);
     
     MTL::RenderCommandEncoder* renderCommandEncoder = metalCommandBuffer->renderCommandEncoder(renderPassDescriptor);
     encodeRenderCommand(renderCommandEncoder);
@@ -123,6 +137,7 @@ void MTLEngine::sendRenderCommand() {
     metalCommandBuffer->commit();
     metalCommandBuffer->waitUntilCompleted();
     
+    msaaTextureDescriptor->release();
     renderPassDescriptor->release();
 }
 
