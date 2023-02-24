@@ -138,6 +138,7 @@ void MTLEngine::sendRenderCommand() {
     metalCommandBuffer->waitUntilCompleted();
     
     msaaTextureDescriptor->release();
+    msaaRenderTargetTexture->release();
     renderPassDescriptor->release();
 }
 
