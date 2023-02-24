@@ -36,7 +36,7 @@ private:
     void initDevice();
     void initWindow();
     
-    void createSquare();
+    void createCube();
     void createDefaultLibrary();
     void createCommandQueue();
     void createRenderPipeline();
@@ -55,7 +55,7 @@ private:
     MTL::CommandQueue* metalCommandQueue;
     MTL::CommandBuffer* metalCommandBuffer;
     MTL::RenderPipelineState* metalRenderPSO;
-    MTL::Buffer* squareVertexBuffer;
+    MTL::Buffer* cubeVertexBuffer;
     MTL::Buffer* transformationBuffer;
     MTL::DepthStencilState* depthStencilState;
     

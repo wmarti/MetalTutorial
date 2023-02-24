@@ -9,7 +9,7 @@ void MTLEngine::init() {
     initDevice();
     initWindow();
     
-    createSquare();
+    createCube();
     createDefaultLibrary();
     createCommandQueue();
     createRenderPipeline();
@@ -54,16 +54,7 @@ void MTLEngine::initWindow() {
     metalWindow.contentView.wantsLayer = YES;
 }
 
-void MTLEngine::createSquare() {
-    VertexData squareVertices[] {
-        {{-0.5, -0.5,  0.5, 1.0f}, {0.0f, 0.0f}},
-        {{-0.5,  0.5,  0.5, 1.0f}, {0.0f, 1.0f}},
-        {{ 0.5,  0.5,  0.5, 1.0f}, {1.0f, 1.0f}},
-        {{-0.5, -0.5,  0.5, 1.0f}, {0.0f, 0.0f}},
-        {{ 0.5,  0.5,  0.5, 1.0f}, {1.0f, 1.0f}},
-        {{ 0.5, -0.5,  0.5, 1.0f}, {1.0f, 0.0f}}
-    };
-    
+void MTLEngine::createCube() {
     VertexData cubeVertices[] = {
         // Back face
          {{ 0.5, -0.5, -0.5, 1.0f},  {1.0f, 0.0f}}, // bottom-right 2
@@ -109,7 +100,7 @@ void MTLEngine::createSquare() {
          {{ 0.5, -0.5, -0.5, 1.0f},   {1.0f, 0.0f}} // bottom-right 2
     };
     
-    squareVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
+    cubeVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
 
     // Make sure to change working directory to Metal-Tutorial root
     // directory via Product -> Scheme -> Edit Scheme -> Run -> Options
@@ -244,7 +235,7 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     //    renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
-    renderCommandEncoder->setVertexBuffer(squareVertexBuffer, 0, 0);
+    renderCommandEncoder->setVertexBuffer(cubeVertexBuffer, 0, 0);
     renderCommandEncoder->setVertexBuffer(transformationBuffer, 0, 1);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
