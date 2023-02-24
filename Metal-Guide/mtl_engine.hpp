@@ -21,6 +21,7 @@
 #include "VertexData.hpp"
 #include "Texture.hpp"
 #include <stb/stb_image.h>
+#include "AAPLMathUtilities.h"
 
 #include <iostream>
 #include <filesystem>
@@ -54,7 +55,9 @@ private:
     MTL::CommandQueue* metalCommandQueue;
     MTL::CommandBuffer* metalCommandBuffer;
     MTL::RenderPipelineState* metalRenderPSO;
-    MTL::Buffer* triangleVertexBuffer;
+    MTL::Buffer* squareVertexBuffer;
+    MTL::Buffer* transformationBuffer;
+    MTL::DepthStencilState* depthStencilState;
     
     Texture* grassTexture;
 };

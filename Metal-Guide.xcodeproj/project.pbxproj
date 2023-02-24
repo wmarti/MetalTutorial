@@ -12,6 +12,7 @@
 		3E581F1829871D3400E5CDF6 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1729871D3400E5CDF6 /* Metal.framework */; };
 		3E581F1A29871D4300E5CDF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1929871D4300E5CDF6 /* Foundation.framework */; };
 		3E6B88E429A56CCD0087A2B1 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B88E229A56CCD0087A2B1 /* stb_image.cpp */; };
+		3E6DC92C29A81BE000C097E2 /* AAPLMathUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */; };
 		3E76CD682987671200178E19 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CD672987671200178E19 /* libglfw.3.3.dylib */; };
 		3E76CD6C298767CD00178E19 /* mtl_engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6A298767CD00178E19 /* mtl_engine.mm */; };
 		3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6D2987690700178E19 /* mtl_implementation.cpp */; };
@@ -40,6 +41,8 @@
 		3E581F1929871D4300E5CDF6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3E6B88E229A56CCD0087A2B1 /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		3E6B88E329A56CCD0087A2B1 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AAPLMathUtilities.cpp; sourceTree = "<group>"; };
+		3E6DC92B29A81BE000C097E2 /* AAPLMathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMathUtilities.h; sourceTree = "<group>"; };
 		3E76CD672987671200178E19 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../opt/homebrew/Cellar/glfw/3.3.8/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
 		3E76CD692987675300178E19 /* Metal-Guide.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Metal-Guide.entitlements"; sourceTree = "<group>"; };
 		3E76CD6A298767CD00178E19 /* mtl_engine.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mtl_engine.mm; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 				3E9F222929A06F6500383DCA /* Texture.cpp */,
 				3E9F222A29A06F6500383DCA /* Texture.hpp */,
 				3E9F222029A04ED300383DCA /* VertexData.hpp */,
+				3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */,
+				3E6DC92B29A81BE000C097E2 /* AAPLMathUtilities.h */,
 			);
 			path = "Metal-Guide";
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 				3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */,
 				3E76CD7229876E7600178E19 /* triangle.metal in Sources */,
 				3E9F222B29A06F6500383DCA /* Texture.cpp in Sources */,
+				3E6DC92C29A81BE000C097E2 /* AAPLMathUtilities.cpp in Sources */,
 				3E56AB67297E0E6E00DB5F4F /* main.mm in Sources */,
 				3E76CD6C298767CD00178E19 /* mtl_engine.mm in Sources */,
 			);

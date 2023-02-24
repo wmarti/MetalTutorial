@@ -20,10 +20,19 @@ struct VertexData
     float2 textureCoordinate;
 };
 
+struct TransformationData {
+    float4x4 modelMatrix;
+    float4x4 perspectiveMatrix;
+};
+
 vertex VertexData vertexShader(uint vertexID [[vertex_id]],
-             constant VertexData* vertexData)
+             constant VertexData* vertexData,
+             constant TransformationData* transformationData)
 {
-    return vertexData[vertexID];
+    VertexData out = vertexData[vertexID];
+    
+    out.position = transformationData->perspectiveMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
+    return out;
 }
 
 fragment float4 fragmentShader(VertexData in [[stage_in]],
