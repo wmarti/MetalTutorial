@@ -15,3 +15,7 @@ struct TransformationData {
     matrix_float4x4 modelMatrix;
     matrix_float4x4 perspectiveMatrix;
 };
+
+struct CubeVertexData {
+    simd::float4 vertex;
+};

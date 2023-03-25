@@ -40,10 +40,13 @@ private:
     void createDefaultLibrary();
     void createCommandQueue();
     void createRenderPipeline();
+    void createLightSourceRenderPipeline();
     
     void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
     void sendRenderCommand();
     void draw();
+    
+    static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
     
     MTL::Device* metalDevice;
     GLFWwindow* glfwWindow;
@@ -55,7 +58,9 @@ private:
     MTL::CommandQueue* metalCommandQueue;
     MTL::CommandBuffer* metalCommandBuffer;
     MTL::RenderPipelineState* metalRenderPSO;
+    MTL::RenderPipelineState* metalLightSourceRenderPSO;
     MTL::Buffer* cubeVertexBuffer;
+    MTL::Buffer* lightVertexBuffer;
     MTL::Buffer* transformationBuffer;
     MTL::DepthStencilState* depthStencilState;
     
