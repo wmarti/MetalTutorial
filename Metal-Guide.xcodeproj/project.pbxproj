@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		3E07A62229CE8FFC00B174A6 /* light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E07A62129CE8FFC00B174A6 /* light.metal */; };
+		3E32487B29CFFB53009CDE34 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487729CFF9F4009CDE34 /* libglfw3.a */; };
+		3E32487E29CFFC3B009CDE34 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487D29CFFC3B009CDE34 /* Cocoa.framework */; };
+		3E32488129CFFC4D009CDE34 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487F29CFFC41009CDE34 /* IOKit.framework */; };
 		3E56AB67297E0E6E00DB5F4F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E56AB66297E0E6E00DB5F4F /* main.mm */; };
 		3E581F1629871D3000E5CDF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1529871D3000E5CDF6 /* QuartzCore.framework */; };
 		3E581F1829871D3400E5CDF6 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1729871D3400E5CDF6 /* Metal.framework */; };
 		3E581F1A29871D4300E5CDF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1929871D4300E5CDF6 /* Foundation.framework */; };
 		3E6B88E429A56CCD0087A2B1 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B88E229A56CCD0087A2B1 /* stb_image.cpp */; };
 		3E6DC92C29A81BE000C097E2 /* AAPLMathUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */; };
-		3E76CD682987671200178E19 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CD672987671200178E19 /* libglfw.3.3.dylib */; };
 		3E76CD6C298767CD00178E19 /* mtl_engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6A298767CD00178E19 /* mtl_engine.mm */; };
 		3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6D2987690700178E19 /* mtl_implementation.cpp */; };
 		3E76CD7229876E7600178E19 /* cube.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD7129876E7600178E19 /* cube.metal */; };
@@ -35,6 +37,13 @@
 
 /* Begin PBXFileReference section */
 		3E07A62129CE8FFC00B174A6 /* light.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = light.metal; sourceTree = "<group>"; };
+		3E32487229CFF96B009CDE34 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		3E32487429CFF97D009CDE34 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "external/GLFW/lib-universal/libglfw3.a"; sourceTree = "<group>"; };
+		3E32487729CFF9F4009CDE34 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "external/GLFW/lib-arm64/libglfw3.a"; sourceTree = "<group>"; };
+		3E32487929CFFB2A009CDE34 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = "external/GLFW/lib-arm64/libglfw.3.dylib"; sourceTree = "<group>"; };
+		3E32487D29CFFC3B009CDE34 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		3E32487F29CFFC41009CDE34 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		3E32488229CFFC86009CDE34 /* lib-universal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "lib-universal"; sourceTree = "<group>"; };
 		3E47CD272987185800938A41 /* metal-cpp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "metal-cpp"; sourceTree = "<group>"; };
 		3E56AB63297E0E6E00DB5F4F /* Metal-Guide */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Metal-Guide"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E56AB66297E0E6E00DB5F4F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -62,7 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E76CD682987671200178E19 /* libglfw.3.3.dylib in Frameworks */,
+				3E32487B29CFFB53009CDE34 /* libglfw3.a in Frameworks */,
+				3E32488129CFFC4D009CDE34 /* IOKit.framework in Frameworks */,
+				3E32487E29CFFC3B009CDE34 /* Cocoa.framework in Frameworks */,
 				3E581F1A29871D4300E5CDF6 /* Foundation.framework in Frameworks */,
 				3E581F1829871D3400E5CDF6 /* Metal.framework in Frameworks */,
 				3E581F1629871D3000E5CDF6 /* QuartzCore.framework in Frameworks */,
@@ -72,6 +83,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E32487029CFF93B009CDE34 /* GLFW */ = {
+			isa = PBXGroup;
+			children = (
+				3E32488229CFFC86009CDE34 /* lib-universal */,
+				3E32487229CFF96B009CDE34 /* include */,
+			);
+			path = GLFW;
+			sourceTree = "<group>";
+		};
 		3E56AB5A297E0E6E00DB5F4F = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +134,11 @@
 		3E581F1429871D3000E5CDF6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E32487F29CFFC41009CDE34 /* IOKit.framework */,
+				3E32487D29CFFC3B009CDE34 /* Cocoa.framework */,
+				3E32487929CFFB2A009CDE34 /* libglfw.3.dylib */,
+				3E32487429CFF97D009CDE34 /* libglfw3.a */,
+				3E32487729CFF9F4009CDE34 /* libglfw3.a */,
 				3E76CD672987671200178E19 /* libglfw.3.3.dylib */,
 				3E581F1929871D4300E5CDF6 /* Foundation.framework */,
 				3E581F1729871D3400E5CDF6 /* Metal.framework */,
@@ -134,6 +159,7 @@
 		3E9F222129A05FDB00383DCA /* external */ = {
 			isa = PBXGroup;
 			children = (
+				3E32487029CFF93B009CDE34 /* GLFW */,
 				3E6B88E529A56CD60087A2B1 /* stb */,
 			);
 			path = external;
@@ -339,14 +365,11 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
-					/opt/homebrew/Cellar/glfw/3.3.8/include,
 					"$(PROJECT_DIR)/metal-cpp",
 					"$(PROJECT_DIR)/external",
+					"$(PROJECT_DIR)/external/GLFW/include",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/homebrew/Cellar/glfw/3.3.8/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/external/GLFW/lib-universal";
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -364,14 +387,11 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
-					/opt/homebrew/Cellar/glfw/3.3.8/include,
 					"$(PROJECT_DIR)/metal-cpp",
 					"$(PROJECT_DIR)/external",
+					"$(PROJECT_DIR)/external/GLFW/include",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/homebrew/Cellar/glfw/3.3.8/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/external/GLFW/lib-universal";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
