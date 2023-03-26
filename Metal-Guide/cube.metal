@@ -21,19 +21,15 @@ struct OutData {
     float4 fragmentPosition;
 };
 
-struct TransformationData {
-    float4x4 modelMatrix;
-    float4x4 perspectiveMatrix;
-};
-
 vertex OutData vertexShader(uint vertexID [[vertex_id]],
              constant VertexData* vertexData,
-             constant TransformationData* transformationData)
+             constant float4x4& modelMatrix,
+             constant float4x4& perspectiveMatrix)
 {
     OutData out;
-    out.position = transformationData->perspectiveMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
+    out.position = perspectiveMatrix * modelMatrix * vertexData[vertexID].position;
     out.normal = vertexData[vertexID].normal;
-    out.fragmentPosition = transformationData->modelMatrix * vertexData[vertexID].position;
+    out.fragmentPosition = modelMatrix * vertexData[vertexID].position;
     return out;
 }
 

@@ -15,18 +15,14 @@ struct VertexData
     float4 normal;
 };
 
-struct TransformationData {
-    float4x4 modelMatrix;
-    float4x4 perspectiveMatrix;
-};
-
 vertex VertexData lightVertexShader(uint vertexID [[vertex_id]],
              constant VertexData* vertexData,
-             constant TransformationData* transformationData)
+             constant float4x4& modelMatrix,
+             constant float4x4& perspectiveMatrix)
 {
     VertexData out = vertexData[vertexID];
     
-    out.position = transformationData->perspectiveMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
+    out.position = perspectiveMatrix * modelMatrix * vertexData[vertexID].position;
     return out;
 }
 

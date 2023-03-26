@@ -287,32 +287,27 @@ void MTLEngine::sendRenderCommand() {
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
-
-    matrix_float4x4 translationMatrix = matrix4x4_translation(0.0f, -0.9f, 1.0f);
-    
-    // Aspect ratio should match the ratio between the window width and height,
-    // otherwise the image will look stretched.
-    float aspectRatio = (metalLayer.frame.size.width / metalLayer.frame.size.height);
-    float fov = 90.0f * (M_PI / 180.0f);
-    float nearZ = 0.1f;
-    float farZ = 100.0f;
-    
-    matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
-    TransformationData transformationData = { translationMatrix, perspectiveMatrix };
-    transformationBuffer = metalDevice->newBuffer(&transformationData, sizeof(transformationData), MTL::ResourceStorageModeShared);
-    
     renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
     // If you want to render in wire-frame mode, you can uncomment this line!
     // renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
-    
     renderCommandEncoder->setVertexBuffer(cubeVertexBuffer, 0, 0);
-    renderCommandEncoder->setVertexBuffer(transformationBuffer, 0, 1);
-    simd_float4 color = simd_make_float4(0.5, 0.9, 0.7, 1.0);
+    
+    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.9f, 1.0f);
+    // Aspect ratio should match the ratio between the window width and height,
+    // otherwise the image will look stretched.
+    float aspectRatio = (metalLayer.frame.size.width / metalLayer.frame.size.height);
+    float fov = 90.0f * (M_PI / 180.0f);
+    float nearZ = 0.1f;
+    float farZ = 100.0f;
+    matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
+    renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
+    renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
+    simd_float4 cubeColor = simd_make_float4(0.5, 0.9, 0.7, 1.0);
     simd_float4 lightColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
-    renderCommandEncoder->setFragmentBytes(&color, sizeof(color), 0);
+    renderCommandEncoder->setFragmentBytes(&cubeColor, sizeof(cubeColor), 0);
     renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
     simd_float4 lightPosition = simd_make_float4(0 + 3*cos(glfwGetTime()/1.0), 1.2,4 + sin(glfwGetTime()/1.0), 1);
     renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
@@ -320,24 +315,21 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     NS::UInteger vertexStart = 0;
     NS::UInteger vertexCount = 6 * 6;
     renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
-    transformationBuffer->release();
 
     matrix_float4x4 scaleMatrix = matrix4x4_scale(0.5f, 0.5f, 0.5f);
-    translationMatrix = matrix4x4_translation(lightPosition.xyz);
+    matrix_float4x4 translationMatrix = matrix4x4_translation(lightPosition.xyz);
     
-    matrix_float4x4 modelMatrix = matrix_identity_float4x4;
+    modelMatrix = matrix_identity_float4x4;
     modelMatrix = matrix_multiply(scaleMatrix, modelMatrix);
     modelMatrix = matrix_multiply(translationMatrix, modelMatrix);
-    transformationData = {modelMatrix, perspectiveMatrix};
-    transformationBuffer = metalDevice->newBuffer(&transformationData, sizeof(transformationData), MTL::ResourceStorageModeShared);
     
     renderCommandEncoder->setRenderPipelineState(metalLightSourceRenderPSO);
     renderCommandEncoder->setVertexBuffer(lightVertexBuffer, 0, 0);
-    renderCommandEncoder->setVertexBuffer(transformationBuffer, 0, 1);
+    renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
+    renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
     typeTriangle = MTL::PrimitiveTypeTriangle;
     vertexStart = 0;
     vertexCount = 6 * 6;
-    renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(color), 0);
+    renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 0);
     renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
-    transformationBuffer->release();
 }
