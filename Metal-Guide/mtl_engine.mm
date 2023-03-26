@@ -14,7 +14,6 @@ void MTLEngine::init() {
     createCommandQueue();
     createRenderPipeline();
     createLightSourceRenderPipeline();
-    createDrawableRenderPass();
 }
 
 void MTLEngine::run() {
