@@ -14,6 +14,7 @@ void MTLEngine::init() {
     createCommandQueue();
     createRenderPipeline();
     createLightSourceRenderPipeline();
+    createDrawableRenderPass();
 }
 
 void MTLEngine::run() {
@@ -66,7 +67,7 @@ void MTLEngine::initWindow() {
 void MTLEngine::createCube() {
     
     CubeVertexData cubeVertices[] = {
-        // Front face
+        // Front face               // Normals
          {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
          {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-right    3
          {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
@@ -112,12 +113,8 @@ void MTLEngine::createCube() {
     
     cubeVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
     
-    // Make sure to change working directory to Metal-Tutorial root
-    // directory via Product -> Scheme -> Edit Scheme -> Run -> Options
-    // grassTexture = new Texture("assets/iron.png", metalDevice);
-    
     CubeVertexData lightSource[] = {
-        // Front face
+        // Front face               // Normals
          {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
          {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-right    3
          {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
@@ -304,7 +301,6 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
     TransformationData transformationData = { translationMatrix, perspectiveMatrix };
     transformationBuffer = metalDevice->newBuffer(&transformationData, sizeof(transformationData), MTL::ResourceStorageModeShared);
-
     
     renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);

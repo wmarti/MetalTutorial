@@ -41,11 +41,11 @@ private:
     void createCommandQueue();
     void createRenderPipeline();
     void createLightSourceRenderPipeline();
-    
-    void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
-    void sendRenderCommand();
-    void draw();
     void createDrawableRenderPass();
+        
+    void draw();
+    void sendRenderCommand();
+    void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
     
     MTL::Device* metalDevice;
     GLFWwindow* glfwWindow;
@@ -67,7 +67,4 @@ private:
     MTL::Texture* depthTexture;
     MTL::TextureDescriptor* msaaTextureDescriptor;
     MTL::Texture* msaaRenderTargetTexture;
-    
-    
-    Texture* grassTexture;
 };
