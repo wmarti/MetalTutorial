@@ -114,7 +114,7 @@ void MTLEngine::createCube() {
     
     // Make sure to change working directory to Metal-Tutorial root
     // directory via Product -> Scheme -> Edit Scheme -> Run -> Options
-//    grassTexture = new Texture("assets/iron.png", metalDevice);
+    // grassTexture = new Texture("assets/iron.png", metalDevice);
     
     CubeVertexData lightSource[] = {
         // Front face
