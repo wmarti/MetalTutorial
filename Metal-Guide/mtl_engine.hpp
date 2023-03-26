@@ -45,8 +45,7 @@ private:
     void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
     void sendRenderCommand();
     void draw();
-    
-    static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    void createDrawableRenderPass();
     
     MTL::Device* metalDevice;
     GLFWwindow* glfwWindow;
@@ -59,10 +58,16 @@ private:
     MTL::CommandBuffer* metalCommandBuffer;
     MTL::RenderPipelineState* metalRenderPSO;
     MTL::RenderPipelineState* metalLightSourceRenderPSO;
+    MTL::RenderPassDescriptor* renderPassDescriptor;
     MTL::Buffer* cubeVertexBuffer;
     MTL::Buffer* lightVertexBuffer;
     MTL::Buffer* transformationBuffer;
     MTL::DepthStencilState* depthStencilState;
+    MTL::TextureDescriptor* depthTextureDescriptor;
+    MTL::Texture* depthTexture;
+    MTL::TextureDescriptor* msaaTextureDescriptor;
+    MTL::Texture* msaaRenderTargetTexture;
+    
     
     Texture* grassTexture;
 };

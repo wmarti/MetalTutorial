@@ -12,6 +12,7 @@ struct VertexData
     // is the clip space position of the vertex when this structure is
     // returned from the vertex function.
     float4 position [[position]];
+    float4 normal;
 };
 
 struct TransformationData {

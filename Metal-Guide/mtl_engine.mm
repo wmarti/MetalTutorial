@@ -17,9 +17,18 @@ void MTLEngine::init() {
 }
 
 void MTLEngine::run() {
+    int prevWidth = -1, prevHeight = -1;
+    int width, height;
     while (!glfwWindowShouldClose(glfwWindow)) {
         @autoreleasepool {
+            glfwGetFramebufferSize(glfwWindow, &width, &height);
             metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
+            if (width != prevWidth or height != prevHeight) {
+                metalDrawable->layer()->setDrawableSize({static_cast<CGFloat>(width), static_cast<CGFloat>(height)});
+                prevWidth = width;
+                prevHeight = height;
+                std::cout << "Drawable Resized." << std::endl;
+            }
             draw();
         }
         glfwPollEvents();
@@ -29,7 +38,6 @@ void MTLEngine::run() {
 void MTLEngine::cleanup() {
     glfwTerminate();
     metalDevice->release();
-    delete grassTexture;
 }
 
 void MTLEngine::initDevice() {
@@ -46,7 +54,7 @@ void MTLEngine::initWindow() {
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
-    
+        
     metalWindow = glfwGetCocoaWindow(glfwWindow);
     metalLayer = [CAMetalLayer layer];
     metalLayer.device = (__bridge id<MTLDevice>)metalDevice;
@@ -56,49 +64,50 @@ void MTLEngine::initWindow() {
 }
 
 void MTLEngine::createCube() {
+    
     CubeVertexData cubeVertices[] = {
-        // Back face
-         {{ 0.5, -0.5, -0.5, 1.0f}}, // bottom-right 2
-         {{ 0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{ 0.5, -0.5, -0.5, 1.0f}}, // bottom-right 2
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-        // Right face
-         {{0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{0.5,  0.5,  0.5, 1.0f}}, // top-right    7
-         {{0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{0.5, -0.5, -0.5, 1.0f}}, // bottom-right 2
         // Front face
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{ 0.5,  0.5,  0.5, 1.0f}}, // top-right    7
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
-         {{ 0.5,  0.5,  0.5, 1.0f}}, // top-right    7
-         {{ 0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
+         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
+         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-right    3
+         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
+         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
+         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
+         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-left  0
+        // Right face
+         {{ 0.5, -0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 6
+         {{ 0.5,  0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    7
+         {{ 0.5,  0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    3
+         {{ 0.5, -0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 6
+         {{ 0.5,  0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    3
+         {{ 0.5, -0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 2
+        // Back face
+         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-left  4
+         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-left     5
+         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-right    7
+         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-left  4
+         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-right    7
+         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-right 6
         // Left face
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
+         {{-0.5, -0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  0
+         {{-0.5,  0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     1
+         {{-0.5,  0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     5
+         {{-0.5, -0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  0
+         {{-0.5,  0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     5
+         {{-0.5, -0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  4
         // Top face
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{ 0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{ 0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{ 0.5,  0.5,  0.5, 1.0f}}, // top-right    7
+         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     5
+         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     1
+         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    3
+         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     5
+         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    3
+         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    7
         // Bottom face
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
-         {{ 0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{ 0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{ 0.5, -0.5, -0.5, 1.0f}}  // bottom-right 2
+         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  0
+         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  4
+         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-right 6
+         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  0
+         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-right 6
+         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}  // bottom-right 2
     };
     
     cubeVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
@@ -108,48 +117,48 @@ void MTLEngine::createCube() {
 //    grassTexture = new Texture("assets/iron.png", metalDevice);
     
     CubeVertexData lightSource[] = {
-        // Back face
-         {{ 0.5, -0.5, -0.5, 1.0f}}, // bottom-right 2
-         {{ 0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{ 0.5, -0.5, -0.5, 1.0f}}, // bottom-right 2
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-        // Right face
-         {{0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{0.5,  0.5,  0.5, 1.0f}}, // top-right    7
-         {{0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{0.5, -0.5, -0.5, 1.0f}}, // bottom-right 2
         // Front face
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{ 0.5,  0.5,  0.5, 1.0f}}, // top-right    7
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
-         {{ 0.5,  0.5,  0.5, 1.0f}}, // top-right    7
-         {{ 0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
+         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
+         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-right    3
+         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
+         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
+         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
+         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-left  0
+        // Right face
+         {{ 0.5, -0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 6
+         {{ 0.5,  0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    7
+         {{ 0.5,  0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    3
+         {{ 0.5, -0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 6
+         {{ 0.5,  0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    3
+         {{ 0.5, -0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 2
+        // Back face
+         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-left  4
+         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-left     5
+         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-right    7
+         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-left  4
+         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-right    7
+         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-right 6
         // Left face
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
+         {{-0.5, -0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  0
+         {{-0.5,  0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     1
+         {{-0.5,  0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     5
+         {{-0.5, -0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  0
+         {{-0.5,  0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     5
+         {{-0.5, -0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  4
         // Top face
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{-0.5,  0.5, -0.5, 1.0f}}, // top-left     1
-         {{ 0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{-0.5,  0.5,  0.5, 1.0f}}, // top-left     5
-         {{ 0.5,  0.5, -0.5, 1.0f}}, // top-right    3
-         {{ 0.5,  0.5,  0.5, 1.0f}}, // top-right    7
+         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     5
+         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     1
+         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    3
+         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     5
+         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    3
+         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    7
         // Bottom face
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{-0.5, -0.5,  0.5, 1.0f}}, // bottom-left  4
-         {{ 0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{-0.5, -0.5, -0.5, 1.0f}}, // bottom-left  0
-         {{ 0.5, -0.5,  0.5, 1.0f}}, // bottom-right 6
-         {{ 0.5, -0.5, -0.5, 1.0f}}  // bottom-right 2
+         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  0
+         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  4
+         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-right 6
+         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  0
+         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-right 6
+         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}  // bottom-right 2
     };
     
     lightVertexBuffer = metalDevice->newBuffer(&lightSource, sizeof(lightSource), MTL::ResourceStorageModeShared);
@@ -180,8 +189,8 @@ void MTLEngine::createRenderPipeline() {
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
     renderPipelineDescriptor->setSampleCount(4);
+    renderPipelineDescriptor->setLabel(NS::String::string("Cube Render Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
-//    renderPipelineDescriptor->setRasterizationEnabled(true);
     renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingClockwise);
     
     NS::Error* error;
@@ -208,8 +217,8 @@ void MTLEngine::createLightSourceRenderPipeline() {
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
     renderPipelineDescriptor->setSampleCount(4);
+    renderPipelineDescriptor->setLabel(NS::String::string("Light Source Render Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
-//    renderPipelineDescriptor->setRasterizationEnabled(true);
     renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingClockwise);
     
     NS::Error* error;
@@ -219,25 +228,25 @@ void MTLEngine::createLightSourceRenderPipeline() {
 }
 
 void MTLEngine::draw() {
+    createDrawableRenderPass();
     sendRenderCommand();
 }
 
-void MTLEngine::sendRenderCommand() {
-    metalCommandBuffer = metalCommandQueue->commandBuffer();
-    
-    MTL::RenderPassDescriptor* renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
+void MTLEngine::createDrawableRenderPass() {
+    renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
     MTL::RenderPassColorAttachmentDescriptor* colorAttachment = renderPassDescriptor->colorAttachments()->object(0);
     MTL::RenderPassDepthAttachmentDescriptor* depthAttachment = renderPassDescriptor->depthAttachment();
 
-    MTL::TextureDescriptor* msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
+    msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
     msaaTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
     msaaTextureDescriptor->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
     msaaTextureDescriptor->setWidth(metalDrawable->texture()->width());
     msaaTextureDescriptor->setHeight(metalDrawable->texture()->height());
     msaaTextureDescriptor->setSampleCount(4);
     msaaTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
+    msaaTextureDescriptor->setStorageMode(MTL::StorageModePrivate);
     
-    MTL::Texture* msaaRenderTargetTexture = metalDevice->newTexture(msaaTextureDescriptor);
+    msaaRenderTargetTexture = metalDevice->newTexture(msaaTextureDescriptor);
     
     colorAttachment->setTexture(msaaRenderTargetTexture);
     colorAttachment->setResolveTexture(metalDrawable->texture());
@@ -245,22 +254,28 @@ void MTLEngine::sendRenderCommand() {
     colorAttachment->setClearColor(MTL::ClearColor(41.0f/255.0f, 42.0f/255.0f, 48.0f/255.0f, 1.0));
     colorAttachment->setStoreAction(MTL::StoreActionMultisampleResolve);
     
-    MTL::TextureDescriptor* depthTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
+    depthTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
     depthTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
     depthTextureDescriptor->setPixelFormat(MTL::PixelFormatDepth32Float);
     depthTextureDescriptor->setWidth(metalDrawable->texture()->width());
-    depthTextureDescriptor->setHeight(metalDrawable->texture()->width());
+    depthTextureDescriptor->setHeight(metalDrawable->texture()->height());
     depthTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
     depthTextureDescriptor->setSampleCount(4);
+    depthTextureDescriptor->setStorageMode(MTL::StorageModeMemoryless);
 
-    MTL::Texture* depthTexture = metalDevice->newTexture(depthTextureDescriptor);
+    depthTexture = metalDevice->newTexture(depthTextureDescriptor);
     
     depthAttachment->setTexture(depthTexture);
     depthAttachment->setLoadAction(MTL::LoadActionClear);
     depthAttachment->setStoreAction(MTL::StoreActionDontCare);
     depthAttachment->setClearDepth(1.0);
+}
+
+void MTLEngine::sendRenderCommand() {
+    metalCommandBuffer = metalCommandQueue->commandBuffer();
     
     MTL::RenderCommandEncoder* renderCommandEncoder = metalCommandBuffer->renderCommandEncoder(renderPassDescriptor);
+    renderCommandEncoder->setLabel(NS::String::string("Drawable Render Pass", NS::ASCIIStringEncoding));
     encodeRenderCommand(renderCommandEncoder);
     renderCommandEncoder->endEncoding();
 
@@ -276,35 +291,18 @@ void MTLEngine::sendRenderCommand() {
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
-    matrix_float4x4 translationMatrix = matrix_identity_float4x4;
-//    translationMatrix.columns[3][2] = 2;
-    translationMatrix.columns[0] = simd_make_float4(1, 0, 0, 0);
-    translationMatrix.columns[1] = simd_make_float4(0, 1, 0, 0);
-    translationMatrix.columns[2] = simd_make_float4(0, 0, 1, 0);
-    translationMatrix.columns[3] = simd_make_float4(-1,-1.3,3.5, 1);
 
-    matrix_float4x4 rotationMatrix = matrix_identity_float4x4;
-    float angleInDegrees = glfwGetTime() * 90;
-    float angleInRadians = angleInDegrees * M_PI / 180.0f;
-    float cosTheta = cos(angleInRadians);
-    float sinTheta = sin(angleInRadians);
-    rotationMatrix.columns[0][0] = cosTheta;
-    rotationMatrix.columns[2][0] = -sinTheta;
-    rotationMatrix.columns[0][2] = sinTheta;
-    rotationMatrix.columns[2][2] = cosTheta;
-
-    matrix_float4x4 modelMatrix = matrix_identity_float4x4;
-    modelMatrix = simd_mul(translationMatrix, rotationMatrix);
+    matrix_float4x4 translationMatrix = matrix4x4_translation(0.0f, -0.9f, 1.0f);
     
     // Aspect ratio should match the ratio between the window width and height,
     // otherwise the image will look stretched.
     float aspectRatio = (metalLayer.frame.size.width / metalLayer.frame.size.height);
-    float fov = M_PI / 2.0f;
+    float fov = 90.0f * (M_PI / 180.0f);
     float nearZ = 0.1f;
     float farZ = 100.0f;
     
     matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
-    TransformationData transformationData = { modelMatrix, perspectiveMatrix };
+    TransformationData transformationData = { translationMatrix, perspectiveMatrix };
     transformationBuffer = metalDevice->newBuffer(&transformationData, sizeof(transformationData), MTL::ResourceStorageModeShared);
 
     
@@ -317,46 +315,28 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     
     renderCommandEncoder->setVertexBuffer(cubeVertexBuffer, 0, 0);
     renderCommandEncoder->setVertexBuffer(transformationBuffer, 0, 1);
+    simd_float4 color = simd_make_float4(0.5, 0.9, 0.7, 1.0);
+    simd_float4 lightColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
+    renderCommandEncoder->setFragmentBytes(&color, sizeof(color), 0);
+    renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
+    simd_float4 lightPosition = simd_make_float4(0 + 3*cos(glfwGetTime()/1.0), 1.2,4 + sin(glfwGetTime()/1.0), 1);
+    renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
     NS::UInteger vertexCount = 6 * 6;
-//    renderCommandEncoder->setFragmentTexture(grassTexture->texture, 0);
-    simd_float4 color = simd_make_float4(0.7, 0.6, 0.9, 1.0);
-    simd_float4 lightColor = simd_make_float4(1.0, 0.8, 0.3, 1.0);
-    renderCommandEncoder->setFragmentBytes(&color, sizeof(color), 0);
-    renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
     renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
     transformationBuffer->release();
 
-    matrix_float4x4 scaleMatrix = matrix_identity_float4x4;
-    scaleMatrix.columns[0] = simd_make_float4(0.5, 0, 0, 0);
-    scaleMatrix.columns[1] = simd_make_float4(0, 0.5, 0, 0);
-
-    translationMatrix = matrix_identity_float4x4;
-    translationMatrix.columns[0] = simd_make_float4(1, 0, 0, 0);
-    translationMatrix.columns[1] = simd_make_float4(0, 1, 0, 0);
-    translationMatrix.columns[2] = simd_make_float4(0, 0, 1, 0);
-    translationMatrix.columns[3] = simd_make_float4(1, 1.2,4.2, 1);
+    matrix_float4x4 scaleMatrix = matrix4x4_scale(0.5f, 0.5f, 0.5f);
+    translationMatrix = matrix4x4_translation(lightPosition.xyz);
     
-    rotationMatrix = matrix_identity_float4x4;
-    angleInDegrees = 15.0f;
-    angleInRadians = angleInDegrees * M_PI / 180.0f;
-    cosTheta = cos(angleInRadians);
-    sinTheta = sin(angleInRadians);
-    rotationMatrix.columns[0][0] = cosTheta;
-    rotationMatrix.columns[2][0] = -sinTheta;
-    rotationMatrix.columns[0][2] = sinTheta;
-    rotationMatrix.columns[2][2] = cosTheta;
-
-    modelMatrix = matrix_identity_float4x4;
-    modelMatrix = simd_mul(rotationMatrix, modelMatrix);
-    modelMatrix = simd_mul(scaleMatrix, modelMatrix);
-    modelMatrix = simd_mul(translationMatrix, modelMatrix);
+    matrix_float4x4 modelMatrix = matrix_identity_float4x4;
+    modelMatrix = matrix_multiply(scaleMatrix, modelMatrix);
+    modelMatrix = matrix_multiply(translationMatrix, modelMatrix);
     transformationData = {modelMatrix, perspectiveMatrix};
     transformationBuffer = metalDevice->newBuffer(&transformationData, sizeof(transformationData), MTL::ResourceStorageModeShared);
     
     renderCommandEncoder->setRenderPipelineState(metalLightSourceRenderPSO);
-    
     renderCommandEncoder->setVertexBuffer(lightVertexBuffer, 0, 0);
     renderCommandEncoder->setVertexBuffer(transformationBuffer, 0, 1);
     typeTriangle = MTL::PrimitiveTypeTriangle;
