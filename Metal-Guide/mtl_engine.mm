@@ -16,9 +16,18 @@ void MTLEngine::init() {
 }
 
 void MTLEngine::run() {
+    int prevWidth = -1, prevHeight = -1;
+    int width, height;
     while (!glfwWindowShouldClose(glfwWindow)) {
         @autoreleasepool {
+            glfwGetFramebufferSize(glfwWindow, &width, &height);
             metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
+            if (width != prevWidth or height != prevHeight) {
+                metalDrawable->layer()->setDrawableSize({static_cast<CGFloat>(width), static_cast<CGFloat>(height)});
+                prevWidth = width;
+                prevHeight = height;
+                std::cout << "Drawable Resized." << std::endl;
+            }
             draw();
         }
         glfwPollEvents();
@@ -221,7 +230,7 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     matrix_float4x4 modelMatrix = matrix_identity_float4x4;
     modelMatrix = simd_mul(translationMatrix, rotationMatrix);
     
-    float aspectRatio = (800.0f / 600.0f);
+    float aspectRatio = (metalLayer.frame.size.width / metalLayer.frame.size.height);
     float fov = M_PI / 2.0f;
     float nearZ = 0.1f;
     float farZ = 100.0f;
