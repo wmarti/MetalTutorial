@@ -10,9 +10,12 @@ void MTLEngine::init() {
     initWindow();
     
     createCube();
+    createBuffers();
     createDefaultLibrary();
     createCommandQueue();
     createRenderPipeline();
+    createDepthAndMSAATextures();
+    createRenderPassDescriptor();
 }
 
 void MTLEngine::run() {
@@ -27,6 +30,10 @@ void MTLEngine::run() {
 
 void MTLEngine::cleanup() {
     glfwTerminate();
+    transformationBuffer->release();
+    msaaRenderTargetTexture->release();
+    depthTexture->release();
+    renderPassDescriptor->release();
     metalDevice->release();
     delete grassTexture;
 }
@@ -42,6 +49,18 @@ void MTLEngine::frameBufferSizeCallback(GLFWwindow *window, int width, int heigh
 
 void MTLEngine::resizeFrameBuffer(int width, int height) {
     metalLayer.drawableSize = CGSizeMake(width, height);
+    // Deallocate the textures if they have been created
+    if (msaaRenderTargetTexture) {
+        msaaRenderTargetTexture->release();
+        msaaRenderTargetTexture = nullptr;
+    }
+    if (depthTexture) {
+        depthTexture->release();
+        depthTexture = nullptr;
+    }
+    createDepthAndMSAATextures();
+    metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
+    updateRenderPassDescriptor();
 }
 
 void MTLEngine::initWindow() {
@@ -121,6 +140,10 @@ void MTLEngine::createCube() {
     grassTexture = new Texture("assets/mc_grass.jpeg", metalDevice);
 }
 
+void MTLEngine::createBuffers() {
+    transformationBuffer = metalDevice->newBuffer(sizeof(TransformationData), MTL::ResourceStorageModeShared);
+}
+
 void MTLEngine::createDefaultLibrary() {
     metalDefaultLibrary = metalDevice->newDefaultLibrary();
     if(!metalDefaultLibrary){
@@ -145,13 +168,17 @@ void MTLEngine::createRenderPipeline() {
     assert(renderPipelineDescriptor);
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
-    renderPipelineDescriptor->setSampleCount(4);
+    renderPipelineDescriptor->setSampleCount(sampleCount);
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
-//    renderPipelineDescriptor->setRasterizationEnabled(true);
     renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingClockwise);
     
     NS::Error* error;
     metalRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
+    
+    if (metalRenderPSO == nil) {
+        std::cout << "Error creating render pipeline state: " << error << std::endl;
+        std::exit(0);
+    }
     
     MTL::DepthStencilDescriptor* depthStencilDescriptor = MTL::DepthStencilDescriptor::alloc()->init();
     depthStencilDescriptor->setDepthCompareFunction(MTL::CompareFunctionLessEqual);
@@ -159,6 +186,57 @@ void MTLEngine::createRenderPipeline() {
     depthStencilState = metalDevice->newDepthStencilState(depthStencilDescriptor);
     
     renderPipelineDescriptor->release();
+    vertexShader->release();
+    fragmentShader->release();
+}
+
+void MTLEngine::createDepthAndMSAATextures() {
+    MTL::TextureDescriptor* msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
+    msaaTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
+    msaaTextureDescriptor->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
+    msaaTextureDescriptor->setWidth(metalLayer.drawableSize.width);
+    msaaTextureDescriptor->setHeight(metalLayer.drawableSize.height);
+    msaaTextureDescriptor->setSampleCount(sampleCount);
+    msaaTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
+
+    msaaRenderTargetTexture = metalDevice->newTexture(msaaTextureDescriptor);
+
+    MTL::TextureDescriptor* depthTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
+    depthTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
+    depthTextureDescriptor->setPixelFormat(MTL::PixelFormatDepth32Float);
+    depthTextureDescriptor->setWidth(metalLayer.drawableSize.width);
+    depthTextureDescriptor->setHeight(metalLayer.drawableSize.height);
+    depthTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
+    depthTextureDescriptor->setSampleCount(sampleCount);
+
+    depthTexture = metalDevice->newTexture(depthTextureDescriptor);
+
+    msaaTextureDescriptor->release();
+    depthTextureDescriptor->release();
+}
+
+void MTLEngine::createRenderPassDescriptor() {
+    renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
+    
+    MTL::RenderPassColorAttachmentDescriptor* colorAttachment = renderPassDescriptor->colorAttachments()->object(0);
+    MTL::RenderPassDepthAttachmentDescriptor* depthAttachment = renderPassDescriptor->depthAttachment();
+
+    colorAttachment->setTexture(msaaRenderTargetTexture);
+    colorAttachment->setResolveTexture(metalDrawable->texture());
+    colorAttachment->setLoadAction(MTL::LoadActionClear);
+    colorAttachment->setClearColor(MTL::ClearColor(41.0f/255.0f, 42.0f/255.0f, 48.0f/255.0f, 1.0));
+    colorAttachment->setStoreAction(MTL::StoreActionMultisampleResolve);
+    
+    depthAttachment->setTexture(depthTexture);
+    depthAttachment->setLoadAction(MTL::LoadActionClear);
+    depthAttachment->setStoreAction(MTL::StoreActionDontCare);
+    depthAttachment->setClearDepth(1.0);
+}
+
+void MTLEngine::updateRenderPassDescriptor() {
+    renderPassDescriptor->colorAttachments()->object(0)->setTexture(msaaRenderTargetTexture);
+    renderPassDescriptor->colorAttachments()->object(0)->setResolveTexture(metalDrawable->texture());
+    renderPassDescriptor->depthAttachment()->setTexture(depthTexture);
 }
 
 void MTLEngine::draw() {
@@ -168,41 +246,7 @@ void MTLEngine::draw() {
 void MTLEngine::sendRenderCommand() {
     metalCommandBuffer = metalCommandQueue->commandBuffer();
     
-    MTL::RenderPassDescriptor* renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
-    MTL::RenderPassColorAttachmentDescriptor* colorAttachment = renderPassDescriptor->colorAttachments()->object(0);
-    MTL::RenderPassDepthAttachmentDescriptor* depthAttachment = renderPassDescriptor->depthAttachment();
-
-    MTL::TextureDescriptor* msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
-    msaaTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
-    msaaTextureDescriptor->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
-    msaaTextureDescriptor->setWidth(metalDrawable->texture()->width());
-    msaaTextureDescriptor->setHeight(metalDrawable->texture()->height());
-    msaaTextureDescriptor->setSampleCount(4);
-    msaaTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
-    
-    MTL::Texture* msaaRenderTargetTexture = metalDevice->newTexture(msaaTextureDescriptor);
-    
-    colorAttachment->setTexture(msaaRenderTargetTexture);
-    colorAttachment->setResolveTexture(metalDrawable->texture());
-    colorAttachment->setLoadAction(MTL::LoadActionClear);
-    colorAttachment->setClearColor(MTL::ClearColor(41.0f/255.0f, 42.0f/255.0f, 48.0f/255.0f, 1.0));
-    colorAttachment->setStoreAction(MTL::StoreActionMultisampleResolve);
-    
-    MTL::TextureDescriptor* depthTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
-    depthTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
-    depthTextureDescriptor->setPixelFormat(MTL::PixelFormatDepth32Float);
-    depthTextureDescriptor->setWidth(metalDrawable->texture()->width());
-    depthTextureDescriptor->setHeight(metalDrawable->texture()->width());
-    depthTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
-    depthTextureDescriptor->setSampleCount(4);
-
-    MTL::Texture* depthTexture = metalDevice->newTexture(depthTextureDescriptor);
-    
-    depthAttachment->setTexture(depthTexture);
-    depthAttachment->setLoadAction(MTL::LoadActionClear);
-    depthAttachment->setStoreAction(MTL::StoreActionDontCare);
-    depthAttachment->setClearDepth(1.0);
-    
+    updateRenderPassDescriptor();
     MTL::RenderCommandEncoder* renderCommandEncoder = metalCommandBuffer->renderCommandEncoder(renderPassDescriptor);
     encodeRenderCommand(renderCommandEncoder);
     renderCommandEncoder->endEncoding();
@@ -210,27 +254,14 @@ void MTLEngine::sendRenderCommand() {
     metalCommandBuffer->presentDrawable(metalDrawable);
     metalCommandBuffer->commit();
     metalCommandBuffer->waitUntilCompleted();
-    
-    msaaTextureDescriptor->release();
-    msaaRenderTargetTexture->release();
-    depthTextureDescriptor->release();
-    depthTexture->release();
-    renderPassDescriptor->release();
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
-    matrix_float4x4 translationMatrix = matrix_identity_float4x4;
-    translationMatrix.columns[3][2] = 2;
+    matrix_float4x4 translationMatrix = matrix4x4_translation(0, 0, 2);
     
-    matrix_float4x4 rotationMatrix = matrix_identity_float4x4;
     float angleInDegrees = glfwGetTime() * 90;
     float angleInRadians = angleInDegrees * M_PI / 180.0f;
-    float cosTheta = cos(angleInRadians);
-    float sinTheta = sin(angleInRadians);
-    rotationMatrix.columns[0][0] = cosTheta;
-    rotationMatrix.columns[2][0] = -sinTheta;
-    rotationMatrix.columns[0][2] = sinTheta;
-    rotationMatrix.columns[2][2] = cosTheta;
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation(angleInRadians, 0.0, -1.0, 0.0);
 
     matrix_float4x4 modelMatrix = matrix_identity_float4x4;
     modelMatrix = simd_mul(translationMatrix, rotationMatrix);
@@ -242,11 +273,11 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     
     matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
     TransformationData transformationData = { modelMatrix, perspectiveMatrix };
-    transformationBuffer = metalDevice->newBuffer(&transformationData, sizeof(transformationData), MTL::ResourceStorageModeShared);
+    memcpy(transformationBuffer->contents(), &transformationData, sizeof(transformationData));
     
     renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
-    //    renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
+//    renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
     renderCommandEncoder->setVertexBuffer(cubeVertexBuffer, 0, 0);
