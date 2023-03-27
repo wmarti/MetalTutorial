@@ -38,13 +38,13 @@
 		3E32489E29CFFFDB009CDE34 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		3E3248A029CFFFDF009CDE34 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3E47CD272987185800938A41 /* metal-cpp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "metal-cpp"; sourceTree = "<group>"; };
-		3E56AB63297E0E6E00DB5F4F /* Metal-Guide */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Metal-Guide"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E56AB63297E0E6E00DB5F4F /* Metal-Tutorial */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Metal-Tutorial"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E56AB66297E0E6E00DB5F4F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		3E581F1529871D3000E5CDF6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3E581F1729871D3400E5CDF6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		3E581F1929871D4300E5CDF6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3E76CD672987671200178E19 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../opt/homebrew/Cellar/glfw/3.3.8/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
-		3E76CD692987675300178E19 /* Metal-Guide.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Metal-Guide.entitlements"; sourceTree = "<group>"; };
+		3E76CD692987675300178E19 /* Metal-Tutorial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Metal-Tutorial.entitlements"; sourceTree = "<group>"; };
 		3E76CD6A298767CD00178E19 /* mtl_engine.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mtl_engine.mm; sourceTree = "<group>"; };
 		3E76CD6B298767CD00178E19 /* mtl_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mtl_engine.hpp; sourceTree = "<group>"; };
 		3E76CD6D2987690700178E19 /* mtl_implementation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mtl_implementation.cpp; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 			children = (
 				3E32489829CFFF9E009CDE34 /* external */,
 				3E47CD272987185800938A41 /* metal-cpp */,
-				3E56AB65297E0E6E00DB5F4F /* Metal-Guide */,
+				3E56AB65297E0E6E00DB5F4F /* Metal-Tutorial */,
 				3E56AB64297E0E6E00DB5F4F /* Products */,
 				3E581F1429871D3000E5CDF6 /* Frameworks */,
 			);
@@ -99,22 +99,22 @@
 		3E56AB64297E0E6E00DB5F4F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3E56AB63297E0E6E00DB5F4F /* Metal-Guide */,
+				3E56AB63297E0E6E00DB5F4F /* Metal-Tutorial */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3E56AB65297E0E6E00DB5F4F /* Metal-Guide */ = {
+		3E56AB65297E0E6E00DB5F4F /* Metal-Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				3E76CD692987675300178E19 /* Metal-Guide.entitlements */,
+				3E76CD692987675300178E19 /* Metal-Tutorial.entitlements */,
 				3E76CD7129876E7600178E19 /* triangle.metal */,
 				3E56AB66297E0E6E00DB5F4F /* main.mm */,
 				3E76CD6A298767CD00178E19 /* mtl_engine.mm */,
 				3E76CD6B298767CD00178E19 /* mtl_engine.hpp */,
 				3E76CD6D2987690700178E19 /* mtl_implementation.cpp */,
 			);
-			path = "Metal-Guide";
+			path = "Metal-Tutorial";
 			sourceTree = "<group>";
 		};
 		3E581F1429871D3000E5CDF6 /* Frameworks */ = {
@@ -134,9 +134,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3E56AB62297E0E6E00DB5F4F /* Metal-Guide */ = {
+		3E56AB62297E0E6E00DB5F4F /* Metal-Tutorial */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E56AB6A297E0E6E00DB5F4F /* Build configuration list for PBXNativeTarget "Metal-Guide" */;
+			buildConfigurationList = 3E56AB6A297E0E6E00DB5F4F /* Build configuration list for PBXNativeTarget "Metal-Tutorial" */;
 			buildPhases = (
 				3E56AB5F297E0E6E00DB5F4F /* Sources */,
 				3E56AB60297E0E6E00DB5F4F /* Frameworks */,
@@ -146,9 +146,9 @@
 			);
 			dependencies = (
 			);
-			name = "Metal-Guide";
+			name = "Metal-Tutorial";
 			productName = "Metal-Guide";
-			productReference = 3E56AB63297E0E6E00DB5F4F /* Metal-Guide */;
+			productReference = 3E56AB63297E0E6E00DB5F4F /* Metal-Tutorial */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -165,7 +165,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3E56AB5E297E0E6E00DB5F4F /* Build configuration list for PBXProject "Metal-Guide" */;
+			buildConfigurationList = 3E56AB5E297E0E6E00DB5F4F /* Build configuration list for PBXProject "Metal-Tutorial" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -178,7 +178,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3E56AB62297E0E6E00DB5F4F /* Metal-Guide */,
+				3E56AB62297E0E6E00DB5F4F /* Metal-Tutorial */,
 			);
 		};
 /* End PBXProject section */
@@ -313,7 +313,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
-				CODE_SIGN_ENTITLEMENTS = "Metal-Guide/Metal-Guide.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Metal-Tutorial/Metal-Tutorial.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8E265M4P59;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -334,7 +334,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
-				CODE_SIGN_ENTITLEMENTS = "Metal-Guide/Metal-Guide.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Metal-Tutorial/Metal-Tutorial.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8E265M4P59;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -355,7 +355,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3E56AB5E297E0E6E00DB5F4F /* Build configuration list for PBXProject "Metal-Guide" */ = {
+		3E56AB5E297E0E6E00DB5F4F /* Build configuration list for PBXProject "Metal-Tutorial" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E56AB68297E0E6E00DB5F4F /* Debug */,
@@ -364,7 +364,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E56AB6A297E0E6E00DB5F4F /* Build configuration list for PBXNativeTarget "Metal-Guide" */ = {
+		3E56AB6A297E0E6E00DB5F4F /* Build configuration list for PBXNativeTarget "Metal-Tutorial" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E56AB6B297E0E6E00DB5F4F /* Debug */,
