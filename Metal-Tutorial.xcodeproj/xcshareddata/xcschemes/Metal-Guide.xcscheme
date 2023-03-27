@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3E56AB62297E0E6E00DB5F4F"
-               BuildableName = "Metal-Guide"
-               BlueprintName = "Metal-Guide"
-               ReferencedContainer = "container:Metal-Guide.xcodeproj">
+               BuildableName = "Metal-Tutorial"
+               BlueprintName = "Metal-Tutorial"
+               ReferencedContainer = "container:Metal-Tutorial.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E56AB62297E0E6E00DB5F4F"
-            BuildableName = "Metal-Guide"
-            BlueprintName = "Metal-Guide"
-            ReferencedContainer = "container:Metal-Guide.xcodeproj">
+            BuildableName = "Metal-Tutorial"
+            BlueprintName = "Metal-Tutorial"
+            ReferencedContainer = "container:Metal-Tutorial.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E56AB62297E0E6E00DB5F4F"
-            BuildableName = "Metal-Guide"
-            BlueprintName = "Metal-Guide"
-            ReferencedContainer = "container:Metal-Guide.xcodeproj">
+            BuildableName = "Metal-Tutorial"
+            BlueprintName = "Metal-Tutorial"
+            ReferencedContainer = "container:Metal-Tutorial.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
