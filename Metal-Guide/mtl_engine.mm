@@ -78,7 +78,7 @@ void MTLEngine::createSquare() {
         {{ 0.5, -0.5,  0.5, 1.0f}, {1.0f, 0.0f}}
     };
     
-    triangleVertexBuffer = metalDevice->newBuffer(&squareVertices, sizeof(squareVertices), MTL::ResourceStorageModeShared);
+    squareVertexBuffer = metalDevice->newBuffer(&squareVertices, sizeof(squareVertices), MTL::ResourceStorageModeShared);
 
     // Make sure to change working directory to Metal-Tutorial root
     // directory via Product -> Scheme -> Edit Scheme -> Run -> Options
@@ -158,7 +158,7 @@ void MTLEngine::sendRenderCommand() {
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
-    renderCommandEncoder->setVertexBuffer(triangleVertexBuffer, 0, 0);
+    renderCommandEncoder->setVertexBuffer(squareVertexBuffer, 0, 0);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
     NS::UInteger vertexCount = 6;
