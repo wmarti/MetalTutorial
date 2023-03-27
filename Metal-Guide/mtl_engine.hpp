@@ -17,7 +17,6 @@
 #include <QuartzCore/QuartzCore.hpp>
 #include <simd/simd.h>
 
-
 #include <iostream>
 
 class MTLEngine {
@@ -38,6 +37,9 @@ private:
     void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
     void sendRenderCommand();
     void draw();
+    
+    static void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
+    void resizeFrameBuffer(int width, int height);
     
     MTL::Device* metalDevice;
     GLFWwindow* glfwWindow;
