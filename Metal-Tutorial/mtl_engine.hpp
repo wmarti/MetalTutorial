@@ -74,7 +74,4 @@ private:
     MTL::Texture* msaaRenderTargetTexture;
     MTL::Texture* depthTexture;
     int sampleCount = 4;
-    
-    Texture* grassTexture;
-
 };
