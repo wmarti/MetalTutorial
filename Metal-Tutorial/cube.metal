@@ -1,5 +1,5 @@
 //
-//  triangle.metal
+//  cube.metal
 //  MetalTutorial
 //
 
