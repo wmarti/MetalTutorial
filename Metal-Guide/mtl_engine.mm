@@ -16,18 +16,9 @@ void MTLEngine::init() {
 }
 
 void MTLEngine::run() {
-    int prevWidth = -1, prevHeight = -1;
-    int width, height;
     while (!glfwWindowShouldClose(glfwWindow)) {
         @autoreleasepool {
-            glfwGetFramebufferSize(glfwWindow, &width, &height);
             metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
-            if (width != prevWidth or height != prevHeight) {
-                metalDrawable->layer()->setDrawableSize({static_cast<CGFloat>(width), static_cast<CGFloat>(height)});
-                prevWidth = width;
-                prevHeight = height;
-                std::cout << "Drawable Resized." << std::endl;
-            }
             draw();
         }
         glfwPollEvents();
@@ -44,10 +35,18 @@ void MTLEngine::initDevice() {
     metalDevice = MTL::CreateSystemDefaultDevice();
 }
 
+void MTLEngine::frameBufferSizeCallback(GLFWwindow *window, int width, int height) {
+    MTLEngine* engine = (MTLEngine*)glfwGetWindowUserPointer(window);
+    engine->resizeFrameBuffer(width, height);
+}
+
+void MTLEngine::resizeFrameBuffer(int width, int height) {
+    metalLayer.drawableSize = CGSizeMake(width, height);
+}
+
 void MTLEngine::initWindow() {
     glfwInit();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindow = glfwCreateWindow(800, 600, "Metal Engine", NULL, NULL);
     
     if (!glfwWindow) {
@@ -55,10 +54,16 @@ void MTLEngine::initWindow() {
         exit(EXIT_FAILURE);
     }
     
+    glfwSetWindowUserPointer(glfwWindow, this);
+    glfwSetFramebufferSizeCallback(glfwWindow, frameBufferSizeCallback);
+    int width, height;
+    glfwGetFramebufferSize(glfwWindow, &width, &height);
+    
     metalWindow = glfwGetCocoaWindow(glfwWindow);
     metalLayer = [CAMetalLayer layer];
     metalLayer.device = (__bridge id<MTLDevice>)metalDevice;
     metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
+    metalLayer.drawableSize = CGSizeMake(width, height);
     metalWindow.contentView.layer = metalLayer;
     metalWindow.contentView.wantsLayer = YES;
 }

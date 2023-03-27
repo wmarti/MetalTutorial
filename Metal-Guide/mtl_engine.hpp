@@ -45,6 +45,9 @@ private:
     void sendRenderCommand();
     void draw();
     
+    static void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
+    void resizeFrameBuffer(int width, int height);
+    
     MTL::Device* metalDevice;
     GLFWwindow* glfwWindow;
     NSWindow* metalWindow;
