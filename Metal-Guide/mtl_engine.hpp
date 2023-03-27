@@ -31,18 +31,23 @@ public:
     void init();
     void run();
     void cleanup();
-
+    
 private:
     void initDevice();
     void initWindow();
     
     void createCube();
+    void createBuffers();
     void createDefaultLibrary();
     void createCommandQueue();
     void createRenderPipeline();
     void createLightSourceRenderPipeline();
-    void createDrawableRenderPass();
-        
+    void createDepthAndMSAATextures();
+    void createRenderPassDescriptor();
+    
+    // Upon resizing, update Depth and MSAA Textures.
+    void updateRenderPassDescriptor();
+    
     void draw();
     void sendRenderCommand();
     void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
@@ -66,8 +71,10 @@ private:
     MTL::Buffer* lightVertexBuffer;
     MTL::Buffer* transformationBuffer;
     MTL::DepthStencilState* depthStencilState;
-    MTL::TextureDescriptor* depthTextureDescriptor;
-    MTL::Texture* depthTexture;
-    MTL::TextureDescriptor* msaaTextureDescriptor;
     MTL::Texture* msaaRenderTargetTexture;
+    MTL::Texture* depthTexture;
+    int sampleCount = 4;
+    
+    Texture* grassTexture;
+
 };
