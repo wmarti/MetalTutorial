@@ -109,7 +109,6 @@ void MTLEngine::createRenderPipeline() {
     assert(renderPipelineDescriptor);
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
-    renderPipelineDescriptor->setSampleCount(4);
         
     NS::Error* error;
     metalRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
@@ -127,21 +126,10 @@ void MTLEngine::sendRenderCommand() {
     MTL::RenderPassDescriptor* renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
     MTL::RenderPassColorAttachmentDescriptor* cd = renderPassDescriptor->colorAttachments()->object(0);
     
-    MTL::TextureDescriptor* msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
-    msaaTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
-    msaaTextureDescriptor->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
-    msaaTextureDescriptor->setWidth(metalDrawable->texture()->width());
-    msaaTextureDescriptor->setHeight(metalDrawable->texture()->height());
-    msaaTextureDescriptor->setSampleCount(4);
-    msaaTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
-    
-    MTL::Texture* msaaRenderTargetTexture = metalDevice->newTexture(msaaTextureDescriptor);
-    
-    cd->setTexture(msaaRenderTargetTexture);
-    cd->setResolveTexture(metalDrawable->texture());
+    cd->setTexture(metalDrawable->texture());
     cd->setLoadAction(MTL::LoadActionClear);
     cd->setClearColor(MTL::ClearColor(41.0f/255.0f, 42.0f/255.0f, 48.0f/255.0f, 1.0));
-    cd->setStoreAction(MTL::StoreActionMultisampleResolve);
+    cd->setStoreAction(MTL::StoreActionStore);
     
     MTL::RenderCommandEncoder* renderCommandEncoder = metalCommandBuffer->renderCommandEncoder(renderPassDescriptor);
     encodeRenderCommand(renderCommandEncoder);
@@ -151,8 +139,6 @@ void MTLEngine::sendRenderCommand() {
     metalCommandBuffer->commit();
     metalCommandBuffer->waitUntilCompleted();
     
-    msaaTextureDescriptor->release();
-    msaaRenderTargetTexture->release();
     renderPassDescriptor->release();
 }
 
