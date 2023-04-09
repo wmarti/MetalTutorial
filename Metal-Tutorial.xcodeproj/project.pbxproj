@@ -362,6 +362,7 @@
 					"$(PROJECT_DIR)/external",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/external/GLFW/lib-universal";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -384,6 +385,7 @@
 					"$(PROJECT_DIR)/external",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/external/GLFW/lib-universal";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
