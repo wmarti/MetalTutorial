@@ -6,12 +6,14 @@
 #pragma once
 #include <simd/simd.h>
 
+using namespace simd;
+
 struct VertexData {
-    simd::float4 vertex;
-    simd::float2 textureCoordinate;
+    float4 position;
+    float2 textureCoordinate;
 };
 
 struct TransformationData {
-    matrix_float4x4 modelMatrix;
-    matrix_float4x4 perspectiveMatrix;
+    float4x4 modelMatrix;
+    float4x4 perspectiveMatrix;
 };

@@ -6,8 +6,9 @@
 #include <metal_stdlib>
 using namespace metal;
 
-struct VertexData
-{
+#include "VertexData.hpp"
+
+struct VertexOut {
     // The [[position]] attribute of this member indicates that this value
     // is the clip space position of the vertex when this structure is
     // returned from the vertex function.
@@ -20,28 +21,21 @@ struct VertexData
     float2 textureCoordinate;
 };
 
-struct TransformationData {
-    float4x4 modelMatrix;
-    float4x4 perspectiveMatrix;
-};
-
-vertex VertexData vertexShader(uint vertexID [[vertex_id]],
+vertex VertexOut vertexShader(uint vertexID [[vertex_id]],
              constant VertexData* vertexData,
              constant TransformationData* transformationData)
 {
-    VertexData out = vertexData[vertexID];
-    
+    VertexOut out;
     out.position = transformationData->perspectiveMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
+    out.textureCoordinate = vertexData[vertexID].textureCoordinate;
     return out;
 }
 
-fragment float4 fragmentShader(VertexData in [[stage_in]],
-                               texture2d<half> colorTexture [[ texture(0) ]]) {
+fragment float4 fragmentShader(VertexOut in [[stage_in]],
+                               texture2d<float> colorTexture [[texture(0)]]) {
     constexpr sampler textureSampler (mag_filter::linear,
                                       min_filter::linear);
-
     // Sample the texture to obtain a color
-    const half4 colorSample = colorTexture.sample(textureSampler, in.textureCoordinate);
-    
-    return float4(colorSample);
+    const float4 colorSample = colorTexture.sample(textureSampler, in.textureCoordinate);
+    return colorSample;
 }
