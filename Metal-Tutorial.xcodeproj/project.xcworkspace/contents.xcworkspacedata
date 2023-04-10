@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/wmarti/Downloads/MetalTutorial/Metal-Tutorial.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>
