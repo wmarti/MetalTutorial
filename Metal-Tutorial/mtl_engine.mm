@@ -91,7 +91,7 @@ void MTLEngine::initWindow() {
 
 void MTLEngine::createCube() {
     
-    CubeVertexData cubeVertices[] = {
+    VertexData cubeVertices[] = {
         // Front face               // Normals
          {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
          {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-right    3
@@ -138,7 +138,7 @@ void MTLEngine::createCube() {
     
     cubeVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
     
-    CubeVertexData lightSource[] = {
+    VertexData lightSource[] = {
         // Front face               // Normals
          {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
          {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-right    3

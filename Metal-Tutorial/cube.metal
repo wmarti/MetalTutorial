@@ -6,11 +6,7 @@
 #include <metal_stdlib>
 using namespace metal;
 
-struct VertexData
-{
-    float4 position;
-    float4 normal;
-};
+#include "VertexData.hpp"
 
 struct OutData {
     // The [[position]] attribute of this member indicates that this value
