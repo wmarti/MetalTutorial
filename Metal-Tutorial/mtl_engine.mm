@@ -9,10 +9,11 @@ void MTLEngine::init() {
     initDevice();
     initWindow();
     
+    createCommandQueue();
     createCube();
     createBuffers();
     createDefaultLibrary();
-    createCommandQueue();
+//    createCommandQueue();
     createRenderPipeline();
     createLightSourceRenderPipeline();
     createDepthAndMSAATextures();
@@ -66,7 +67,7 @@ void MTLEngine::resizeFrameBuffer(int width, int height) {
 void MTLEngine::initWindow() {
     glfwInit();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindow = glfwCreateWindow(800, 600, "Metal Engine", NULL, NULL);
+    glfwWindow = glfwCreateWindow(1200, 600, "Metal Engine", NULL, NULL);
     
     if (!glfwWindow) {
         glfwTerminate();
@@ -90,54 +91,20 @@ void MTLEngine::initWindow() {
 }
 
 void MTLEngine::createCube() {
+    Mesh mesh("assets/ODST/odst.obj", metalDevice);
+    meshVertexCount = mesh.vertices.size();
+    uint64_t meshVertexBufferSize = sizeof(Vertex) * mesh.vertices.size();
+    meshVertexBuffer = metalDevice->newBuffer(mesh.vertices.data(), meshVertexBufferSize, MTL::ResourceStorageModeShared);
+    meshVertexBuffer->setLabel(NS::String::string("Mesh Vertex Buffer", NS::ASCIIStringEncoding));
+    diffuseTextures = mesh.textures->diffuseTextureArray;
+    normalMaps = mesh.textures->normalTextureArray;
     
-    VertexData cubeVertices[] = {
-        // Front face               // Normals
-         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
-         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-right    3
-         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
-         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
-         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// top-left     1
-         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-left  0
-        // Right face
-         {{ 0.5, -0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 6
-         {{ 0.5,  0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    7
-         {{ 0.5,  0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    3
-         {{ 0.5, -0.5,  0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 6
-         {{ 0.5,  0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // top-right    3
-         {{ 0.5, -0.5, -0.5, 1.0f}, {1.0, 0.0, 0.0, 1.0}}, // bottom-right 2
-        // Back face
-         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-left  4
-         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-left     5
-         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-right    7
-         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-left  4
-         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // top-right    7
-         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, 0.0, 1.0, 1.0}}, // bottom-right 6
-        // Left face
-         {{-0.5, -0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  0
-         {{-0.5,  0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     1
-         {{-0.5,  0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     5
-         {{-0.5, -0.5, -0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  0
-         {{-0.5,  0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // top-left     5
-         {{-0.5, -0.5,  0.5, 1.0f}, {-1.0, 0.0, 0.0, 1.0}}, // bottom-left  4
-        // Top face
-         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     5
-         {{-0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     1
-         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    3
-         {{-0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-left     5
-         {{ 0.5,  0.5, -0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    3
-         {{ 0.5,  0.5,  0.5, 1.0f}, {0.0, 1.0, 0.0, 1.0}}, // top-right    7
-        // Bottom face
-         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  0
-         {{-0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  4
-         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-right 6
-         {{-0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-left  0
-         {{ 0.5, -0.5,  0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}, // bottom-right 6
-         {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, -1.0, 0.0, 1.0}}  // bottom-right 2
-    };
     
-    cubeVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
-    
+    size_t bufferSize = mesh.textures->diffuseTextureInfos.size() * sizeof(TextureInfo);
+    diffuseTextureInfos = metalDevice->newBuffer(mesh.textures->diffuseTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
+    bufferSize = mesh.textures->normalTextureInfos.size() * sizeof(TextureInfo);
+    normalTextureInfos = metalDevice->newBuffer(mesh.textures->normalTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
+
     VertexData lightSource[] = {
         // Front face               // Normals
          {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
@@ -187,7 +154,7 @@ void MTLEngine::createCube() {
 }
 
 void MTLEngine::createBuffers() {
-    transformationBuffer = metalDevice->newBuffer(sizeof(TransformationData), MTL::ResourceStorageModeShared);
+//    transformationBuffer = metalDevice->newBuffer(sizeof(TransformationData), MTL::ResourceStorageModeShared);
 }
 
 void MTLEngine::createDefaultLibrary() {
@@ -232,6 +199,7 @@ void MTLEngine::createRenderPipeline() {
     depthStencilDescriptor->setDepthWriteEnabled(true);
     depthStencilState = metalDevice->newDepthStencilState(depthStencilDescriptor);
     
+    depthStencilDescriptor->release();
     renderPipelineDescriptor->release();
     vertexShader->release();
     fragmentShader->release();
@@ -327,42 +295,54 @@ void MTLEngine::sendRenderCommand() {
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
-    renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
+    renderCommandEncoder->setFrontFacingWinding(MTL::WindingClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
     // If you want to render in wire-frame mode, you can uncomment this line!
     // renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
-    renderCommandEncoder->setVertexBuffer(cubeVertexBuffer, 0, 0);
-    
-    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.9f, 1.0f);
+    renderCommandEncoder->setVertexBuffer(meshVertexBuffer, 0, 0);
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation( 90.0f * (M_PI / 180.0f), 0.0, 1.0, 0.0);
+    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.8f, 2.2f) * rotationMatrix;
     // Aspect ratio should match the ratio between the window width and height,
     // otherwise the image will look stretched.
-    float aspectRatio = (metalLayer.frame.size.width / metalLayer.frame.size.height);
-    float fov = 90.0f * (M_PI / 180.0f);
+//    std::cout << "Metal Layer Width: " << metalLayer.frame.size.width << std::endl;
+//    std::cout << "Metal Layer Height: " << metalLayer.frame.size.height << std::endl;
+//    std::cout << "Metal Drawable Layer Width: " << metalDrawable->layer()->drawableSize().width << std::endl;
+//    std::cout << "Metal Drawable Texture Width: " << metalDrawable->texture()->width() << std::endl;
+    float aspectRatio = (metalDrawable->layer()->drawableSize().width /metalDrawable->layer()->drawableSize().height);
+    float fov = 45.0f * (M_PI / 180.0f);
     float nearZ = 0.1f;
     float farZ = 100.0f;
     matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
     renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
     renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
-    simd_float4 cubeColor = simd_make_float4(0.5, 0.9, 0.7, 1.0);
+    simd_float4 cubeColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
     simd_float4 lightColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
     renderCommandEncoder->setFragmentBytes(&cubeColor, sizeof(cubeColor), 0);
     renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
-    simd_float4 lightPosition = simd_make_float4(0 + 3*cos(glfwGetTime()/1.0), 1.2,4 + sin(glfwGetTime()/1.0), 1);
+    simd_float4 lightPosition = simd_make_float4(2 * cos(glfwGetTime()), 0.6,-0.5, 1);
     renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
-    NS::UInteger vertexCount = 6 * 6;
+    NS::UInteger vertexCount = 6 * meshVertexCount;
+    renderCommandEncoder->setFragmentTexture(diffuseTextures, 3);
+    renderCommandEncoder->setFragmentTexture(normalMaps, 4);
+    renderCommandEncoder->setFragmentBuffer(diffuseTextureInfos, 0, 5);
+    renderCommandEncoder->setFragmentBuffer(normalTextureInfos, 0, 6);
+
+//    renderCommandEncoder->setFragmentTexture(normalMap->texture, 3);
+//    renderCommandEncoder->setFragmentTexture(diffuseTexture->texture, 4);
     renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
 
-    matrix_float4x4 scaleMatrix = matrix4x4_scale(0.5f, 0.5f, 0.5f);
+    matrix_float4x4 scaleMatrix = matrix4x4_scale(0.3f, 0.3f, 0.3f);
     matrix_float4x4 translationMatrix = matrix4x4_translation(lightPosition.xyz);
     
     modelMatrix = matrix_identity_float4x4;
     modelMatrix = matrix_multiply(scaleMatrix, modelMatrix);
     modelMatrix = matrix_multiply(translationMatrix, modelMatrix);
-    
+    renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
+
     renderCommandEncoder->setRenderPipelineState(metalLightSourceRenderPSO);
     renderCommandEncoder->setVertexBuffer(lightVertexBuffer, 0, 0);
     renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);

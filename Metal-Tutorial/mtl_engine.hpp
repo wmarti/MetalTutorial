@@ -9,6 +9,7 @@
 #import <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_COCOA
 #import <GLFW/glfw3native.h>
+#include <stb/stb_image.h>
 
 #include <Metal/Metal.hpp>
 #include <Metal/Metal.h>
@@ -17,11 +18,10 @@
 #include <QuartzCore/QuartzCore.hpp>
 #include <simd/simd.h>
 
-
 #include "VertexData.hpp"
 #include "Texture.hpp"
-#include <stb/stb_image.h>
 #include "AAPLMathUtilities.h"
+#include "mesh.hpp"
 
 #include <iostream>
 #include <filesystem>
@@ -60,6 +60,8 @@ private:
     NSWindow* metalWindow;
     CAMetalLayer* metalLayer;
     CA::MetalDrawable* metalDrawable;
+    bool windowResizeFlag = false;
+    int newWidth, newHeight;
     
     MTL::Library* metalDefaultLibrary;
     MTL::CommandQueue* metalCommandQueue;
@@ -67,11 +69,16 @@ private:
     MTL::RenderPipelineState* metalRenderPSO;
     MTL::RenderPipelineState* metalLightSourceRenderPSO;
     MTL::RenderPassDescriptor* renderPassDescriptor;
-    MTL::Buffer* cubeVertexBuffer;
+    MTL::Buffer* meshVertexBuffer;
+    uint64_t meshVertexCount;
     MTL::Buffer* lightVertexBuffer;
     MTL::Buffer* transformationBuffer;
     MTL::DepthStencilState* depthStencilState;
     MTL::Texture* msaaRenderTargetTexture;
     MTL::Texture* depthTexture;
+    MTL::Texture* diffuseTextures;
+    MTL::Buffer* diffuseTextureInfos;
+    MTL::Texture* normalMaps;
+    MTL::Buffer* normalTextureInfos;
     int sampleCount = 4;
 };
