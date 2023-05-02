@@ -42,8 +42,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3E05BEE129E8E89B005D1184 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
-		3E05BEE229E8E89B005D1184 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
 		3E05BEE329E8E8A1005D1184 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = external/assimp/lib/libassimp.a; sourceTree = "<group>"; };
 		3E05BEE529E8EDF9005D1184 /* mesh_assimp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mesh_assimp.cpp; sourceTree = "<group>"; };
 		3E05BEE629E8EDF9005D1184 /* mesh_assimp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mesh_assimp.hpp; sourceTree = "<group>"; };
@@ -62,19 +60,20 @@
 		3E581F1729871D3400E5CDF6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		3E581F1929871D4300E5CDF6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3E5C801F29EA0B9400DB49E7 /* ODST */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ODST; sourceTree = "<group>"; };
-		3E5C802229EA0EDC00DB49E7 /* contrib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = contrib; sourceTree = "<group>"; };
 		3E5C802329EA0EE400DB49E7 /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = external/assimp/contrib/zlib/libzlibstatic.a; sourceTree = "<group>"; };
 		3E5C802529EA21D500DB49E7 /* mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
 		3E5C802629EA21D500DB49E7 /* mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
 		3E5C802929EA229900DB49E7 /* tiny_obj_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tiny_obj_loader.h; sourceTree = "<group>"; };
 		3E5C802C29EA237300DB49E7 /* tiny_obj_loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tiny_obj_loader.cpp; sourceTree = "<group>"; };
+		3E69EBE92A00D694006968EA /* contrib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = contrib; sourceTree = "<group>"; };
+		3E69EBEA2A00D694006968EA /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
+		3E69EBEB2A00D695006968EA /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		3E69EBEC2A00D6B1006968EA /* GhostTown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GhostTown; sourceTree = "<group>"; };
+		3E69EBED2A00D6B9006968EA /* Chief */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Chief; sourceTree = "<group>"; };
 		3E6B88E229A56CCD0087A2B1 /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		3E6B88E329A56CCD0087A2B1 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AAPLMathUtilities.cpp; sourceTree = "<group>"; };
 		3E6DC92B29A81BE000C097E2 /* AAPLMathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMathUtilities.h; sourceTree = "<group>"; };
-		3E722EC429FBA67700F25FB7 /* GhostTown.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GhostTown.mtl; sourceTree = "<group>"; };
-		3E722EC529FBA67C00F25FB7 /* bitmaps_and_models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bitmaps_and_models; sourceTree = "<group>"; };
-		3E722EC629FBA67D00F25FB7 /* GhostTown.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GhostTown.obj; sourceTree = "<group>"; };
 		3E76CD672987671200178E19 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../opt/homebrew/Cellar/glfw/3.3.8/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
 		3E76CD692987675300178E19 /* Metal-Tutorial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Metal-Tutorial.entitlements"; sourceTree = "<group>"; };
 		3E76CD6A298767CD00178E19 /* mtl_engine.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mtl_engine.mm; sourceTree = "<group>"; };
@@ -84,11 +83,14 @@
 		3E9847D929F73BC200209C3D /* backpack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = backpack; sourceTree = "<group>"; };
 		3E9847DA29F98D6A00209C3D /* TextureArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureArray.cpp; sourceTree = "<group>"; };
 		3E9847DB29F98D6A00209C3D /* TextureArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureArray.hpp; sourceTree = "<group>"; };
-		3E9847DD29F9F7A800209C3D /* Chief */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Chief; sourceTree = "<group>"; };
 		3E9F222029A04ED300383DCA /* VertexData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexData.hpp; sourceTree = "<group>"; };
 		3E9F222429A060BA00383DCA /* mc_grass.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mc_grass.jpeg; sourceTree = "<group>"; };
 		3E9F222929A06F6500383DCA /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		3E9F222A29A06F6500383DCA /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		3ED7C06A2A00DA2200550CA6 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
+		3ED7C06F2A00E24200550CA6 /* smg.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smg.mtl; sourceTree = "<group>"; };
+		3ED7C0732A00E67100550CA6 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		3ED7C0742A00E72100550CA6 /* smg.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smg.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,16 +112,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E05BEDE29E8E802005D1184 /* assimp */ = {
-			isa = PBXGroup;
-			children = (
-				3E5C802229EA0EDC00DB49E7 /* contrib */,
-				3E05BEE129E8E89B005D1184 /* include */,
-				3E05BEE229E8E89B005D1184 /* lib */,
-			);
-			path = assimp;
-			sourceTree = "<group>";
-		};
 		3E32487029CFF93B009CDE34 /* GLFW */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +193,16 @@
 			path = tinyobjloader;
 			sourceTree = "<group>";
 		};
+		3E69EBE82A00D658006968EA /* assimp */ = {
+			isa = PBXGroup;
+			children = (
+				3E69EBE92A00D694006968EA /* contrib */,
+				3E69EBEB2A00D695006968EA /* include */,
+				3E69EBEA2A00D694006968EA /* lib */,
+			);
+			path = assimp;
+			sourceTree = "<group>";
+		};
 		3E6B88E529A56CD60087A2B1 /* stb */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,21 +212,11 @@
 			path = stb;
 			sourceTree = "<group>";
 		};
-		3E722EC329FBA65D00F25FB7 /* GhostTown */ = {
-			isa = PBXGroup;
-			children = (
-				3E722EC529FBA67C00F25FB7 /* bitmaps_and_models */,
-				3E722EC429FBA67700F25FB7 /* GhostTown.mtl */,
-				3E722EC629FBA67D00F25FB7 /* GhostTown.obj */,
-			);
-			path = GhostTown;
-			sourceTree = "<group>";
-		};
 		3E9F222129A05FDB00383DCA /* external */ = {
 			isa = PBXGroup;
 			children = (
 				3E5C802829EA228900DB49E7 /* tinyobjloader */,
-				3E05BEDE29E8E802005D1184 /* assimp */,
+				3E69EBE82A00D658006968EA /* assimp */,
 				3E32487029CFF93B009CDE34 /* GLFW */,
 				3E6B88E529A56CD60087A2B1 /* stb */,
 			);
@@ -234,13 +226,25 @@
 		3E9F222329A060A600383DCA /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				3E722EC329FBA65D00F25FB7 /* GhostTown */,
-				3E9847DD29F9F7A800209C3D /* Chief */,
+				3ED7C0692A00DA1800550CA6 /* SMG */,
+				3E69EBED2A00D6B9006968EA /* Chief */,
+				3E69EBEC2A00D6B1006968EA /* GhostTown */,
 				3E9847D929F73BC200209C3D /* backpack */,
 				3E5C801F29EA0B9400DB49E7 /* ODST */,
 				3E9F222429A060BA00383DCA /* mc_grass.jpeg */,
 			);
 			path = assets;
+			sourceTree = "<group>";
+		};
+		3ED7C0692A00DA1800550CA6 /* SMG */ = {
+			isa = PBXGroup;
+			children = (
+				3ED7C0732A00E67100550CA6 /* license.txt */,
+				3ED7C06F2A00E24200550CA6 /* smg.mtl */,
+				3ED7C0742A00E72100550CA6 /* smg.obj */,
+				3ED7C06A2A00DA2200550CA6 /* textures */,
+			);
+			path = SMG;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

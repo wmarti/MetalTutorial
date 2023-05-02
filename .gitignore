@@ -215,8 +215,8 @@ xcuserdata/
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
-./assets/Chief/*
-./assets/GhostTown/*
-./assets/ODST/*
-./external/assimp/*
-./Metal-Tutorial.xcodeproj/project.xcworkspace/xcuserdata/wmarti.xcuserdatad/UserInterfaceState.xcuserstate
+assets/Chief/*
+assets/GhostTown/*
+assets/ODST/*
+external/assimp/*
+Metal-Tutorial.xcodeproj/project.xcworkspace/xcuserdata/wmarti.xcuserdatad/UserInterfaceState.xcuserstate

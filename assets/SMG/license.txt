@@ -1,0 +1,11 @@
+Model Information:
+* title:	Halo 2 anniversary - SMG
+* source:	https://sketchfab.com/3d-models/halo-2-anniversary-smg-b750ee3892c1427ab9e768313ba38f6d
+* author:	McCarthy3D (https://sketchfab.com/joshuawatt811)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Halo 2 anniversary - SMG" (https://sketchfab.com/3d-models/halo-2-anniversary-smg-b750ee3892c1427ab9e768313ba38f6d) by McCarthy3D (https://sketchfab.com/joshuawatt811) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

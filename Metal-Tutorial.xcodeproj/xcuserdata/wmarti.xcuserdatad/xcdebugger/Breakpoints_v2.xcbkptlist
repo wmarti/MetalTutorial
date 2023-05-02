@@ -378,8 +378,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
             <Locations>
@@ -750,8 +750,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
             <Locations>
@@ -813,8 +813,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
             <Locations>
@@ -861,8 +861,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
          </BreakpointContent>
@@ -877,8 +877,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "MTLEngine::createCube()"
             landmarkType = "7">
          </BreakpointContent>
@@ -905,8 +905,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "MTLEngine::createCube()"
             landmarkType = "7">
          </BreakpointContent>
@@ -921,8 +921,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "MTLEngine::createCube()"
             landmarkType = "7">
          </BreakpointContent>
@@ -937,8 +937,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "MTLEngine::createCube()"
             landmarkType = "7">
          </BreakpointContent>
@@ -953,8 +953,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "376"
-            endingLineNumber = "376"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
          </BreakpointContent>

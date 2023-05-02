@@ -92,9 +92,10 @@ void MTLEngine::initWindow() {
 
 void MTLEngine::createCube() {
 //    Mesh mesh("assets/Chief/Chief.obj", metalDevice);
-//    Mesh mesh("assets/ODST/odst.obj", metalDevice);
-    Mesh mesh("assets/backpack/backpack.obj", metalDevice);
+    Mesh mesh("assets/ODST/odst.obj", metalDevice);
+//    Mesh mesh("assets/backpack/backpack.obj", metalDevice);
 //    Mesh mesh("assets/GhostTown/GhostTown.obj", metalDevice);
+//    Mesh mesh("assets/SMG/smg.obj", metalDevice);
 
     indexCount = mesh.vertexIndices.size();
     indexBuffer = metalDevice->newBuffer(mesh.vertexIndices.data(), sizeof(int) * indexCount, MTL::ResourceUsageRead);
@@ -209,9 +210,9 @@ void MTLEngine::createRenderPipeline() {
     MTL::PixelFormat pixelFormat = (MTL::PixelFormat)metalLayer.pixelFormat;
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
     renderPipelineDescriptor->setSampleCount(4);
-    renderPipelineDescriptor->setLabel(NS::String::string("Cube Render Pipeline", NS::ASCIIStringEncoding));
+    renderPipelineDescriptor->setLabel(NS::String::string("Model Render Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
-    renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingClockwise);
+    renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingCounterClockwise);
     
     NS::Error* error;
     metalRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
@@ -247,7 +248,7 @@ void MTLEngine::createLightSourceRenderPipeline() {
     renderPipelineDescriptor->setSampleCount(4);
     renderPipelineDescriptor->setLabel(NS::String::string("Light Source Render Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
-    renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingClockwise);
+    renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingCounterClockwise);
     renderPipelineDescriptor->colorAttachments()->object(0)->setBlendingEnabled(true);
     renderPipelineDescriptor->colorAttachments()->object(0)->setRgbBlendOperation(MTL::BlendOperationAdd);
     renderPipelineDescriptor->colorAttachments()->object(0)->setAlphaBlendOperation(MTL::BlendOperationAdd);
@@ -329,22 +330,22 @@ void MTLEngine::sendRenderCommand() {
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
-    renderCommandEncoder->setFrontFacingWinding(MTL::WindingClockwise);
+    renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
     // If you want to render in wire-frame mode, you can uncomment this line!
     //renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
     renderCommandEncoder->setVertexBuffer(meshVertexBuffer, 0, 0);
-    matrix_float4x4 rotationMatrix = matrix4x4_rotation( 135 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
-    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.4f, 6.2f) * rotationMatrix;
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation(-90 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
+    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.8f, -2.2f) * rotationMatrix;
     // Aspect ratio should match the ratio between the window width and height,
     // otherwise the image will look stretched.
     float aspectRatio = (metalDrawable->layer()->drawableSize().width /metalDrawable->layer()->drawableSize().height);
     float fov = 45.0f * (M_PI / 180.0f);
     float nearZ = 0.1f;
     float farZ = 100.0f;
-    matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
+    matrix_float4x4 perspectiveMatrix = matrix_perspective_right_hand(fov, aspectRatio, nearZ, farZ);
     renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
     renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
     simd_float4 cubeColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
@@ -361,19 +362,19 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setFragmentBuffer(diffuseTextureInfos, 0, 5);
     renderCommandEncoder->setFragmentBuffer(normalTextureInfos, 0, 6);
 
-    for (int x = 0; x < 10; x++) {
-        for (int y = 0; y < 10; y++) {
-            matrix_float4x4 scaleMatrix = matrix4x4_scale(0.8f, 0.8f, 0.8f);
-            modelMatrix = matrix4x4_translation(-13.0 + y*3, -5.0f + x*1.25, 20 + x) * rotationMatrix * scaleMatrix;
-            renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
-            renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
-        }
-    }
+//    for (int x = 0; x < 10; x++) {
+//        for (int y = 0; y < 10; y++) {
+//            matrix_float4x4 scaleMatrix = matrix4x4_scale(0.8f, 0.8f, 0.8f);
+//            modelMatrix = matrix4x4_translation(-13.0 + y*3, -5.0f + x*1.25, 20 + x) * rotationMatrix * scaleMatrix;
+//            renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
+//            renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
+//        }
+//    }
     
 //    renderCommandEncoder->setFragmentTexture(normalMap->texture, 3);
 //    renderCommandEncoder->setFragmentTexture(diffuseTexture->texture, 4);
 //    renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
-//    renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
+    renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
 
     matrix_float4x4 scaleMatrix = matrix4x4_scale(0.3f, 0.3f, 0.3f);
     matrix_float4x4 translationMatrix = matrix4x4_translation(lightPosition.xyz);
