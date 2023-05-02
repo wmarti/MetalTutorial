@@ -26,7 +26,7 @@ void TextureArray::loadTextures(std::vector<std::string> &filePaths, TextureType
     std::vector<int> heights;
     // Load Images and determine max width and height
     for (std::string filePath : filePaths) {
-            stbi_set_flip_vertically_on_load(true);
+        stbi_set_flip_vertically_on_load(true);
         image = stbi_load(filePath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
         assert(image != NULL);
     

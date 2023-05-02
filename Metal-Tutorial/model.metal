@@ -19,13 +19,13 @@ struct OutData {
     int textureIndex;
 };
 //
-//struct Vertex {
-//    float3 position;
-//    float3 normal;
-//    float2 textureCoordinate;
-//    int diffuseTextureIndex;
-//    int normalTextureIndex;
-//};
+struct Vertex {
+    float3 position;
+    float3 normal;
+    float2 textureCoordinate;
+    int diffuseTextureIndex;
+    int normalTextureIndex;
+};
 //
 //struct TextureInfo {
 //    int width;
@@ -36,7 +36,8 @@ struct Mesh {
     constant Vertex* vertices;
 };
 
-vertex OutData vertexShader(uint vertexID [[vertex_id]],
+vertex OutData vertexShader(
+             uint vertexID [[vertex_id]],
              constant Vertex* vertexData,
              constant float4x4& modelMatrix,
              constant float4x4& perspectiveMatrix)
@@ -59,6 +60,15 @@ fragment float4 fragmentShader(OutData in [[stage_in]],
                                constant TextureInfo* diffuseTextureInfos [[buffer(5)]],
                                constant TextureInfo* normalTextureInfos [[buffer(6)]])
 {
+    // Debugging: Check texture index and texture info values
+    if (in.textureIndex < 0 || in.textureIndex >= diffuseTextures.get_array_size()) {
+        return float4(1.0, 0.0, 0.0, 1.0); // Return red color for invalid texture index
+    }
+
+    if (diffuseTextureInfos[in.textureIndex].width <= 0 || diffuseTextureInfos[in.textureIndex].height <= 0) {
+        return float4(0.0, 1.0, 0.0, 1.0); // Return green color for invalid texture info
+    }
+    
     // Sample the texture to obtain a color
     constexpr sampler textureSampler (mag_filter::linear,
                                       min_filter::linear);
@@ -88,5 +98,5 @@ fragment float4 fragmentShader(OutData in [[stage_in]],
     
     float4 finalColor = (ambient + diffuse + specular) * diffuseSample;
     
-    return finalColor;
+    return float4(finalColor.rgb, diffuseSample.a);
 }

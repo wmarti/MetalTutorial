@@ -32,7 +32,7 @@ void MTLEngine::run() {
 
 void MTLEngine::cleanup() {
     glfwTerminate();
-    transformationBuffer->release();
+//    transformationBuffer->release();
     msaaRenderTargetTexture->release();
     depthTexture->release();
     renderPassDescriptor->release();
@@ -91,20 +91,47 @@ void MTLEngine::initWindow() {
 }
 
 void MTLEngine::createCube() {
-    Mesh mesh("assets/ODST/odst.obj", metalDevice);
+//    Mesh mesh("assets/Chief/Chief.obj", metalDevice);
+//    Mesh mesh("assets/ODST/odst.obj", metalDevice);
+    Mesh mesh("assets/backpack/backpack.obj", metalDevice);
+//    Mesh mesh("assets/GhostTown/GhostTown.obj", metalDevice);
+
+    indexCount = mesh.vertexIndices.size();
+    indexBuffer = metalDevice->newBuffer(mesh.vertexIndices.data(), sizeof(int) * indexCount, MTL::ResourceUsageRead);
+    
     meshVertexCount = mesh.vertices.size();
-    uint64_t meshVertexBufferSize = sizeof(Vertex) * mesh.vertices.size();
+    std::cout << "Mesh Vertex Count: " << meshVertexCount << std::endl;
+    unsigned long meshVertexBufferSize = sizeof(Vertex) * mesh.vertices.size();
+    std::cout << "Mesh Vertex Buffer Size: " << meshVertexBufferSize << std::endl;
     meshVertexBuffer = metalDevice->newBuffer(mesh.vertices.data(), meshVertexBufferSize, MTL::ResourceStorageModeShared);
     meshVertexBuffer->setLabel(NS::String::string("Mesh Vertex Buffer", NS::ASCIIStringEncoding));
     diffuseTextures = mesh.textures->diffuseTextureArray;
+    diffuseTextures->setLabel(NS::String::string("Diffuse Texture Array", NS::ASCIIStringEncoding));
     normalMaps = mesh.textures->normalTextureArray;
+    normalMaps->setLabel(NS::String::string("NormalMap Texture Array", NS::ASCIIStringEncoding));
     
+//    std::cout << "Mesh Vertex Buffer Size: " << meshVertexBufferSize << std::endl;
+//    std::cout << "First few vertices:" << std::endl;
+//    for (size_t i = 0; i < std::min<size_t>(10, mesh.vertices.size()); ++i) {
+//        Vertex &v = mesh.vertices[i];
+//        std::cout << "Vertex " << i << ": "
+//                  << "position(" << v.position.x << ", " << v.position.y << ", " << v.position.z << "), "
+//                  << "normal(" << v.normal.x << ", " << v.normal.y << ", " << v.normal.z << "), "
+//                  << "textureCoordinate(" << v.textureCoordinate.x << ", " << v.textureCoordinate.y << "), "
+//                  << "diffuseTextureIndex(" << v.diffuseTextureIndex << "), "
+//                  << "normalTextureIndex(" << v.normalTextureIndex << ")"
+//                  << std::endl;
+//    }
     
     size_t bufferSize = mesh.textures->diffuseTextureInfos.size() * sizeof(TextureInfo);
+    std::cout << "Num Textures: " << mesh.textures->diffuseTextureInfos.size() << std::endl;
+    std::cout << "TextureInfo size: " << sizeof(TextureInfo) << std::endl;
     diffuseTextureInfos = metalDevice->newBuffer(mesh.textures->diffuseTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
+    diffuseTextureInfos->setLabel(NS::String::string("Diffuse Texture Info Array", NS::ASCIIStringEncoding));
     bufferSize = mesh.textures->normalTextureInfos.size() * sizeof(TextureInfo);
     normalTextureInfos = metalDevice->newBuffer(mesh.textures->normalTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
-
+    normalTextureInfos->setLabel(NS::String::string("NormalMap Texture Info Array", NS::ASCIIStringEncoding));
+    
     VertexData lightSource[] = {
         // Front face               // Normals
          {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
@@ -221,6 +248,13 @@ void MTLEngine::createLightSourceRenderPipeline() {
     renderPipelineDescriptor->setLabel(NS::String::string("Light Source Render Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
     renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingClockwise);
+    renderPipelineDescriptor->colorAttachments()->object(0)->setBlendingEnabled(true);
+    renderPipelineDescriptor->colorAttachments()->object(0)->setRgbBlendOperation(MTL::BlendOperationAdd);
+    renderPipelineDescriptor->colorAttachments()->object(0)->setAlphaBlendOperation(MTL::BlendOperationAdd);
+    renderPipelineDescriptor->colorAttachments()->object(0)->setSourceAlphaBlendFactor(MTL::BlendFactorSourceAlpha);
+    renderPipelineDescriptor->colorAttachments()->object(0)->setDestinationAlphaBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
+    renderPipelineDescriptor->colorAttachments()->object(0)->setSourceRGBBlendFactor(MTL::BlendFactorSourceAlpha);
+    renderPipelineDescriptor->colorAttachments()->object(0)->setDestinationRGBBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
     
     NS::Error* error;
     metalLightSourceRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
@@ -298,18 +332,14 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setFrontFacingWinding(MTL::WindingClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
     // If you want to render in wire-frame mode, you can uncomment this line!
-    // renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
+    //renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
     renderCommandEncoder->setVertexBuffer(meshVertexBuffer, 0, 0);
-    matrix_float4x4 rotationMatrix = matrix4x4_rotation( 90.0f * (M_PI / 180.0f), 0.0, 1.0, 0.0);
-    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.8f, 2.2f) * rotationMatrix;
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation( 135 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
+    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.4f, 6.2f) * rotationMatrix;
     // Aspect ratio should match the ratio between the window width and height,
     // otherwise the image will look stretched.
-//    std::cout << "Metal Layer Width: " << metalLayer.frame.size.width << std::endl;
-//    std::cout << "Metal Layer Height: " << metalLayer.frame.size.height << std::endl;
-//    std::cout << "Metal Drawable Layer Width: " << metalDrawable->layer()->drawableSize().width << std::endl;
-//    std::cout << "Metal Drawable Texture Width: " << metalDrawable->texture()->width() << std::endl;
     float aspectRatio = (metalDrawable->layer()->drawableSize().width /metalDrawable->layer()->drawableSize().height);
     float fov = 45.0f * (M_PI / 180.0f);
     float nearZ = 0.1f;
@@ -325,15 +355,25 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
-    NS::UInteger vertexCount = 6 * meshVertexCount;
+    NS::UInteger vertexCount = meshVertexCount;
     renderCommandEncoder->setFragmentTexture(diffuseTextures, 3);
     renderCommandEncoder->setFragmentTexture(normalMaps, 4);
     renderCommandEncoder->setFragmentBuffer(diffuseTextureInfos, 0, 5);
     renderCommandEncoder->setFragmentBuffer(normalTextureInfos, 0, 6);
 
+    for (int x = 0; x < 10; x++) {
+        for (int y = 0; y < 10; y++) {
+            matrix_float4x4 scaleMatrix = matrix4x4_scale(0.8f, 0.8f, 0.8f);
+            modelMatrix = matrix4x4_translation(-13.0 + y*3, -5.0f + x*1.25, 20 + x) * rotationMatrix * scaleMatrix;
+            renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
+            renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
+        }
+    }
+    
 //    renderCommandEncoder->setFragmentTexture(normalMap->texture, 3);
 //    renderCommandEncoder->setFragmentTexture(diffuseTexture->texture, 4);
-    renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
+//    renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
+//    renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
 
     matrix_float4x4 scaleMatrix = matrix4x4_scale(0.3f, 0.3f, 0.3f);
     matrix_float4x4 translationMatrix = matrix4x4_translation(lightPosition.xyz);

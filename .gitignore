@@ -215,7 +215,7 @@ xcuserdata/
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
-./assets/Chief
-./assets/GhostTown
-./assets/ODST
-./external/assimp
+./assets/Chief/*
+./assets/GhostTown/*
+./assets/ODST/*
+./external/assimp/*

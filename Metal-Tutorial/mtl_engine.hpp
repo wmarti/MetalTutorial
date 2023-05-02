@@ -80,5 +80,7 @@ private:
     MTL::Buffer* diffuseTextureInfos;
     MTL::Texture* normalMaps;
     MTL::Buffer* normalTextureInfos;
+    MTL::Buffer* indexBuffer;
+    unsigned long indexCount;
     int sampleCount = 4;
 };

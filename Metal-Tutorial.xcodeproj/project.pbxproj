@@ -72,6 +72,9 @@
 		3E6B88E329A56CCD0087A2B1 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AAPLMathUtilities.cpp; sourceTree = "<group>"; };
 		3E6DC92B29A81BE000C097E2 /* AAPLMathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMathUtilities.h; sourceTree = "<group>"; };
+		3E722EC429FBA67700F25FB7 /* GhostTown.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GhostTown.mtl; sourceTree = "<group>"; };
+		3E722EC529FBA67C00F25FB7 /* bitmaps_and_models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bitmaps_and_models; sourceTree = "<group>"; };
+		3E722EC629FBA67D00F25FB7 /* GhostTown.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GhostTown.obj; sourceTree = "<group>"; };
 		3E76CD672987671200178E19 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../opt/homebrew/Cellar/glfw/3.3.8/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
 		3E76CD692987675300178E19 /* Metal-Tutorial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Metal-Tutorial.entitlements"; sourceTree = "<group>"; };
 		3E76CD6A298767CD00178E19 /* mtl_engine.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mtl_engine.mm; sourceTree = "<group>"; };
@@ -207,6 +210,16 @@
 			path = stb;
 			sourceTree = "<group>";
 		};
+		3E722EC329FBA65D00F25FB7 /* GhostTown */ = {
+			isa = PBXGroup;
+			children = (
+				3E722EC529FBA67C00F25FB7 /* bitmaps_and_models */,
+				3E722EC429FBA67700F25FB7 /* GhostTown.mtl */,
+				3E722EC629FBA67D00F25FB7 /* GhostTown.obj */,
+			);
+			path = GhostTown;
+			sourceTree = "<group>";
+		};
 		3E9F222129A05FDB00383DCA /* external */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +234,7 @@
 		3E9F222329A060A600383DCA /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				3E722EC329FBA65D00F25FB7 /* GhostTown */,
 				3E9847DD29F9F7A800209C3D /* Chief */,
 				3E9847D929F73BC200209C3D /* backpack */,
 				3E5C801F29EA0B9400DB49E7 /* ODST */,
@@ -440,6 +454,7 @@
 					"$(PROJECT_DIR)/external/assimp/lib",
 					"$(PROJECT_DIR)/external/assimp/contrib/zlib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -473,6 +488,7 @@
 					"$(PROJECT_DIR)/external/assimp/lib",
 					"$(PROJECT_DIR)/external/assimp/contrib/zlib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";

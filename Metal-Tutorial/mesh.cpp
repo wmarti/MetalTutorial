@@ -6,6 +6,8 @@
 #include "mesh.hpp"
 
 #include <iostream>
+#include <unordered_map>
+#include <string>
 
 Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
     tinyobj::attrib_t vertexArrays;
@@ -27,12 +29,16 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
 //    std::cout << sizeof(Mesh::vertices) << std::endl;
 //    std::cout << baseDirectory << std::endl;
     
+    
+    std::unordered_map<std::string, int> diffuseTextureIndexMap;
+    int count = 0;
     // Load Textures
     std::vector<std::string> diffuseFilePaths, normalFilePaths;
     for(int i = 0; i < materials.size(); i++) {
         if (!materials[i].diffuse_texname.empty()) {
             std::cout << baseDirectory + materials[i].diffuse_texname << std::endl;
             diffuseFilePaths.push_back(baseDirectory + materials[i].diffuse_texname);
+            diffuseTextureIndexMap[materials[i].diffuse_texname] = count++;
         }
         if (!materials[i].bump_texname.empty()) {
             std::cout << baseDirectory + materials[i].bump_texname << std::endl;
@@ -50,44 +56,46 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
         for (int f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
             // Get the diffuse texture name for a particular face
             int material_id = shapes[s].mesh.material_ids[f];
-            std::string diffuse_texture_name2 = materials[material_id].diffuse_texname;
-//            std::cout << "Diffuse texture name for face " << f << " is " << diffuse_texture_name2 << std::endl;
-//            std::cout << "Normal texture name for face " << f << " is " << materials[material_id].bump_texname << std::endl;
+            std::string diffuseTextureName = materials[material_id].diffuse_texname;
             // Hardcode loading triangles
             int fv = 3;
             // Loop over vertices in the face
             for (int v = 0; v < fv; v++) {
                 // Access to Vertex
                 tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+                
+                Vertex vertex{};
                 // Vertex position
-                tinyobj::real_t vx = vertexArrays.vertices[3 * idx.vertex_index + 0];
-                tinyobj::real_t vy = vertexArrays.vertices[3 * idx.vertex_index + 1];
-                tinyobj::real_t vz = vertexArrays.vertices[3 * idx.vertex_index + 2];
+                vertex.position = {
+                    vertexArrays.vertices[3 * idx.vertex_index + 0],
+                    vertexArrays.vertices[3 * idx.vertex_index + 1],
+                    vertexArrays.vertices[3 * idx.vertex_index + 2],
+                };
                 // Vertex Normal
-                tinyobj::real_t nx = vertexArrays.normals[3 * idx.normal_index + 0];
-                tinyobj::real_t ny = vertexArrays.normals[3 * idx.normal_index + 1];
-                tinyobj::real_t nz = vertexArrays.normals[3 * idx.normal_index + 2];
+                vertex.normal = {
+                    vertexArrays.normals[3 * idx.normal_index + 0],
+                    vertexArrays.normals[3 * idx.normal_index + 1],
+                    vertexArrays.normals[3 * idx.normal_index + 2]
+                };
                 // Vertex Texture Coordinates
-                tinyobj::real_t tu = vertexArrays.texcoords[2 * idx.texcoord_index + 0];
-                tinyobj::real_t tv = vertexArrays.texcoords[2 * idx.texcoord_index + 1];
-                // Texture Index
-                int diffuseTextureIndex = shapes[s].mesh.material_ids[0];
+                vertex.textureCoordinate = {
+                    vertexArrays.texcoords[2 * idx.texcoord_index + 0],
+                    vertexArrays.texcoords[2 * idx.texcoord_index + 1]
+                };
+                // Texture Indices
+                vertex.diffuseTextureIndex = {
+                    diffuseTextureIndexMap[diffuseTextureName]
+                };
 //                int normalTextureIndex = shapes[s].mesh.material_ids[
-//                if (textureIndex != 0) {
-//                    std::cout << textureIndex << std::endl;
-//                }
-                vertices.push_back(
-                   {
-                    float3{vx, vy, vz},
-                    float3{nx, ny, nz},
-                    float2{tu, tv},
-                    diffuseTextureIndex,
-                    0,
-                   }
-                );
+                // Vertex Indices
+                if (vertexMap.count(vertex) == 0) {
+                    vertexMap[vertex] = (uint32_t)vertices.size();
+                    vertices.push_back(vertex);
+                }
+                
+                vertexIndices.push_back(vertexMap[vertex]);
             }
             index_offset += fv;
         }
     }
-    return;
 }
