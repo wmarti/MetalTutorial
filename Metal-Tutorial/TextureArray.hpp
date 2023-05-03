@@ -16,15 +16,9 @@ enum TextureType {
     SPECULAR,
 };
 
-//struct TextureInfo {
-//    int width;
-//    int height;
-//};
-
 class TextureArray {
 public:
     TextureArray(std::vector<std::string>& diffuseFilePaths,
-                 std::vector<std::string>& normalFilePaths,
                  MTL::Device* metalDevice);
     ~TextureArray();
     
@@ -32,10 +26,8 @@ public:
                       TextureType type);
     
     MTL::Texture* diffuseTextureArray;
-    MTL::Texture* normalTextureArray;
     // Vectors to store texture info for each texture type
     std::vector<TextureInfo> diffuseTextureInfos;
-    std::vector<TextureInfo> normalTextureInfos;
 
 private:
     MTL::Device* device;

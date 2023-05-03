@@ -108,17 +108,13 @@ void MTLEngine::loadMeshes() {
     meshVertexBuffer->setLabel(NS::String::string("Mesh Vertex Buffer", NS::ASCIIStringEncoding));
     diffuseTextures = mesh.textures->diffuseTextureArray;
     diffuseTextures->setLabel(NS::String::string("Diffuse Texture Array", NS::ASCIIStringEncoding));
-    normalMaps = mesh.textures->normalTextureArray;
-    normalMaps->setLabel(NS::String::string("NormalMap Texture Array", NS::ASCIIStringEncoding));
     
     size_t bufferSize = mesh.textures->diffuseTextureInfos.size() * sizeof(TextureInfo);
     std::cout << "Diffuse Texture Count: " << mesh.textures->diffuseTextureInfos.size() << std::endl;
     std::cout << "TextureInfo size: " << sizeof(TextureInfo) << std::endl;
     diffuseTextureInfos = metalDevice->newBuffer(mesh.textures->diffuseTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
     diffuseTextureInfos->setLabel(NS::String::string("Diffuse Texture Info Array", NS::ASCIIStringEncoding));
-    bufferSize = mesh.textures->normalTextureInfos.size() * sizeof(TextureInfo);
-    normalTextureInfos = metalDevice->newBuffer(mesh.textures->normalTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
-    normalTextureInfos->setLabel(NS::String::string("NormalMap Texture Info Array", NS::ASCIIStringEncoding));
+
     
     VertexData lightSource[] = {
         // Front face               // Normals
@@ -169,7 +165,7 @@ void MTLEngine::loadMeshes() {
 }
 
 void MTLEngine::createBuffers() {
-//    transformationBuffer = metalDevice->newBuffer(sizeof(TransformationData), MTL::ResourceStorageModeShared);
+    // ...
 }
 
 void MTLEngine::createDefaultLibrary() {
@@ -338,22 +334,8 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     NS::UInteger vertexStart = 0;
     NS::UInteger vertexCount = meshVertexCount;
     renderCommandEncoder->setFragmentTexture(diffuseTextures, 3);
-    renderCommandEncoder->setFragmentTexture(normalMaps, 4);
-    renderCommandEncoder->setFragmentBuffer(diffuseTextureInfos, 0, 5);
-    renderCommandEncoder->setFragmentBuffer(normalTextureInfos, 0, 6);
+    renderCommandEncoder->setFragmentBuffer(diffuseTextureInfos, 0, 4);
 
-//    for (int x = 0; x < 10; x++) {
-//        for (int y = 0; y < 10; y++) {
-//            matrix_float4x4 scaleMatrix = matrix4x4_scale(0.8f, 0.8f, 0.8f);
-//            modelMatrix = matrix4x4_translation(-13.0 + y*3, -5.0f + x*1.25, 20 + x) * rotationMatrix * scaleMatrix;
-//            renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
-//            renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
-//        }
-//    }
-    
-//    renderCommandEncoder->setFragmentTexture(normalMap->texture, 3);
-//    renderCommandEncoder->setFragmentTexture(diffuseTexture->texture, 4);
-//    renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
     renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
 
     matrix_float4x4 scaleMatrix = matrix4x4_scale(0.3f, 0.3f, 0.3f);

@@ -12,32 +12,20 @@ using namespace simd;
 #include <string>
 
 #include <tiny_obj_loader.h>
-//#include "Texture.hpp"
-#include "TextureArray.hpp"
 #include "VertexData.hpp"
-#include <map>
+#include "TextureArray.hpp"
 
-struct Vertex {
-    float3 position;
-    float3 normal;
-    float2 textureCoordinate;
-    int diffuseTextureIndex;
-    int normalTextureIndex;
-    
-    bool operator==(const Vertex& other) const {
-        return position.x == other.position.x &&
-               position.y == other.position.y &&
-               position.z == other.position.z &&
-               normal.x == other.normal.x &&
-               normal.y == other.normal.y &&
-               normal.z == other.normal.z &&
-               textureCoordinate.x == other.textureCoordinate.x &&
-               textureCoordinate.y == other.textureCoordinate.y &&
-               diffuseTextureIndex == other.diffuseTextureIndex &&
-               normalTextureIndex == other.normalTextureIndex;
-    }
-    
-};
+inline bool operator==(const Vertex& lhs, const Vertex& rhs) {
+    return lhs.position.x == rhs.position.x &&
+           lhs.position.y == rhs.position.y &&
+           lhs.position.z == rhs.position.z &&
+           lhs.normal.x == rhs.normal.x &&
+           lhs.normal.y == rhs.normal.y &&
+           lhs.normal.z == rhs.normal.z &&
+           lhs.textureCoordinate.x == rhs.textureCoordinate.x &&
+           lhs.textureCoordinate.y == rhs.textureCoordinate.y &&
+    lhs.diffuseTextureIndex == rhs.diffuseTextureIndex;
+}
 
 namespace std {
     template<> struct hash<simd::float3> {
@@ -57,25 +45,16 @@ namespace std {
         }
     };
 
-template<> struct hash<Vertex> {
-    size_t operator()(Vertex const& vertex) const {
-        size_t h1 = hash<float3>{}(vertex.position);
-        size_t h2 = hash<float3>{}(vertex.normal);
-        size_t h3 = hash<float2>{}(vertex.textureCoordinate);
-        size_t h4 = hash<int>{}(vertex.diffuseTextureIndex);
-        size_t h5 = hash<int>{}(vertex.normalTextureIndex);
-        
-        return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3) ^ (h5 << 4);
-    }
-};
-
-//    template<> struct hash<Vertex> {
-//        size_t operator()(Vertex const& vertex) const {
-//            return ((hash<simd::float3>()(vertex.position) ^
-//                    (hash<simd::float3>()(vertex.normal) << 1)) >> 1) ^
-//                    (hash<simd::float2>()(vertex.textureCoordinate) << 1);
-//        }
-//    };
+    template<> struct hash<Vertex> {
+        size_t operator()(Vertex const& vertex) const {
+            size_t h1 = hash<float3>{}(vertex.position);
+            size_t h2 = hash<float3>{}(vertex.normal);
+            size_t h3 = hash<float2>{}(vertex.textureCoordinate);
+            size_t h4 = hash<int>{}(vertex.diffuseTextureIndex);
+            
+            return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3);
+        }
+    };
 }
 
 struct Mesh {
@@ -85,5 +64,4 @@ struct Mesh {
     std::vector<uint32_t> vertexIndices;
     TextureArray* textures;
     std::unordered_map<Vertex, uint32_t> vertexMap;
-
 };

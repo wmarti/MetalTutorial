@@ -8,14 +8,12 @@
 
 using namespace simd;
 
-//struct Vertex {
-//    float3 position;
-//    float3 normal;
-//    float2 textureCoordinate;
-//    int diffuseTextureIndex;
-//    int normalTextureIndex;
-//    
-//};
+struct Vertex {
+    float3 position;
+    float3 normal;
+    float2 textureCoordinate;
+    int diffuseTextureIndex;
+};
 
 struct TextureInfo {
     int width;

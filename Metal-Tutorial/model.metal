@@ -2,7 +2,7 @@
 //  cube.metal
 //  MetalTutorial
 //
-
+#define METAL
 #include <metal_stdlib>
 using namespace metal;
 
@@ -18,19 +18,6 @@ struct OutData {
     float2 textureCoordinate;
     int textureIndex;
 };
-//
-struct Vertex {
-    float3 position;
-    float3 normal;
-    float2 textureCoordinate;
-    int diffuseTextureIndex;
-    int normalTextureIndex;
-};
-//
-//struct TextureInfo {
-//    int width;
-//    int height;
-//};
 
 struct Mesh {
     constant Vertex* vertices;
@@ -56,9 +43,7 @@ fragment float4 fragmentShader(OutData in [[stage_in]],
                                constant float4& lightColor    [[buffer(1)]],
                                constant float4& lightPosition [[buffer(2)]],
                                texture2d_array<float> diffuseTextures [[texture(3)]],
-                               texture2d_array<float> normalTextures  [[texture(4)]],
-                               constant TextureInfo* diffuseTextureInfos [[buffer(5)]],
-                               constant TextureInfo* normalTextureInfos [[buffer(6)]])
+                               constant TextureInfo* diffuseTextureInfos [[buffer(4)]])
 {
     // Debugging: Check texture index and texture info values
     if (in.textureIndex < 0 || in.textureIndex >= diffuseTextures.get_array_size()) {

@@ -26,7 +26,7 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
     std::unordered_map<std::string, int> diffuseTextureIndexMap;
     int count = 0;
     // Load Textures
-    std::vector<std::string> diffuseFilePaths, normalFilePaths;
+    std::vector<std::string> diffuseFilePaths;
     std::cout << "Loading Textures..." << std::endl;
     for(int i = 0; i < materials.size(); i++) {
         if (!materials[i].diffuse_texname.empty()) {
@@ -34,14 +34,8 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
             diffuseFilePaths.push_back(baseDirectory + materials[i].diffuse_texname);
             diffuseTextureIndexMap[materials[i].diffuse_texname] = count++;
         }
-        if (!materials[i].bump_texname.empty()) {
-            std::cout << count+1 << ".) " << baseDirectory + materials[i].bump_texname << std::endl;
-            normalFilePaths.push_back(baseDirectory + materials[i].bump_texname);
-//            count++;
-        }
     }
     textures = new TextureArray(diffuseFilePaths,
-                                normalFilePaths,
                                 metalDevice);
     
     // Loop over Shapes
@@ -81,7 +75,6 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
                 vertex.diffuseTextureIndex = {
                     diffuseTextureIndexMap[diffuseTextureName]
                 };
-//                int normalTextureIndex = shapes[s].mesh.material_ids[
                 // Vertex Indices
                 if (vertexMap.count(vertex) == 0) {
                     vertexMap[vertex] = (uint32_t)vertices.size();

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E05BEE729E8EDF9005D1184 /* mesh_assimp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E05BEE529E8EDF9005D1184 /* mesh_assimp.cpp */; };
 		3E07A62229CE8FFC00B174A6 /* light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E07A62129CE8FFC00B174A6 /* light.metal */; };
 		3E32487B29CFFB53009CDE34 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487729CFF9F4009CDE34 /* libglfw3.a */; };
 		3E32487E29CFFC3B009CDE34 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487D29CFFC3B009CDE34 /* Cocoa.framework */; };
@@ -26,7 +25,6 @@
 		3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6D2987690700178E19 /* mtl_implementation.cpp */; };
 		3E76CD7229876E7600178E19 /* model.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD7129876E7600178E19 /* model.metal */; };
 		3E9847DC29F98D6A00209C3D /* TextureArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9847DA29F98D6A00209C3D /* TextureArray.cpp */; };
-		3E9F222B29A06F6500383DCA /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F222929A06F6500383DCA /* Texture.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,8 +41,6 @@
 
 /* Begin PBXFileReference section */
 		3E05BEE329E8E8A1005D1184 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = external/assimp/lib/libassimp.a; sourceTree = "<group>"; };
-		3E05BEE529E8EDF9005D1184 /* mesh_assimp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mesh_assimp.cpp; sourceTree = "<group>"; };
-		3E05BEE629E8EDF9005D1184 /* mesh_assimp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mesh_assimp.hpp; sourceTree = "<group>"; };
 		3E07A62129CE8FFC00B174A6 /* light.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = light.metal; sourceTree = "<group>"; };
 		3E32487229CFF96B009CDE34 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
 		3E32487429CFF97D009CDE34 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "external/GLFW/lib-universal/libglfw3.a"; sourceTree = "<group>"; };
@@ -85,8 +81,6 @@
 		3E9847DB29F98D6A00209C3D /* TextureArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureArray.hpp; sourceTree = "<group>"; };
 		3E9F222029A04ED300383DCA /* VertexData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexData.hpp; sourceTree = "<group>"; };
 		3E9F222429A060BA00383DCA /* mc_grass.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mc_grass.jpeg; sourceTree = "<group>"; };
-		3E9F222929A06F6500383DCA /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
-		3E9F222A29A06F6500383DCA /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		3EC468F02A01BE07005ED132 /* smg.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smg.obj; sourceTree = "<group>"; };
 		3EC468F62A01BE08005ED132 /* smg.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smg.mtl; sourceTree = "<group>"; };
 		3ED7C06A2A00DA2200550CA6 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
@@ -152,11 +146,7 @@
 				3E76CD6B298767CD00178E19 /* mtl_engine.hpp */,
 				3E5C802529EA21D500DB49E7 /* mesh.cpp */,
 				3E5C802629EA21D500DB49E7 /* mesh.hpp */,
-				3E05BEE529E8EDF9005D1184 /* mesh_assimp.cpp */,
-				3E05BEE629E8EDF9005D1184 /* mesh_assimp.hpp */,
 				3E76CD6D2987690700178E19 /* mtl_implementation.cpp */,
-				3E9F222929A06F6500383DCA /* Texture.cpp */,
-				3E9F222A29A06F6500383DCA /* Texture.hpp */,
 				3E9847DA29F98D6A00209C3D /* TextureArray.cpp */,
 				3E9847DB29F98D6A00209C3D /* TextureArray.hpp */,
 				3E9F222029A04ED300383DCA /* VertexData.hpp */,
@@ -308,9 +298,7 @@
 				3E9847DC29F98D6A00209C3D /* TextureArray.cpp in Sources */,
 				3E6B88E429A56CCD0087A2B1 /* stb_image.cpp in Sources */,
 				3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */,
-				3E05BEE729E8EDF9005D1184 /* mesh_assimp.cpp in Sources */,
 				3E76CD7229876E7600178E19 /* model.metal in Sources */,
-				3E9F222B29A06F6500383DCA /* Texture.cpp in Sources */,
 				3E07A62229CE8FFC00B174A6 /* light.metal in Sources */,
 				3E6DC92C29A81BE000C097E2 /* AAPLMathUtilities.cpp in Sources */,
 				3E56AB67297E0E6E00DB5F4F /* main.mm in Sources */,

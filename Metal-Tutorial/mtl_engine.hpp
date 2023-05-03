@@ -19,7 +19,7 @@
 #include <simd/simd.h>
 
 #include "VertexData.hpp"
-#include "Texture.hpp"
+#include "TextureArray.hpp"
 #include "AAPLMathUtilities.h"
 #include "mesh.hpp"
 
