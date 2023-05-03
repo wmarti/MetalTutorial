@@ -69,13 +69,10 @@ private:
     MTL::RenderPipelineState* metalRenderPSO;
     MTL::RenderPipelineState* metalLightSourceRenderPSO;
     MTL::RenderPassDescriptor* renderPassDescriptor;
-    MTL::Buffer* meshVertexBuffer;
-    uint64_t meshVertexCount;
+    Mesh* mesh;
     MTL::Buffer* lightVertexBuffer;
-    MTL::Buffer* transformationBuffer;
     MTL::DepthStencilState* depthStencilState;
     MTL::Texture* msaaRenderTargetTexture;
     MTL::Texture* depthTexture;
-    Mesh* mesh;
     int sampleCount = 4;
 };

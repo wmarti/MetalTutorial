@@ -32,7 +32,6 @@ void MTLEngine::run() {
 
 void MTLEngine::cleanup() {
     glfwTerminate();
-//    transformationBuffer->release();
     delete mesh;
     msaaRenderTargetTexture->release();
     depthTexture->release();
@@ -92,12 +91,8 @@ void MTLEngine::initWindow() {
 }
 
 void MTLEngine::loadMeshes() {
-//    Mesh mesh("assets/Chief/Chief.obj", metalDevice);
-//    mesh = new Mesh("assets/ODST/odst.obj", metalDevice);
-//    Mesh mesh("assets/backpack/backpack.obj", metalDevice);
-//    Mesh mesh("assets/GhostTown/GhostTown.obj", metalDevice);
+//    mesh = new Mesh("assets/backpack/backpack.obj", metalDevice);
     mesh = new Mesh("assets/SMG/smg.obj", metalDevice);
-
     
     VertexData lightSource[] = {
         // Front face               // Normals
@@ -313,12 +308,10 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
     simd_float4 lightPosition = simd_make_float4(2 * cos(glfwGetTime()), 0.6,-0.5, 1);
     renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
-    MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
-    NS::UInteger vertexStart = 0;
-    NS::UInteger vertexCount = meshVertexCount;
     renderCommandEncoder->setFragmentTexture(mesh->diffuseTextures, 3);
     renderCommandEncoder->setFragmentBuffer(mesh->diffuseTextureInfos, 0, 4);
-
+    
+    MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     renderCommandEncoder->drawIndexedPrimitives(typeTriangle, mesh->indexCount, MTL::IndexTypeUInt32, mesh->indexBuffer, 0);
 
     matrix_float4x4 scaleMatrix = matrix4x4_scale(0.3f, 0.3f, 0.3f);
@@ -334,8 +327,8 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
     renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
     typeTriangle = MTL::PrimitiveTypeTriangle;
-    vertexStart = 0;
-    vertexCount = 6 * 6;
+    NS::UInteger vertexStart = 0;
+    NS::UInteger vertexCount = 6 * 6;
     renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 0);
     renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
 }
