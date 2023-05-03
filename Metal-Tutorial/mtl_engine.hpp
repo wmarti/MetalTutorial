@@ -76,11 +76,6 @@ private:
     MTL::DepthStencilState* depthStencilState;
     MTL::Texture* msaaRenderTargetTexture;
     MTL::Texture* depthTexture;
-    MTL::Texture* diffuseTextures;
-    MTL::Buffer* diffuseTextureInfos;
-    MTL::Texture* normalMaps;
-    MTL::Buffer* normalTextureInfos;
-    MTL::Buffer* indexBuffer;
-    unsigned long indexCount;
+    Mesh* mesh;
     int sampleCount = 4;
 };

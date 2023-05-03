@@ -59,9 +59,22 @@ namespace std {
 
 struct Mesh {
     Mesh(std::string filePath, MTL::Device* metalDevice);
+    ~Mesh();
+
+private:
+    void loadObj(std::string filePath);
+    void createBuffers();
     
     std::vector<Vertex> vertices;
     std::vector<uint32_t> vertexIndices;
     TextureArray* textures;
     std::unordered_map<Vertex, uint32_t> vertexMap;
+    
+public:
+    MTL::Device* device;
+    MTL::Buffer* vertexBuffer;
+    MTL::Buffer* indexBuffer;
+    unsigned long indexCount;
+    MTL::Texture* diffuseTextures;
+    MTL::Buffer* diffuseTextureInfos;
 };

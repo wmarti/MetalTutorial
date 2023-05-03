@@ -10,6 +10,19 @@
 #include <string>
 
 Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
+    device = metalDevice;
+    loadObj(filePath);
+    createBuffers();
+}
+
+Mesh::~Mesh() {
+    diffuseTextures->release();
+    diffuseTextureInfos->release();
+    vertexBuffer->release();
+    indexBuffer->release();
+}
+
+void Mesh::loadObj(std::string filePath) {
     tinyobj::attrib_t vertexArrays;
     std::vector<tinyobj::shape_t>shapes;
     std::vector<tinyobj::material_t> materials;
@@ -36,7 +49,7 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
         }
     }
     textures = new TextureArray(diffuseFilePaths,
-                                metalDevice);
+                                device);
     
     // Loop over Shapes
     for (int s = 0; s < shapes.size(); s++) {
@@ -86,4 +99,27 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
             index_offset += fv;
         }
     }
+}
+
+void Mesh::createBuffers() {
+    // Create Vertex Buffers
+    unsigned long vertexCount = vertices.size();
+    std::cout << "Mesh Vertex Count: " << vertexCount << std::endl;
+    unsigned long vertexBufferSize = sizeof(Vertex) * vertices.size();
+    std::cout << "Mesh Vertex Buffer Size: " << vertexBufferSize << std::endl;
+    vertexBuffer = device->newBuffer(vertices.data(), vertexBufferSize, MTL::ResourceStorageModeShared);
+    vertexBuffer->setLabel(NS::String::string("Mesh Vertex Buffer", NS::ASCIIStringEncoding));
+    // Create Index Buffer
+    indexCount = vertexIndices.size();
+    unsigned long indexBufferSize = sizeof(uint32_t) * vertexIndices.size();
+    indexBuffer = device->newBuffer(vertexIndices.data(), indexBufferSize, MTL::ResourceStorageModeShared);
+    // Pass previously created Texture Array Pointer
+    diffuseTextures = textures->diffuseTextureArray;
+    diffuseTextures->setLabel(NS::String::string("Diffuse Texture Array", NS::ASCIIStringEncoding));
+    // Create Diffuse Texture Info
+    size_t bufferSize = textures->diffuseTextureInfos.size() * sizeof(TextureInfo);
+    std::cout << "Diffuse Texture Count: " << textures->diffuseTextureInfos.size() << std::endl;
+    std::cout << "TextureInfo size: " << sizeof(TextureInfo) << std::endl;
+    diffuseTextureInfos = device->newBuffer(textures->diffuseTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
+    diffuseTextureInfos->setLabel(NS::String::string("Diffuse Texture Info Array", NS::ASCIIStringEncoding));
 }

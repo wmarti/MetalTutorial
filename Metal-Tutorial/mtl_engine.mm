@@ -33,6 +33,7 @@ void MTLEngine::run() {
 void MTLEngine::cleanup() {
     glfwTerminate();
 //    transformationBuffer->release();
+    delete mesh;
     msaaRenderTargetTexture->release();
     depthTexture->release();
     renderPassDescriptor->release();
@@ -92,28 +93,10 @@ void MTLEngine::initWindow() {
 
 void MTLEngine::loadMeshes() {
 //    Mesh mesh("assets/Chief/Chief.obj", metalDevice);
-    Mesh mesh("assets/ODST/odst.obj", metalDevice);
+//    mesh = new Mesh("assets/ODST/odst.obj", metalDevice);
 //    Mesh mesh("assets/backpack/backpack.obj", metalDevice);
 //    Mesh mesh("assets/GhostTown/GhostTown.obj", metalDevice);
-//    Mesh mesh("assets/SMG/smg.obj", metalDevice);
-
-    indexCount = mesh.vertexIndices.size();
-    indexBuffer = metalDevice->newBuffer(mesh.vertexIndices.data(), sizeof(int) * indexCount, MTL::ResourceUsageRead);
-    
-    meshVertexCount = mesh.vertices.size();
-    std::cout << "Mesh Vertex Count: " << meshVertexCount << std::endl;
-    unsigned long meshVertexBufferSize = sizeof(Vertex) * mesh.vertices.size();
-    std::cout << "Mesh Vertex Buffer Size: " << meshVertexBufferSize << std::endl;
-    meshVertexBuffer = metalDevice->newBuffer(mesh.vertices.data(), meshVertexBufferSize, MTL::ResourceStorageModeShared);
-    meshVertexBuffer->setLabel(NS::String::string("Mesh Vertex Buffer", NS::ASCIIStringEncoding));
-    diffuseTextures = mesh.textures->diffuseTextureArray;
-    diffuseTextures->setLabel(NS::String::string("Diffuse Texture Array", NS::ASCIIStringEncoding));
-    
-    size_t bufferSize = mesh.textures->diffuseTextureInfos.size() * sizeof(TextureInfo);
-    std::cout << "Diffuse Texture Count: " << mesh.textures->diffuseTextureInfos.size() << std::endl;
-    std::cout << "TextureInfo size: " << sizeof(TextureInfo) << std::endl;
-    diffuseTextureInfos = metalDevice->newBuffer(mesh.textures->diffuseTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
-    diffuseTextureInfos->setLabel(NS::String::string("Diffuse Texture Info Array", NS::ASCIIStringEncoding));
+    mesh = new Mesh("assets/SMG/smg.obj", metalDevice);
 
     
     VertexData lightSource[] = {
@@ -170,7 +153,7 @@ void MTLEngine::createBuffers() {
 
 void MTLEngine::createDefaultLibrary() {
     metalDefaultLibrary = metalDevice->newDefaultLibrary();
-    if(!metalDefaultLibrary){
+    if(!metalDefaultLibrary) {
         std::cerr << "Failed to load default library.";
         std::exit(-1);
     }
@@ -312,9 +295,9 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     //renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
-    renderCommandEncoder->setVertexBuffer(meshVertexBuffer, 0, 0);
-    matrix_float4x4 rotationMatrix = matrix4x4_rotation(-90 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
-    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, -0.8f, -2.2f) * rotationMatrix;
+    renderCommandEncoder->setVertexBuffer(mesh->vertexBuffer, 0, 0);
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation(-125 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
+    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, 0.0f, -3.2f) * rotationMatrix;
     // Aspect ratio should match the ratio between the window width and height,
     // otherwise the image will look stretched.
     float aspectRatio = (metalDrawable->layer()->drawableSize().width /metalDrawable->layer()->drawableSize().height);
@@ -333,10 +316,10 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
     NS::UInteger vertexCount = meshVertexCount;
-    renderCommandEncoder->setFragmentTexture(diffuseTextures, 3);
-    renderCommandEncoder->setFragmentBuffer(diffuseTextureInfos, 0, 4);
+    renderCommandEncoder->setFragmentTexture(mesh->diffuseTextures, 3);
+    renderCommandEncoder->setFragmentBuffer(mesh->diffuseTextureInfos, 0, 4);
 
-    renderCommandEncoder->drawIndexedPrimitives(typeTriangle, indexCount, MTL::IndexTypeUInt32, indexBuffer, 0);
+    renderCommandEncoder->drawIndexedPrimitives(typeTriangle, mesh->indexCount, MTL::IndexTypeUInt32, mesh->indexBuffer, 0);
 
     matrix_float4x4 scaleMatrix = matrix4x4_scale(0.3f, 0.3f, 0.3f);
     matrix_float4x4 translationMatrix = matrix4x4_translation(lightPosition.xyz);
