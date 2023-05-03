@@ -1,0 +1,1115 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../1.%20Hello%20Window/">
+      
+      
+        <link rel="next" href="../3.%20Textures/">
+      
+      <link rel="icon" href="../../images/metal-logo-dall-e.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.9">
+    
+    
+      
+        <title>2. Hello Triangle - Metal Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CSF+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"SF Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-9B3546Q8FY"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-9B3546Q8FY",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-9B3546Q8FY",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rendering-a-triangle-to-the-screen" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Metal Tutorial" class="md-header__button md-logo" aria-label="Metal Tutorial" data-md-component="logo">
+      
+  <img src="../../images/metal-logo-dall-e.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Metal Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Hello Triangle
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Metal Tutorial" class="md-nav__button md-logo" aria-label="Metal Tutorial" data-md-component="logo">
+      
+  <img src="../../images/metal-logo-dall-e.png" alt="logo">
+
+    </a>
+    Metal Tutorial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Welcome to Metal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Setup/" class="md-nav__link">
+        Lesson 0: Setup
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Lesson 1: Hello Metal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lesson 1: Hello Metal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%20Hello%20Window/" class="md-nav__link">
+        1. Hello Window
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          2. Hello Triangle
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        2. Hello Triangle
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-graphics-rendering-pipeline" class="md-nav__link">
+    The Graphics Rendering Pipeline
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-metal-flow" class="md-nav__link">
+    The "Metal Flow"
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-queues-and-command-buffers" class="md-nav__link">
+    Command Queues and Command Buffers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#render-pipelines" class="md-nav__link">
+    Render Pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing-render-passes-and-render-pipelines" class="md-nav__link">
+    Drawing: Render Passes and Render Pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hello-triangle" class="md-nav__link">
+    Hello Triangle!
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.%20Textures/" class="md-nav__link">
+        3. Textures
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Lesson 2: Lets Go 3D!
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Lesson 2: Lets Go 3D!
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Lesson%202%3A%20Lets%20Go%203D%21/1.%203D%20Cube/" class="md-nav__link">
+        1. 3D Cube
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Lesson%202%3A%20Lets%20Go%203D%21/2.%20Basic%20Lighting/" class="md-nav__link">
+        2. Basic Lighting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Lesson%202%3A%20Lets%20Go%203D%21/3.%20Loading%203D%20Models/" class="md-nav__link">
+        3. Loading 3D Models
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Advanced Chapters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Advanced Chapters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Extra%20Chapters/Compute%20Shaders/" class="md-nav__link">
+        Compute Shaders
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-graphics-rendering-pipeline" class="md-nav__link">
+    The Graphics Rendering Pipeline
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-metal-flow" class="md-nav__link">
+    The "Metal Flow"
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-queues-and-command-buffers" class="md-nav__link">
+    Command Queues and Command Buffers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#render-pipelines" class="md-nav__link">
+    Render Pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing-render-passes-and-render-pipelines" class="md-nav__link">
+    Drawing: Render Passes and Render Pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hello-triangle" class="md-nav__link">
+    Hello Triangle!
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="rendering-a-triangle-to-the-screen">Rendering a Triangle to the Screen</h1>
+<p>In this chapter, we'll finally be getting to render something to the screen! Exciting stuff. We're going to start with something simple: a triangle!</p>
+<h3 id="the-graphics-rendering-pipeline">The Graphics Rendering Pipeline</h3>
+<p>Before we can render our triangle, it has to pass through something called the "Graphics Pipeline". The Graphics Pipeline is the series of steps that we must go through to render objects to our screen:</p>
+<p><img alt="graphicsPipeline" src="/images/graphicsPipeline.png" /></p>
+<p>The steps listed in green are fully programmable by you. We write the code for the C++ application as well as the Vertex and Fragment Shader programs that are executed on the GPU. GPUs are massively parallel devices, and Shader programs are specifically designed to take advantage of this fact. Unlike with CPUs where you might have 4, 8, 16, or maybe even 32 individual cores, GPUs have hundrends and thousands of them, all running in parallel. Vertex shaders are designed to operate on the vertices of the meshes in our scene concurrently. Initially, our Vertex Shader will transform all 3 vertices of our triangle mesh at once, and this process will scale continously as we render more complicated scenes with more complicated meshes. A similar logic applies with the Fragment Shader. The Fragment Shader (sometimes called the "Pixel" Shader) operates on each pixel that we'll want to render, as determined by the output of the Rasterization stage. Modern displays have many individual pixels on them, which makes them a perfect candidate for GPU processing. The steps highlighted above in red are not programmable stages, but are instead <em>configurable</em>. We'll modify them as necessary in the following lessons. Here is a more detailed description of the steps involved in the Graphics Pipeline:</p>
+<ol>
+<li>The Application Stage: In our case, the "Application Stage" involves setting up our <code>MTLEngine</code>, intializing the Metal device, configuring a GLFW window, compiling shader code into a library, creating command buffers, encoding draw commands, managing the render loop, and more. This stage represents the C++ side of the process, preparing the environment for encoding GPU commands for rendering or compute related tasks.</li>
+<li>The Vertex Shader Stage: This is the stage in the pipeline where the GPU comes into play. In other Graphics APIs such as DirectX, typically the second stage of the Graphics Pipeline starts with something called the "Input Assembler", which is responsible for collecting and organizing vertex data from memory buffers on the GPU and feeding them into the rendering pipeline. In Metal, this functionality is integrated with the Vertex Shader stage. The Vertex Shader is responsible for processing vertex data, applying transformations, and passing the resulting data to the next stages of the rendering pipeline. To feed vertex data into the Vertex Shader in Metal, you define vertex descriptors that specify the layout and format of the vertex data. These descriptors are used to map vertex data from the vertex buffers to the input attributes of the Vertex Shader. This process effectively replaces the Input Assembler stage found in other Graphics APIs, streamlining the rendering pipeline in Metal.</li>
+<li>The Rasterization Stage: In Metal, the Rasterization Stage converts vector-based geometry (aka vertices) into pixel-based fragments. It processes transformed vertices from the Vertex Shader, assembles them into primitives, interpolates attributes, performs perspective division, clips vertices to the view frustum, and identifies the pixels we want to shade within the rendered geometry. This stage effectively prepares the pixels or "fragments" for further processing and shading in the Fragment Shader Stage.</li>
+<li>The Fragment Shader Stage: The Fragment Shader in Metal is responsible for processing and shading pixel-based fragments generated during rasterization. The Fragment Shader is executed for each pixel on the screen, and typically performs a series of mathematical operations to calculate the final color of the pixel, such as texture sampling, lighting and material property calculations, blending with the color of nearby pixels, etc. Once processed, the fragments are combined to create the final rendered image on the screen.</li>
+<li>The Blending Stage: The Blending stage in Metal is responsible for combining the output of the Fragment Shader stage with the existing data in the framebuffer, considering factors like transparency, translucency, and depth. It determines how the final color of each pixel is calculated by blending the incoming fragment color with the color already present in the framebuffer, ultimately producing the final rendered image on the screen.</li>
+</ol>
+<p>Additionally, we also have another type of shader called "Compute Shaders". A Compute Shader is a program that runs on the GPU, seperate from the traditional rendering pipeline. It is used to perform general-purpose computational tasks that are generally (but not always) unrelated to rendering, such as image and audio processing, phsysics simulation, and machine learning. Compute shaders provide for an incredibly high degree of parallelism, and allow a user to perform parallel operations and algorithms much faster than on the CPU. We'll get into more detail about how we can use these in the Advanced Chapters later on.</p>
+<p>Now that I've described the Graphics Pipeline and these things called Shaders, let's get to writing some.</p>
+<p>To render our triangle, we'll need to create a new shader file in our Xcode project called <code>triangle.metal</code>. Unlike other Graphics APIs, in Metal there is only one file extension for writing shaders. You use the function definition to define a function as a vertex, fragment, or compute function. In our new Shader file, we're going to write two shader functions, correspondingly titled <code>vertexShader()</code> and <code>fragmentShader()</code>:
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">triangle.metal</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;metal_stdlib&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">metal</span><span class="p">;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">vertex</span><span class="w"> </span><span class="n">float4</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">vertexShader</span><span class="p">(</span><span class="n">uint</span><span class="w"> </span><span class="n">vertexID</span><span class="w"> </span><span class="p">[[</span><span class="n">vertex_id</span><span class="p">]],</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">             </span><span class="n">constant</span><span class="w"> </span><span class="n">simd</span><span class="o">::</span><span class="n">float3</span><span class="o">*</span><span class="w"> </span><span class="n">vertexPositions</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="n">float4</span><span class="w"> </span><span class="n">vertexOutPositions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">float4</span><span class="p">(</span><span class="n">vertexPositions</span><span class="p">[</span><span class="n">vertexID</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">                                       </span><span class="n">vertexPositions</span><span class="p">[</span><span class="n">vertexID</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">                                       </span><span class="n">vertexPositions</span><span class="p">[</span><span class="n">vertexID</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">                                       </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">vertexOutPositions</span><span class="p">;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="p">}</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="n">fragment</span><span class="w"> </span><span class="n">float4</span><span class="w"> </span><span class="n">fragmentShader</span><span class="p">(</span><span class="n">float4</span><span class="w"> </span><span class="n">vertexOutPositions</span><span class="w"> </span><span class="p">[[</span><span class="n">stage_in</span><span class="p">]])</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">float4</span><span class="p">(</span><span class="mf">182.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">240.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">228.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+The Metal shading language is essentially builty on top of C++14, and has some restrictions. You can learn more about the restrictions in section 1.4.4 of the <a href="https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf">Metal Specification</a>. We first include the Metal standard library, and add a <code>using namespace metal;</code>. We need to pre-pend our <code>vertexShader()</code> function definition with the <code>vertex</code> keyword to tell Metal that this is a vertex function. We'll be returning a float4, made up of the position of each vertex in the triangle. Shader programs run concurrently on the GPU, so each vertex we input will be processed simultaneously. To render our triangle, since we have three input vertices, we'll really have three instances of this <code>vertexShader()</code> function running at the same time. This is why the first take in the vertexID as input, so that we can know which vertex we're working on. The second input is our triangle's <code>vertexPositions</code> buffer. You'll notice the <code>constant</code> keyword prepended to our type definition. This is called an address space attribute, and it dictates the region of memory that the buffer is located in on the GPU. Quoting the Metal Specification directly, "the <code>constant</code> address space name refers to buffer memory objects allocated from the device memory pool that are read-only". Essentially, the buffer is allocated on the GPU in read-only memory, we aren't going to be able to change it. You can read more about address spaces in section 4.0 of the <a href="https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf">Metal Specification</a>. We'll use our <code>vertexID</code> to index the proper Vertex per Shader, and we're going to cast our <code>vertexPositions</code> to a larger homogeneous vector type of <code>float4</code>, as Vertex functions are required to output positions in four-dimensional clip-space coordinates. Here's a great write-up on why that's necessary over at <a href="https://learnopengl.com/Getting-started/Transformations">learnopengl.com</a>. </p>
+<p>Similarly, our <code>fragmentShader()</code> will output a <code>float4</code> of color values at each triangle Vertex, and interpolate between them. Since we're just returning the same color at each Vertex, the <em>whole</em> triangle will be the same color, as there aren't any other colors to interpolate between. You can fill these with any value's between 0.0-1.0, Red, Green, Blue. The input <code>vertexPositions</code> to the <code>fragmentShader()</code> isn't necessary quite yet, but it's there as a demonstration on how you would pass the vertexPositions for use within the Fragment shader. We'll make use of it once we have a triangle rendering.</p>
+<p><div class="highlight"><span class="filename">mtl_engine.hpp</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">MTLEngine</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">();</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">();</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">initDevice</span><span class="p">();</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">initWindow</span><span class="p">();</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createTriangle</span><span class="p">();</span>
+</span><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createDefaultLibrary</span><span class="p">();</span>
+</span><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createCommandQueue</span><span class="p">();</span>
+</span><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">createRenderPipeline</span><span class="p">();</span>
+</span><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">encodeRenderCommand</span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderCommandEncoder</span><span class="o">*</span><span class="w"> </span><span class="n">renderEncoder</span><span class="p">);</span>
+</span><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">sendRenderCommand</span><span class="p">();</span>
+</span><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="hll"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">draw</span><span class="p">();</span>
+</span><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Device</span><span class="o">*</span><span class="w"> </span><span class="n">metalDevice</span><span class="p">;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">glfwWindow</span><span class="p">;</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="n">NSWindow</span><span class="o">*</span><span class="w"> </span><span class="n">metalWindow</span><span class="p">;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="n">CAMetalLayer</span><span class="o">*</span><span class="w"> </span><span class="n">metalLayer</span><span class="p">;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="hll"><span class="w">    </span><span class="n">CA</span><span class="o">::</span><span class="n">MetalDrawable</span><span class="o">*</span><span class="w"> </span><span class="n">metalDrawable</span><span class="p">;</span>
+</span><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Library</span><span class="o">*</span><span class="w"> </span><span class="n">metalDefaultLibrary</span><span class="p">;</span>
+</span><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">CommandQueue</span><span class="o">*</span><span class="w"> </span><span class="n">metalCommandQueue</span><span class="p">;</span>
+</span><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">CommandBuffer</span><span class="o">*</span><span class="w"> </span><span class="n">metalCommandBuffer</span><span class="p">;</span>
+</span><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPipelineState</span><span class="o">*</span><span class="w"> </span><span class="n">metalRenderPSO</span><span class="p">;</span>
+</span><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="hll"><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Buffer</span><span class="o">*</span><span class="w"> </span><span class="n">triangleVertexBuffer</span><span class="p">;</span>
+</span><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="p">};</span>
+</code></pre></div>
+Here are the member functions and variables that we'll be adding to our MTLEngine. It may seem like quite a lot of stuff is required to render a simple triangle, and in the grand scheme of things it is. But, I assure you, the effort required in Metal is far less than the other modern Graphics APIs, being DirectX12 and Vulkan. In Vulkan, it typically takes about 1000 lines of code to render a single triangle 😱. With Metal, it will only take us about 100 lines of code to get there, and we've already got 40 of them :). Get your boots strapped ladies and gentleman, it's time to dive in.</p>
+<p>The first addition is <code>createTriangle()</code>:
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mtl_engine.mm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="n">initDevice</span><span class="p">();</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="n">initWindow</span><span class="p">();</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="hll"><span class="w">    </span><span class="n">createTriangle</span><span class="p">();</span>
+</span><a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="p">}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="p">...</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span>
+<span class="normal"><a href="#__codelineno-3-53">53</a></span>
+<span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span>
+<span class="normal"><a href="#__codelineno-3-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-51" name="__codelineno-3-51"></a><span class="p">...</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a><span class="kt">void</span><span class="w"> </span><span class="n">MTLEngine</span><span class="o">::</span><span class="n">createTriangle</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a><span class="w">    </span><span class="n">simd</span><span class="o">::</span><span class="n">float3</span><span class="w"> </span><span class="n">triangleVertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a><span class="w">        </span><span class="p">{</span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">},</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">},</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">}</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a><span class="w">    </span><span class="n">triangleVertexBuffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalDevice</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">triangleVertices</span><span class="p">,</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a><span class="w">                                                  </span><span class="k">sizeof</span><span class="p">(</span><span class="n">triangleVertices</span><span class="p">),</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a><span class="w">                                                  </span><span class="n">MTL</span><span class="o">::</span><span class="n">ResourceStorageModeShared</span><span class="p">);</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+This goes into our <code>init()</code> function after we initialize our Metal device and GLFW window. Given that our goal is to render a triangle, we first define some triangle vertices. We then ask our Metal device to create a new Metal Buffer, copying our triangle vertices over to the GPU. You can think of a MTL::Buffer object like a buffer of data in any programming language, it's simply used to store data. Metal doesn't know anything about the contents or layout of the data - you can customize it however you like. All it knows is the size of the buffer, as it's the second argument you pass in to <code>newBuffer()</code>. You might notice the third argument, <code>MTL::ResourceStorageModeShared</code>. This tells Metal to give both the CPU and GPU the ability to access the object. We'll discuss the other two types of storage modes later on.</p>
+<p>The next addition to our MTLEngine is <code>createDefaultLibrary()</code>:
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mtl_engine.mm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">    </span><span class="n">initDevice</span><span class="p">();</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">    </span><span class="n">initWindow</span><span class="p">();</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">    </span><span class="n">createTriangle</span><span class="p">();</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="hll"><span class="w">    </span><span class="n">createDefaultLibrary</span><span class="p">();</span>
+</span><a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="p">}</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="p">...</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-51">51</a></span>
+<span class="normal"><a href="#__codelineno-5-52">52</a></span>
+<span class="normal"><a href="#__codelineno-5-53">53</a></span>
+<span class="normal"><a href="#__codelineno-5-54">54</a></span>
+<span class="normal"><a href="#__codelineno-5-55">55</a></span>
+<span class="normal"><a href="#__codelineno-5-56">56</a></span>
+<span class="normal"><a href="#__codelineno-5-57">57</a></span>
+<span class="normal"><a href="#__codelineno-5-58">58</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-51" name="__codelineno-5-51"></a><span class="p">...</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="kt">void</span><span class="w"> </span><span class="n">MTLEngine</span><span class="o">::</span><span class="n">createDefaultLibrary</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a><span class="w">    </span><span class="n">metalDefaultLibrary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalDevice</span><span class="o">-&gt;</span><span class="n">newDefaultLibrary</span><span class="p">();</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">metalDefaultLibrary</span><span class="p">){</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed to load default library.&quot;</span><span class="p">;</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">-1</span><span class="p">);</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+This goes into our <code>init()</code> function after we create our triangle and copy it to the GPU. The first thing we're going to do is access our <code>metalDevice</code> to create a new default library. Xcode automatically compiles all Metal source files (ending in <code>.metal</code>) within an Xcode project into a single default library upon project compilation. In our case, because we're not compiling our Metal source code at runtime, our <code>MTL::Library*</code> object will give us access to all of our Metal source code from a single source, making it very simple to access and manage. If for any reason we're unable to load our compiled Metal binaries, we'll exit. If for any reason later on you get any errors here, make sure that your Metal source files are added as compile targets in the <code>Build Phases</code> section of the project.</p>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mtl_engine.mm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">    </span><span class="n">initDevice</span><span class="p">();</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">    </span><span class="n">initWindow</span><span class="p">();</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">    </span><span class="n">createTriangle</span><span class="p">();</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="n">createDefaultLibrary</span><span class="p">();</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="hll"><span class="w">    </span><span class="n">createCommandQueue</span><span class="p">();</span>
+</span><a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="p">}</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="p">...</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-59">59</a></span>
+<span class="normal"><a href="#__codelineno-7-60">60</a></span>
+<span class="normal"><a href="#__codelineno-7-61">61</a></span>
+<span class="normal"><a href="#__codelineno-7-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-59" name="__codelineno-7-59"></a><span class="p">...</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60"></a><span class="kt">void</span><span class="w"> </span><span class="n">MTLEngine</span><span class="o">::</span><span class="n">createCommandQueue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-61" name="__codelineno-7-61"></a><span class="w">    </span><span class="n">metalCommandQueue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalDevice</span><span class="o">-&gt;</span><span class="n">newCommandQueue</span><span class="p">();</span>
+<a id="__codelineno-7-62" name="__codelineno-7-62"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+We'll now ask our Metal device to create a new Command Queue for us. But first, what are these Command Queus and Buffers?</p>
+<h3 id="the-metal-flow">The "Metal Flow"</h3>
+<p><img alt="metalFlow" src="/images/metalFlow.png" />
+This image describes what I call the "Metal Flow"<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. The "Metal Flow" can be summarized as follows: To perform graphics tasks in Metal, we first create a "Command Queue", which acts as the railway tracks in the above image. Multiple railway cars, or "Command Buffers", can run on these tracks concurrently. Command Buffers store individual "Commands" that instruct the GPU, such as drawing a triangle. These commands are executed on the GPU using "Shader Code" within programs called Shaders, like we discussed previously.</p>
+<h3 id="command-queues-and-command-buffers">Command Queues and Command Buffers</h3>
+<p>A Command Queue allows us to create Command Buffers, which essentially represent a chunk of work for the GPU. We use Command Buffers by encoding individual commands into them via something called a Command Encoder, like for setting and rendering our triangle vertex data, or telling the GPU to draw our primitives.</p>
+<table>
+<thead>
+<tr>
+<th>Command Queue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="commandQueue" src="/images/commandQueue.png" /></td>
+</tr>
+</tbody>
+</table>
+<!-- Within a Command Queue, you might have multiple Command Buffers. Why might we want this? There are a variety of reasons:
+
+- Concurrent Execution and Improved Resource Usage: By using multiple Command Buffers, we can have multiple tasks run concurrently on the GPU, which can help to hide the latency of individual operations and improve overall performance. For example, we could use one Command Buffer for rendering, and another for compute operations (we'll discuss this later on in the Ray-Tracing chapter). 
+- Increased Flexibility: Using multiple Command Buffers allows you to have more control over the order in which commands are executed and to organize your commands in a way that makes sense for your application. This can make it easier to debug and optimize.
+- Render Pass Management: In Metal, a render pass is a sequence of render commands that defines the rendering of a single frame. By using multiple Command Buffers, you can define multiple render passes that are executed in parallel, which can result in improved performance and reduced memory usage. For example, you could have one render pass for calculating shadows, one for reflections, and one for post-processing such as motion-blur. We'll explore this more in Lesson 2 when we get to lighting. -->
+
+<table>
+<thead>
+<tr>
+<th>Command Encoder</th>
+<th>Command Buffer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="alt" src="/images/commandEncoder.png" /></td>
+<td><img alt="alt" src="/images/commandBuffer.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>A Command Queue is responsible for creating Command Buffers, which represent a set of tasks for the GPU. Command Encoders are used to encode individual commands into these buffers, such as rendering and drawing operations. You can create multiple Command Buffers within a Command Queue, which can offer various benefits, including concurrent execution, improved resource usage, increased flexibility, and efficient render pass management. In essence, a single Command Queue allows the creation of Command Buffers to organize GPU tasks, with Command Encoders facilitating the encoding of commands into these buffers.</p>
+<h2 id="render-pipelines">Render Pipelines</h2>
+<p>We're now going to create our Render Pipeline.</p>
+<p>A render pipeline is an object that encapsulates the GPU's rendering state, including shaders, vertex data, and other rendering settings. It specifies how the GPU processes vertex and fragment data to generate the final output image. Render pipelines are created and configured once, and then used repeatedly for rendering similar graphics objects. In this case, our render pipeline is setup to render individual triangles. It will contain the vertex and fragment functions that we defined earlier in our <code>triangle.metal</code> shader file. In Lesson two, we'll explore how we can create a second render pipeline to handle lights in our scene, using entirely seperate vertex and fragment shader functions from the ones our triangle uses.</p>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mtl_engine.mm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">    </span><span class="n">initDevice</span><span class="p">();</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">    </span><span class="n">initWindow</span><span class="p">();</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">    </span><span class="n">createTriangle</span><span class="p">();</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">    </span><span class="n">createDefaultLibrary</span><span class="p">();</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">    </span><span class="n">createCommandQueue</span><span class="p">();</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="hll"><span class="w">    </span><span class="n">createRenderPipeline</span><span class="p">();</span>
+</span><a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="p">}</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="p">...</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-63">63</a></span>
+<span class="normal"><a href="#__codelineno-9-64">64</a></span>
+<span class="normal"><a href="#__codelineno-9-65">65</a></span>
+<span class="normal"><a href="#__codelineno-9-66">66</a></span>
+<span class="normal"><a href="#__codelineno-9-67">67</a></span>
+<span class="normal"><a href="#__codelineno-9-68">68</a></span>
+<span class="normal"><a href="#__codelineno-9-69">69</a></span>
+<span class="normal"><a href="#__codelineno-9-70">70</a></span>
+<span class="normal"><a href="#__codelineno-9-71">71</a></span>
+<span class="normal"><a href="#__codelineno-9-72">72</a></span>
+<span class="normal"><a href="#__codelineno-9-73">73</a></span>
+<span class="normal"><a href="#__codelineno-9-74">74</a></span>
+<span class="normal"><a href="#__codelineno-9-75">75</a></span>
+<span class="normal"><a href="#__codelineno-9-76">76</a></span>
+<span class="normal"><a href="#__codelineno-9-77">77</a></span>
+<span class="normal"><a href="#__codelineno-9-78">78</a></span>
+<span class="normal"><a href="#__codelineno-9-79">79</a></span>
+<span class="normal"><a href="#__codelineno-9-80">80</a></span>
+<span class="normal"><a href="#__codelineno-9-81">81</a></span>
+<span class="normal"><a href="#__codelineno-9-82">82</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-63" name="__codelineno-9-63"></a><span class="p">...</span>
+<a id="__codelineno-9-64" name="__codelineno-9-64"></a><span class="kt">void</span><span class="w"> </span><span class="n">MTLEngine</span><span class="o">::</span><span class="n">createRenderPipeline</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-65" name="__codelineno-9-65"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Function</span><span class="o">*</span><span class="w"> </span><span class="n">vertexShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalDefaultLibrary</span><span class="o">-&gt;</span><span class="n">newFunction</span><span class="p">(</span><span class="n">NS</span><span class="o">::</span><span class="n">String</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&quot;vertexShader&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">NS</span><span class="o">::</span><span class="n">ASCIIStringEncoding</span><span class="p">));</span>
+<a id="__codelineno-9-66" name="__codelineno-9-66"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">vertexShader</span><span class="p">);</span>
+<a id="__codelineno-9-67" name="__codelineno-9-67"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">Function</span><span class="o">*</span><span class="w"> </span><span class="n">fragmentShader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalDefaultLibrary</span><span class="o">-&gt;</span><span class="n">newFunction</span><span class="p">(</span><span class="n">NS</span><span class="o">::</span><span class="n">String</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&quot;fragmentShader&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">NS</span><span class="o">::</span><span class="n">ASCIIStringEncoding</span><span class="p">));</span>
+<a id="__codelineno-9-68" name="__codelineno-9-68"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">fragmentShader</span><span class="p">);</span>
+<a id="__codelineno-9-69" name="__codelineno-9-69"></a>
+<a id="__codelineno-9-70" name="__codelineno-9-70"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPipelineDescriptor</span><span class="o">*</span><span class="w"> </span><span class="n">renderPipelineDescriptor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPipelineDescriptor</span><span class="o">::</span><span class="n">alloc</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-9-71" name="__codelineno-9-71"></a><span class="w">    </span><span class="n">renderPipelineDescriptor</span><span class="o">-&gt;</span><span class="n">setLabel</span><span class="p">(</span><span class="n">NS</span><span class="o">::</span><span class="n">String</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&quot;Triangle Rendering Pipeline&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">NS</span><span class="o">::</span><span class="n">ASCIIStringEncoding</span><span class="p">));</span>
+<a id="__codelineno-9-72" name="__codelineno-9-72"></a><span class="w">    </span><span class="n">renderPipelineDescriptor</span><span class="o">-&gt;</span><span class="n">setVertexFunction</span><span class="p">(</span><span class="n">vertexShader</span><span class="p">);</span>
+<a id="__codelineno-9-73" name="__codelineno-9-73"></a><span class="w">    </span><span class="n">renderPipelineDescriptor</span><span class="o">-&gt;</span><span class="n">setFragmentFunction</span><span class="p">(</span><span class="n">fragmentShader</span><span class="p">);</span>
+<a id="__codelineno-9-74" name="__codelineno-9-74"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">renderPipelineDescriptor</span><span class="p">);</span>
+<a id="__codelineno-9-75" name="__codelineno-9-75"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">PixelFormat</span><span class="w"> </span><span class="n">pixelFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">PixelFormat</span><span class="p">)</span><span class="n">metalLayer</span><span class="p">.</span><span class="n">pixelFormat</span><span class="p">;</span>
+<a id="__codelineno-9-76" name="__codelineno-9-76"></a><span class="w">    </span><span class="n">renderPipelineDescriptor</span><span class="o">-&gt;</span><span class="n">colorAttachments</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">object</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setPixelFormat</span><span class="p">(</span><span class="n">pixelFormat</span><span class="p">);</span>
+<a id="__codelineno-9-77" name="__codelineno-9-77"></a>
+<a id="__codelineno-9-78" name="__codelineno-9-78"></a><span class="w">    </span><span class="n">NS</span><span class="o">::</span><span class="n">Error</span><span class="o">*</span><span class="w"> </span><span class="n">error</span><span class="p">;</span>
+<a id="__codelineno-9-79" name="__codelineno-9-79"></a><span class="w">    </span><span class="n">metalRenderPSO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalDevice</span><span class="o">-&gt;</span><span class="n">newRenderPipelineState</span><span class="p">(</span><span class="n">renderPipelineDescriptor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-9-80" name="__codelineno-9-80"></a>
+<a id="__codelineno-9-81" name="__codelineno-9-81"></a><span class="w">    </span><span class="n">renderPipelineDescriptor</span><span class="o">-&gt;</span><span class="n">release</span><span class="p">();</span>
+<a id="__codelineno-9-82" name="__codelineno-9-82"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+We're first going to grab our two Metal functions from our <code>metalDefaultLibrary</code>, specifying the names of the corresponding Vertex and Fragment Shader functions. We then create a <code>MTL::RenderPipelineDescriptor</code> object, which allows us to to configure a variety of settings to use during a render pass. First we'll set the optional Label to give it a name, and then the Vertex and Fragment functions. We then set a Pixel format for our output image, which should match the format of our render target (aka our metalLayer). The color attachment in the <code>renderPipelineDescriptor</code> is used to specify the format and layout of the color buffer that will be used to store the output of our Fragment Shader. This buffer is where the final color information for each pixel of the rendered image is stored. We then use our <code>metalDevice</code> to represent a compiled Render Pipeline. We'll create a new <code>MTL::RenderPipelineState</code> object, specifying our <code>renderPipelineDescriptor</code> as input. In Metal, a render pipeline is a series of stages that process vertex and fragment data and produce a final image. Once we've created this pipeline state object, we can use it to render objects by encoding render commands into a Command Buffer and submitting it the GPU for drawing. You only have to create this object once, rather than each time we render a new frame. You can create a <code>MTL::RenderPipelineState</code> for each render pipeline that you may want. In our case, we'll just need this one. At the end of our function, we'll release our <code>renderPipelineDescriptor</code> object, as we're the owner of it (because we called <code>alloc()</code> to create it) and we won't be needing it anymore once the Render Pipeline has been created.</p>
+<p>With this, we've finished off our <code>init()</code> function. It's now time to move on to our <code>run()</code> loop.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">glfwWindowShouldClose</span><span class="p">(</span><span class="n">glfwWindow</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">        </span><span class="err">@</span><span class="n">autoreleasepool</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">            </span><span class="n">metalDrawable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">__bridge</span><span class="w"> </span><span class="n">CA</span><span class="o">::</span><span class="n">MetalDrawable</span><span class="o">*</span><span class="p">)[</span><span class="n">metalLayer</span><span class="w"> </span><span class="n">nextDrawable</span><span class="p">];</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">            </span><span class="n">draw</span><span class="p">();</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">        </span><span class="n">glfwPollEvents</span><span class="p">();</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>The first thing to note is the addition of our <code>@autoreleasepool</code>. The <strong>metal-cpp</strong> <code>README.md</code> describes the purpose of this better than I can, so i'll quote them here:</p>
+<blockquote>
+<p><strong>AutoreleasePools and Objects</strong></p>
+<p>Several methods that create temporary objects in <strong><em>*</em></strong><em>metal-cpp</em><strong><em>**</em>* add them to an <code>AutoreleasePool</code> to help manage their lifetimes. In these situations, after </strong><em>*</em><strong><em>metal-cpp</em></strong><strong>*</strong> creates the object, it adds it to an <code>AutoreleasePool</code>, which will release its objects when you release (or drain) it.</p>
+<p>By adding temporary objects to an AutoreleasePool, you do not need to explicitly call <code>release()</code> to deallocate them. Instead, you can rely on the <code>AutoreleasePool</code> to implicitly manage those lifetimes.</p>
+<p>If you create an object with a method that does not begin with <code>alloc</code>, <code>new</code>, <code>copy</code>, <code>mutableCopy</code>, or <code>Create</code>, the creating method adds the object to an autorelease pool.</p>
+<p>The typical scope of an <code>AutoreleasePool</code> is one frame of rendering for the main thread of the program. When the thread returns control to the RunLoop (an object responsible for receiving input and events from the windowing system), the pool is <strong><em>*drained</em></strong>*, releasing its objects.</p>
+</blockquote>
+<p>As such, our <code>AutoreleasePool</code> surrounds our <code>draw()</code> command, as they recommend. This will allow it to clean up some of the temporarily created objects for us each frame, like our <code>metalDrawable</code>, so we don't get any memory leaks.</p>
+<h2 id="drawing-render-passes-and-render-pipelines">Drawing: Render Passes and Render Pipelines</h2>
+<p>In Metal, a render pass is a collection of rendering commands that takes a set of input resources (textures, buffers, etc.) and processes them through the graphics pipeline to produce an output, typically a rendered image. It groups related rendering operations performed on specific attachments (textures) to optimize the rendering process. To perform a render pass, you create a Command Encoder using the configured Render Pass Descriptor. The encoder is responsible for encoding draw commands, setting pipeline state, and providing resources (textures, buffers, etc.) to the graphics pipeline. Once you've encoded all your GPU commands, you end the encoding process, and the render pass is executed on the GPU when the command buffer is committed. </p>
+<div class="highlight"><span class="filename">mtl_engine.cpp</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="n">sendRenderCommand</span><span class="p">();</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">}</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::sendRenderCommand</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="n">metalCommandBuffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalCommandQueue</span><span class="o">-&gt;</span><span class="n">commandBuffer</span><span class="p">();</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPassDescriptor</span><span class="o">*</span><span class="w"> </span><span class="n">renderPassDescriptor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPassDescriptor</span><span class="o">::</span><span class="n">alloc</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderPassColorAttachmentDescriptor</span><span class="o">*</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">renderPassDescriptor</span><span class="o">-&gt;</span><span class="n">colorAttachments</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">object</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="n">cd</span><span class="o">-&gt;</span><span class="n">setTexture</span><span class="p">(</span><span class="n">metalDrawable</span><span class="o">-&gt;</span><span class="n">texture</span><span class="p">());</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="n">cd</span><span class="o">-&gt;</span><span class="n">setLoadAction</span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">LoadActionClear</span><span class="p">);</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="n">cd</span><span class="o">-&gt;</span><span class="n">setClearColor</span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">ClearColor</span><span class="p">(</span><span class="mf">41.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">42.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">48.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">));</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="n">cd</span><span class="o">-&gt;</span><span class="n">setStoreAction</span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">StoreActionStore</span><span class="p">);</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderCommandEncoder</span><span class="o">*</span><span class="w"> </span><span class="n">renderCommandEncoder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalCommandBuffer</span><span class="o">-&gt;</span><span class="n">renderCommandEncoder</span><span class="p">(</span><span class="n">renderPassDescriptor</span><span class="p">);</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="n">encodeRenderCommand</span><span class="p">(</span><span class="n">renderCommandEncoder</span><span class="p">);</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">    </span><span class="n">renderCommandEncoder</span><span class="o">-&gt;</span><span class="n">endEncoding</span><span class="p">();</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="n">metalCommandBuffer</span><span class="o">-&gt;</span><span class="n">presentDrawable</span><span class="p">(</span><span class="n">metalDrawable</span><span class="p">);</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">    </span><span class="n">metalCommandBuffer</span><span class="o">-&gt;</span><span class="n">commit</span><span class="p">();</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">    </span><span class="n">metalCommandBuffer</span><span class="o">-&gt;</span><span class="n">waitUntilCompleted</span><span class="p">();</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">    </span><span class="n">renderPassDescriptor</span><span class="o">-&gt;</span><span class="n">release</span><span class="p">();</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="p">}</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::encodeRenderCommand</span><span class="p">(</span><span class="n">MTL</span><span class="o">::</span><span class="n">RenderCommandEncoder</span><span class="o">*</span><span class="w"> </span><span class="n">renderCommandEncoder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">    </span><span class="n">renderCommandEncoder</span><span class="o">-&gt;</span><span class="n">setRenderPipelineState</span><span class="p">(</span><span class="n">metalRenderPSO</span><span class="p">);</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">    </span><span class="n">renderCommandEncoder</span><span class="o">-&gt;</span><span class="n">setVertexBuffer</span><span class="p">(</span><span class="n">triangleVertexBuffer</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">    </span><span class="n">MTL</span><span class="o">::</span><span class="n">PrimitiveType</span><span class="w"> </span><span class="n">typeTriangle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTL</span><span class="o">::</span><span class="n">PrimitiveTypeTriangle</span><span class="p">;</span>
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">    </span><span class="n">NS</span><span class="o">::</span><span class="n">UInteger</span><span class="w"> </span><span class="n">vertexStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="w">    </span><span class="n">NS</span><span class="o">::</span><span class="n">UInteger</span><span class="w"> </span><span class="n">vertexCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">    </span><span class="n">renderCommandEncoder</span><span class="o">-&gt;</span><span class="n">drawPrimitives</span><span class="p">(</span><span class="n">typeTriangle</span><span class="p">,</span><span class="w"> </span><span class="n">vertexStart</span><span class="p">,</span><span class="w"> </span><span class="n">vertexCount</span><span class="p">);</span>
+<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="p">}</span>
+</code></pre></div>
+<p>Our <code>draw()</code> command simply calls our <code>sendRenderCommand()</code> function, which actually handles the creation of our Render Pass. We first use our <code>metalCommandQueue</code> to create a Command Buffer. To encode render commands to a Command Buffer, we'll need a <code>MTL::RenderCommandEncoder</code>. Before we create one though, we'll need a <code>MTL::RenderPassDescriptor</code> , which serves to hold a collection of attachments for pixels generated by a render pass. The <code>colorAttachments</code> property specifies the textures or render targets that will be used to store the results of the render pass, hence why we give it the texture for our <code>metalDrawable</code>. We're going to also set a Clear Color, which is going to be the initial Color of all the pixels in the framebuffer. It'll essentially serve as the color of the background in our image. We then tell the GPU to store the rendered contents of our render pass to our <code>metalDrawable</code> texture with <code>MTL::StoreActionStore</code> when it's finished.</p>
+<p>We then create a <code>MTL::RenderCommandEncoder</code> to encode our render commands. Before we encode any commands, we need to tell the Command Encoder which Render Pipeline to process our commands in the context of. We set our Render Pipeline State to our previously created <code>metalRenderPSO</code> object, which defines our Triangle Rendering Pipeline. We then set our VertexBuffer to our <code>triangleVertexBuffer</code>, and tell it to draw the Triangle! With the Render Pipeline provided, the GPU will execute operations on the vetices of our triangle in the context of the vertex and fragment shader code we defined in our <code>triangle.metal</code> shader file. We then finish off our command encoding with <code>renderCommandEncoder-&gt;endEncoding()</code> to tell our Command Buffer that we're done issuing GPU commands. As a final command, we tell our Command Buffer to present the final Drawable, which will be the result of the command executed in the <code>renderCommandEncoder</code>. We then actually send these commands to the GPU with <code>metalCommandBuffer-&gt;commit()</code>. Critically, we tell the current thread to <code>waitUntilCompleted()</code>, which halts the execution of our C++ application until the GPU has finished its work. We'll discuss more complex methods of CPU&lt;-&gt;GPU synchronization later on. We release the <code>renderPassDescriptor</code> object, as we created it with the <code>alloc()</code> method.</p>
+<p>Finally, we can compile and run, and see our beautiful triangle displayed the the screen!</p>
+<h2 id="hello-triangle">Hello Triangle!</h2>
+<p><img alt="triangle" src="/images/triangle.png" /></p>
+<p>If you look closely at the edges of the triangle, you'll notice that it might look a bit fuzzy. The reason for this is due to a bug in GLFW. By default, our <code>metalLayer</code> resolution gets set to the resolution we specified in <code>glfwCreateWindow()</code>. Normally this wouldn't be an issue, but in MacOS the supposed window size doesn't necessarily correspond to the size of the image rendered within our window, aka our metalLayer or 'framebuffer'. This issue occurs due to DPI scaling within MacOS. On a high resolution monitor like a 4K monitor, or even on a Macbook Air Display, MacOS by default renders the UI at a "lower resolution" so that it appears larger on the screen. That's why if you ask GLFW what it's window size is, it will report 800x600, the values that we specified in <code>glfwCreateWindow()</code>, but if you ask what its <em>framebuffer</em> resolution is with <code>glfwGetFramebufferSize()</code>, it will likely be larger than that. It all depends on the scaling you have set in System Preferences. Anways, to counteract this issue, we'll need to make a few changes to our GLFWwindow and metalLayer creation:</p>
+<p><div class="highlight"><span class="filename">mtl_engine.cpp</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">MTLEngine::initWindow</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="n">glfwInit</span><span class="p">();</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CLIENT_API</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_NO_API</span><span class="p">);</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="n">glfwWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwCreateWindow</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Metal Engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">glfwWindow</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">        </span><span class="n">glfwTerminate</span><span class="p">();</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="hll"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+</span><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="hll"><span class="w">    </span><span class="n">glfwGetFramebufferSize</span><span class="p">(</span><span class="n">glfwWindow</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">height</span><span class="p">);</span>
+</span><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">    </span><span class="n">metalWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetCocoaWindow</span><span class="p">(</span><span class="n">glfwWindow</span><span class="p">);</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">    </span><span class="n">metalLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">CAMetalLayer</span><span class="w"> </span><span class="n">layer</span><span class="p">];</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">    </span><span class="n">metalLayer</span><span class="p">.</span><span class="n">device</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">__bridge</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;</span><span class="n">MTLDevice</span><span class="o">&gt;</span><span class="p">)</span><span class="n">metalDevice</span><span class="p">;</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">    </span><span class="n">metalLayer</span><span class="p">.</span><span class="n">pixelFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MTLPixelFormatBGRA8Unorm</span><span class="p">;</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="hll"><span class="w">    </span><span class="n">metalLayer</span><span class="p">.</span><span class="n">drawableSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGSizeMake</span><span class="p">(</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">);</span>
+</span><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="n">metalWindow</span><span class="p">.</span><span class="n">contentView</span><span class="p">.</span><span class="n">layer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metalLayer</span><span class="p">;</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">    </span><span class="n">metalWindow</span><span class="p">.</span><span class="n">contentView</span><span class="p">.</span><span class="n">wantsLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">YES</span><span class="p">;</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="p">}</span>
+</code></pre></div>
+With this, our <code>metalLayer</code> size should now be set to the internal frameBuffer resolution of the <code>glfwWindow</code> object, which will give us nice and sharp edges:</p>
+<p><img alt="sharpTriangle" src="/images/sharpTriangle.png" /></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>This image references the creation of Command Buffers, as described in the Apple Metal Docs article titled <a href="https://developer.apple.com/documentation/metal/gpu_devices_and_work_submission/setting_up_a_command_structure?language=objc">Setting Up a Command Structure</a>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+  
+
+
+
+
+  <h2 id="__comments">Comments</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+  data-repo="wmarti/MetalTutorial"
+  data-repo-id="R_kgDOI3W6fQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOI3W6fc4CUFgH"
+  data-mapping="pathname"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="top"
+  data-theme="preferred_color_scheme"
+  data-lang="en"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async>
+</script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fac441b0.min.js"></script>
+      
+    
+  </body>
+</html>
