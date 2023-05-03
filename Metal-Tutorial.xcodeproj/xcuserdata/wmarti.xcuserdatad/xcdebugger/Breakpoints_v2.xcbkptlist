@@ -48,7 +48,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
             endingLineNumber = "94"
-            landmarkName = "MTLEngine::createCube()"
+            landmarkName = "MTLEngine::loadMeshes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -118,22 +118,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6D8C1F75-F019-4938-BDE8-2BDF43C81876"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Metal-Tutorial/mesh.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "Mesh::Mesh(filePath, metalDevice)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "510A27BD-EA65-4A0A-A685-A53A4C28DB44"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -141,8 +125,8 @@
             filePath = "Metal-Tutorial/mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "Mesh::Mesh(filePath, metalDevice)"
             landmarkType = "7">
             <Locations>
@@ -204,8 +188,8 @@
             filePath = "Metal-Tutorial/mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "Mesh::Mesh(filePath, metalDevice)"
             landmarkType = "7">
             <Locations>
@@ -245,54 +229,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D8794489-CC44-4957-B585-4A6DDB38D6EC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Metal-Tutorial/mesh.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "Mesh::Mesh(filePath, metalDevice)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D8794489-CC44-4957-B585-4A6DDB38D6EC - b88f0617e82e93f4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Mesh::Mesh(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, MTL::Device*)"
-                  moduleName = "Metal-Tutorial"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wmarti/Documents/MetalTutorial/Metal-Tutorial/mesh.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "372">
-               </Location>
-               <Location
-                  uuid = "D8794489-CC44-4957-B585-4A6DDB38D6EC - b88f0617e82e9391"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Mesh::Mesh(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, MTL::Device*)"
-                  moduleName = "Metal-Tutorial"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wmarti/Documents/MetalTutorial/Metal-Tutorial/mesh.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "28"
-                  endingLineNumber = "28"
-                  offsetFromSymbolStart = "368">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B5129F9E-E214-4C71-94F3-344AAD710A4D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -300,8 +236,8 @@
             filePath = "Metal-Tutorial/mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "Mesh::Mesh(filePath, metalDevice)"
             landmarkType = "7">
             <Locations>
@@ -378,8 +314,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
             <Locations>
@@ -501,8 +437,8 @@
             filePath = "Metal-Tutorial/mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "Mesh::Mesh(filePath, metalDevice)"
             landmarkType = "7">
          </BreakpointContent>
@@ -517,8 +453,8 @@
             filePath = "Metal-Tutorial/mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "Mesh::Mesh(filePath, metalDevice)"
             landmarkType = "7">
             <Locations>
@@ -670,8 +606,8 @@
             filePath = "Metal-Tutorial/mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "Mesh::Mesh(filePath, metalDevice)"
             landmarkType = "7">
          </BreakpointContent>
@@ -686,8 +622,8 @@
             filePath = "Metal-Tutorial/mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "Mesh::Mesh(filePath, metalDevice)"
             landmarkType = "7">
          </BreakpointContent>
@@ -750,8 +686,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
             <Locations>
@@ -813,8 +749,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
             <Locations>
@@ -861,8 +797,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
          </BreakpointContent>
@@ -879,7 +815,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
             endingLineNumber = "105"
-            landmarkName = "MTLEngine::createCube()"
+            landmarkName = "MTLEngine::loadMeshes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -905,9 +841,9 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "MTLEngine::createCube()"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "MTLEngine::loadMeshes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -921,9 +857,9 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "MTLEngine::createCube()"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "MTLEngine::loadMeshes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -937,9 +873,9 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "MTLEngine::createCube()"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "MTLEngine::loadMeshes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -953,8 +889,8 @@
             filePath = "Metal-Tutorial/mtl_engine.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "377"
-            endingLineNumber = "377"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
             landmarkName = "MTLEngine::encodeRenderCommand(renderCommandEncoder)"
             landmarkType = "7">
          </BreakpointContent>

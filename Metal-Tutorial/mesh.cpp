@@ -22,27 +22,22 @@ Mesh::Mesh(std::string filePath, MTL::Device* metalDevice) {
     if (!error.empty())
         std::cout << "TINYOBJ::ERROR: " << error << std::endl;
     
-//    std::cout << shapes.size() << std::endl;
-//
-//    std::cout << materials.size() << std::endl;
-//    std::cout << materials[0].diffuse_texname << std::endl;
-//    std::cout << sizeof(Mesh::vertices) << std::endl;
-//    std::cout << baseDirectory << std::endl;
-    
     
     std::unordered_map<std::string, int> diffuseTextureIndexMap;
     int count = 0;
     // Load Textures
     std::vector<std::string> diffuseFilePaths, normalFilePaths;
+    std::cout << "Loading Textures..." << std::endl;
     for(int i = 0; i < materials.size(); i++) {
         if (!materials[i].diffuse_texname.empty()) {
-            std::cout << baseDirectory + materials[i].diffuse_texname << std::endl;
+            std::cout << count+1 << ".) " << baseDirectory + materials[i].diffuse_texname << std::endl;
             diffuseFilePaths.push_back(baseDirectory + materials[i].diffuse_texname);
             diffuseTextureIndexMap[materials[i].diffuse_texname] = count++;
         }
         if (!materials[i].bump_texname.empty()) {
-            std::cout << baseDirectory + materials[i].bump_texname << std::endl;
+            std::cout << count+1 << ".) " << baseDirectory + materials[i].bump_texname << std::endl;
             normalFilePaths.push_back(baseDirectory + materials[i].bump_texname);
+//            count++;
         }
     }
     textures = new TextureArray(diffuseFilePaths,

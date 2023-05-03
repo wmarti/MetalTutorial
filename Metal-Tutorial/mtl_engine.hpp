@@ -36,7 +36,7 @@ private:
     void initDevice();
     void initWindow();
     
-    void createCube();
+    void loadMeshes();
     void createBuffers();
     void createDefaultLibrary();
     void createCommandQueue();

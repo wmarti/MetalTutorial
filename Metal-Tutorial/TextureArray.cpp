@@ -56,8 +56,9 @@ void TextureArray::loadTextures(std::vector<std::string> &filePaths, TextureType
     MTL::Texture* textureArray = device->newTexture(textureDescriptor);
     assert(textureArray != nullptr);
     textureDescriptor->release();
-    std::cout << "Texture Array Width: " << textureArray->width() << std::endl;
-    std::cout << "Texture Array Height: " << textureArray->height() << std::endl;
+    std::string textureType = type == DIFFUSE ? "Diffuse " : "Normal ";
+    std::cout << textureType << "Texture Array Width: " << textureArray->width() << std::endl;
+    std::cout << textureType << "Texture Array Height: " << textureArray->height() << std::endl;
 
     for (int i = 0; i < images.size(); i++) {
         if (type == DIFFUSE)

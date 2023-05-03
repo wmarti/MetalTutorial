@@ -10,7 +10,7 @@ void MTLEngine::init() {
     initWindow();
     
     createCommandQueue();
-    createCube();
+    loadMeshes();
     createBuffers();
     createDefaultLibrary();
 //    createCommandQueue();
@@ -90,7 +90,7 @@ void MTLEngine::initWindow() {
     metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
 }
 
-void MTLEngine::createCube() {
+void MTLEngine::loadMeshes() {
 //    Mesh mesh("assets/Chief/Chief.obj", metalDevice);
     Mesh mesh("assets/ODST/odst.obj", metalDevice);
 //    Mesh mesh("assets/backpack/backpack.obj", metalDevice);
@@ -111,21 +111,8 @@ void MTLEngine::createCube() {
     normalMaps = mesh.textures->normalTextureArray;
     normalMaps->setLabel(NS::String::string("NormalMap Texture Array", NS::ASCIIStringEncoding));
     
-//    std::cout << "Mesh Vertex Buffer Size: " << meshVertexBufferSize << std::endl;
-//    std::cout << "First few vertices:" << std::endl;
-//    for (size_t i = 0; i < std::min<size_t>(10, mesh.vertices.size()); ++i) {
-//        Vertex &v = mesh.vertices[i];
-//        std::cout << "Vertex " << i << ": "
-//                  << "position(" << v.position.x << ", " << v.position.y << ", " << v.position.z << "), "
-//                  << "normal(" << v.normal.x << ", " << v.normal.y << ", " << v.normal.z << "), "
-//                  << "textureCoordinate(" << v.textureCoordinate.x << ", " << v.textureCoordinate.y << "), "
-//                  << "diffuseTextureIndex(" << v.diffuseTextureIndex << "), "
-//                  << "normalTextureIndex(" << v.normalTextureIndex << ")"
-//                  << std::endl;
-//    }
-    
     size_t bufferSize = mesh.textures->diffuseTextureInfos.size() * sizeof(TextureInfo);
-    std::cout << "Num Textures: " << mesh.textures->diffuseTextureInfos.size() << std::endl;
+    std::cout << "Diffuse Texture Count: " << mesh.textures->diffuseTextureInfos.size() << std::endl;
     std::cout << "TextureInfo size: " << sizeof(TextureInfo) << std::endl;
     diffuseTextureInfos = metalDevice->newBuffer(mesh.textures->diffuseTextureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
     diffuseTextureInfos->setLabel(NS::String::string("Diffuse Texture Info Array", NS::ASCIIStringEncoding));
@@ -249,13 +236,6 @@ void MTLEngine::createLightSourceRenderPipeline() {
     renderPipelineDescriptor->setLabel(NS::String::string("Light Source Render Pipeline", NS::ASCIIStringEncoding));
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
     renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingCounterClockwise);
-    renderPipelineDescriptor->colorAttachments()->object(0)->setBlendingEnabled(true);
-    renderPipelineDescriptor->colorAttachments()->object(0)->setRgbBlendOperation(MTL::BlendOperationAdd);
-    renderPipelineDescriptor->colorAttachments()->object(0)->setAlphaBlendOperation(MTL::BlendOperationAdd);
-    renderPipelineDescriptor->colorAttachments()->object(0)->setSourceAlphaBlendFactor(MTL::BlendFactorSourceAlpha);
-    renderPipelineDescriptor->colorAttachments()->object(0)->setDestinationAlphaBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
-    renderPipelineDescriptor->colorAttachments()->object(0)->setSourceRGBBlendFactor(MTL::BlendFactorSourceAlpha);
-    renderPipelineDescriptor->colorAttachments()->object(0)->setDestinationRGBBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
     
     NS::Error* error;
     metalLightSourceRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
