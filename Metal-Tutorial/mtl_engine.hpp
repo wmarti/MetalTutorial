@@ -23,6 +23,7 @@
 #include "AAPLMathUtilities.h"
 #include "mesh.hpp"
 #include "model.hpp"
+#include "camera.hpp"
 
 #include <iostream>
 #include <filesystem>
@@ -52,8 +53,13 @@ private:
     void sendRenderCommand();
     void encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder);
     
-    static void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
+    static void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
     void resizeFrameBuffer(int width, int height);
+    static void cursorPositionCallback(GLFWwindow* window, double x, double y);
+    void updateMousePosition(double x, double y);
+    static void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+    void updateScrollPosition(double xOffset, double yOffset);
+    void processInput();
     
     MTL::Device* metalDevice;
     GLFWwindow* glfwWindow;
@@ -76,4 +82,15 @@ private:
     MTL::Texture* depthTexture;
     Model* model;
     int sampleCount = 4;
+    
+    // Camera
+    Camera camera;
+    float lastX;
+    float lastY;
+    bool firstMouse = true;
+
+    // Timing
+    float deltaTime = 0.0f;    // time between current frame and last frame
+    float lastFrame = 0.0f;
+    
 };

@@ -30,12 +30,13 @@ struct Mesh {
 
 vertex OutData vertexShader(
              uint vertexID [[vertex_id]],
-             constant Vertex* vertexData,
-             constant float4x4& modelMatrix,
-             constant float4x4& perspectiveMatrix)
+             constant Vertex* vertexData [[buffer(0)]],
+             constant float4x4& modelMatrix [[buffer(1)]],
+             constant float4x4& viewMatrix [[buffer(2)]],
+             constant float4x4& perspectiveMatrix [[buffer(3)]])
 {
     OutData out;
-    out.position = perspectiveMatrix * modelMatrix * float4(vertexData[vertexID].position, 1.0f);
+    out.position = perspectiveMatrix * viewMatrix * modelMatrix * float4(vertexData[vertexID].position, 1.0f);
     out.normal = modelMatrix * float4(vertexData[vertexID].normal, 0.0f);
     out.fragmentPosition = modelMatrix * float4(vertexData[vertexID].position, 1.0f);
     out.textureCoordinate = vertexData[vertexID].textureCoordinate;

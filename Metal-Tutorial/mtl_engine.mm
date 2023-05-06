@@ -16,11 +16,14 @@ void MTLEngine::init() {
     createLightSourceRenderPipeline();
     createDepthAndMSAATextures();
     createRenderPassDescriptor();
+    
+    camera = Camera();
 }
 
 void MTLEngine::run() {
     while (!glfwWindowShouldClose(glfwWindow)) {
         @autoreleasepool {
+            processInput();
             metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
             draw();
         }
@@ -63,6 +66,58 @@ void MTLEngine::resizeFrameBuffer(int width, int height) {
     updateRenderPassDescriptor();
 }
 
+void MTLEngine::processInput() {
+    if (glfwGetKey(glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(glfwWindow, true);
+
+    float currentFrame = (float)glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    
+    if (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS)
+        camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS)
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS)
+        camera.ProcessKeyboard(LEFT, deltaTime);
+    if (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
+        camera.ProcessKeyboard(RIGHT, deltaTime);
+}
+
+void MTLEngine::cursorPositionCallback(GLFWwindow* window, double x, double y) {
+    MTLEngine* engine = (MTLEngine*)glfwGetWindowUserPointer(window);
+    engine->updateMousePosition(x, y);
+}
+
+void MTLEngine::updateMousePosition(double x, double y) {
+    float xpos = (float)(x);
+    float ypos = (float)(y);
+
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+    lastX = xpos;
+    lastY = ypos;
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+void MTLEngine::scrollCallback(GLFWwindow *window, double xOffset, double yOffset) {
+    MTLEngine* engine = (MTLEngine*)glfwGetWindowUserPointer(window);
+    engine->updateScrollPosition(xOffset, yOffset);
+}
+
+void MTLEngine::updateScrollPosition(double xOffset, double yOffset) {
+    camera.ProcessMouseScroll((float)yOffset);
+}
+
 void MTLEngine::initWindow() {
     glfwInit();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -75,6 +130,12 @@ void MTLEngine::initWindow() {
     
     glfwSetWindowUserPointer(glfwWindow, this);
     glfwSetFramebufferSizeCallback(glfwWindow, frameBufferSizeCallback);
+    glfwSetCursorPosCallback(glfwWindow, cursorPositionCallback);
+    glfwSetScrollCallback(glfwWindow, scrollCallback);
+    
+    // Tell GLFW to Capture our Mouse.
+    glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    
     int width, height;
     glfwGetFramebufferSize(glfwWindow, &width, &height);
     
@@ -94,6 +155,7 @@ void MTLEngine::loadMeshes() {
 //    mesh = new Mesh("assets/backpack/backpack.obj", metalDevice);
 //    model = new Model("assets/San_Miguel/san-miguel-low-poly.obj", metalDevice);
     model = new Model("assets/SMG/smg.obj", metalDevice);
+//    model = new Model("assets/xeno-raven/source/XenoRaven.fbx", metalDevice);
 //    mesh = new Mesh("assets/lostEmpire/lost_empire.obj", metalDevice);
     
     std::cout << "Mesh Count: " << model->meshes.size() << std::endl;
@@ -293,12 +355,13 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     
     
 //    matrix_float4x4 rotationMatrix = matrix4x4_rotation((M_PI / 180.0f) * 90.0f, 0.0, 0.0, 1.0);
-    matrix_float4x4 rotationMatrix = matrix4x4_rotation( glfwGetTime() * 5 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation((M_PI / 180.0f), 0.0, 1.0, 0.0);
     matrix_float4x4 modelMatrix = matrix4x4_translation(0.0, 0.0, -5.0) * rotationMatrix;
+    matrix_float4x4 viewMatrix = camera.GetViewMatrix();
     // Aspect ratio should match the ratio between the window width and height,
     // otherwise the image will look stretched.
     float aspectRatio = (metalDrawable->layer()->drawableSize().width /metalDrawable->layer()->drawableSize().height);
-    float fov = 45.0f * (M_PI / 180.0f);
+    float fov = camera.Zoom * (M_PI / 180.0f);
     float nearZ = 0.1f;
     float farZ = 100.0f;
     matrix_float4x4 perspectiveMatrix = matrix_perspective_right_hand(fov, aspectRatio, nearZ, farZ);
@@ -312,7 +375,8 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
         
         renderCommandEncoder->setVertexBuffer(mesh->vertexBuffer, 0, 0);
         renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
-        renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
+        renderCommandEncoder->setVertexBytes(&viewMatrix, sizeof(viewMatrix), 2);
+        renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 3);
         renderCommandEncoder->setFragmentBytes(&cubeColor, sizeof(cubeColor), 0);
         renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
         renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
@@ -335,7 +399,8 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setRenderPipelineState(metalLightSourceRenderPSO);
     renderCommandEncoder->setVertexBuffer(lightVertexBuffer, 0, 0);
     renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
-    renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
+    renderCommandEncoder->setVertexBytes(&viewMatrix, sizeof(viewMatrix), 2);
+    renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 3);
     typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
     NS::UInteger vertexCount = 6 * 6;

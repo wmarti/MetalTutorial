@@ -17,12 +17,13 @@ struct VertexData
 
 vertex VertexData lightVertexShader(uint vertexID [[vertex_id]],
              constant VertexData* vertexData,
-             constant float4x4& modelMatrix,
-             constant float4x4& perspectiveMatrix)
+             constant float4x4& modelMatrix [[buffer(1)]],
+             constant float4x4& viewMatrix [[buffer(2)]],
+             constant float4x4& perspectiveMatrix [[buffer(3)]])
 {
     VertexData out = vertexData[vertexID];
     
-    out.position = perspectiveMatrix * modelMatrix * vertexData[vertexID].position;
+    out.position = perspectiveMatrix * viewMatrix * modelMatrix * vertexData[vertexID].position;
     return out;
 }
 
