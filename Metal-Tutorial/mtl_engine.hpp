@@ -22,6 +22,7 @@
 #include "TextureArray.hpp"
 #include "AAPLMathUtilities.h"
 #include "mesh.hpp"
+#include "model.hpp"
 
 #include <iostream>
 #include <filesystem>
@@ -36,10 +37,9 @@ private:
     void initDevice();
     void initWindow();
     
-    void loadMeshes();
-    void createBuffers();
-    void createDefaultLibrary();
     void createCommandQueue();
+    void loadMeshes();
+    void createDefaultLibrary();
     void createRenderPipeline();
     void createLightSourceRenderPipeline();
     void createDepthAndMSAATextures();
@@ -50,7 +50,7 @@ private:
     
     void draw();
     void sendRenderCommand();
-    void encodeRenderCommand(MTL::RenderCommandEncoder* renderEncoder);
+    void encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder);
     
     static void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
     void resizeFrameBuffer(int width, int height);
@@ -74,5 +74,6 @@ private:
     MTL::DepthStencilState* depthStencilState;
     MTL::Texture* msaaRenderTargetTexture;
     MTL::Texture* depthTexture;
+    Model* model;
     int sampleCount = 4;
 };

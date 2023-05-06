@@ -215,8 +215,13 @@ xcuserdata/
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
+assets/militaryBackpack/*
+assets/San_Miguel/*
+assets/lostEmpire/*
+assets/chiefobj/*
 assets/Chief/*
 assets/GhostTown/*
 assets/ODST/*
-external/assimp/*
 Metal-Tutorial.xcodeproj/project.xcworkspace/xcuserdata/wmarti.xcuserdatad/UserInterfaceState.xcuserstate
+Metal-Tutorial.xcodeproj/project.xcworkspace/xcuserdata/wmarti.xcuserdatad/UserInterfaceState.xcuserstate
+.gitignore

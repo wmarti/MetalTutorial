@@ -25,6 +25,7 @@
 		3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6D2987690700178E19 /* mtl_implementation.cpp */; };
 		3E76CD7229876E7600178E19 /* model.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD7129876E7600178E19 /* model.metal */; };
 		3E9847DC29F98D6A00209C3D /* TextureArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9847DA29F98D6A00209C3D /* TextureArray.cpp */; };
+		3EBE18552A05D36C00877C36 /* model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EBE18532A05D36C00877C36 /* model.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,8 +82,22 @@
 		3E9847DB29F98D6A00209C3D /* TextureArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureArray.hpp; sourceTree = "<group>"; };
 		3E9F222029A04ED300383DCA /* VertexData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexData.hpp; sourceTree = "<group>"; };
 		3E9F222429A060BA00383DCA /* mc_grass.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mc_grass.jpeg; sourceTree = "<group>"; };
+		3EBE18512A048D6300877C36 /* copyright.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = copyright.txt; sourceTree = "<group>"; };
+		3EBE18522A04A5A400877C36 /* San_Miguel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = San_Miguel; sourceTree = "<group>"; };
+		3EBE18532A05D36C00877C36 /* model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = model.cpp; sourceTree = "<group>"; };
+		3EBE18542A05D36C00877C36 /* model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = model.hpp; sourceTree = "<group>"; };
+		3EBE185C2A06DAA500877C36 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
+		3EBE185D2A06DAA600877C36 /* scene.gltf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene.gltf; sourceTree = "<group>"; };
+		3EBE185E2A06DAE100877C36 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		3EBE185F2A06DAE300877C36 /* scene.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = scene.bin; sourceTree = "<group>"; };
 		3EC468F02A01BE07005ED132 /* smg.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smg.obj; sourceTree = "<group>"; };
 		3EC468F62A01BE08005ED132 /* smg.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smg.mtl; sourceTree = "<group>"; };
+		3EC468F72A033F8D005ED132 /* chiefobj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = chiefobj; sourceTree = "<group>"; };
+		3EC468F92A047E26005ED132 /* lost_empire.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lost_empire.obj; sourceTree = "<group>"; };
+		3EC468FA2A047E26005ED132 /* lost_empire.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lost_empire.mtl; sourceTree = "<group>"; };
+		3EC468FB2A047E26005ED132 /* lost_empire-RGB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lost_empire-RGB.png"; sourceTree = "<group>"; };
+		3EC468FC2A047E26005ED132 /* lost_empire-Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lost_empire-Alpha.png"; sourceTree = "<group>"; };
+		3EC468FD2A047E26005ED132 /* lost_empire-RGBA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lost_empire-RGBA.png"; sourceTree = "<group>"; };
 		3ED7C06A2A00DA2200550CA6 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
 		3ED7C0732A00E67100550CA6 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +161,8 @@
 				3E76CD6B298767CD00178E19 /* mtl_engine.hpp */,
 				3E5C802529EA21D500DB49E7 /* mesh.cpp */,
 				3E5C802629EA21D500DB49E7 /* mesh.hpp */,
+				3EBE18532A05D36C00877C36 /* model.cpp */,
+				3EBE18542A05D36C00877C36 /* model.hpp */,
 				3E76CD6D2987690700178E19 /* mtl_implementation.cpp */,
 				3E9847DA29F98D6A00209C3D /* TextureArray.cpp */,
 				3E9847DB29F98D6A00209C3D /* TextureArray.hpp */,
@@ -216,6 +233,10 @@
 		3E9F222329A060A600383DCA /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				3EBE185B2A06DA9A00877C36 /* militaryBackpack */,
+				3EBE18522A04A5A400877C36 /* San_Miguel */,
+				3EC468F82A047E16005ED132 /* lostEmpire */,
+				3EC468F72A033F8D005ED132 /* chiefobj */,
 				3ED7C0692A00DA1800550CA6 /* SMG */,
 				3E69EBED2A00D6B9006968EA /* Chief */,
 				3E69EBEC2A00D6B1006968EA /* GhostTown */,
@@ -224,6 +245,30 @@
 				3E9F222429A060BA00383DCA /* mc_grass.jpeg */,
 			);
 			path = assets;
+			sourceTree = "<group>";
+		};
+		3EBE185B2A06DA9A00877C36 /* militaryBackpack */ = {
+			isa = PBXGroup;
+			children = (
+				3EBE185E2A06DAE100877C36 /* license.txt */,
+				3EBE185F2A06DAE300877C36 /* scene.bin */,
+				3EBE185D2A06DAA600877C36 /* scene.gltf */,
+				3EBE185C2A06DAA500877C36 /* textures */,
+			);
+			path = militaryBackpack;
+			sourceTree = "<group>";
+		};
+		3EC468F82A047E16005ED132 /* lostEmpire */ = {
+			isa = PBXGroup;
+			children = (
+				3EBE18512A048D6300877C36 /* copyright.txt */,
+				3EC468FC2A047E26005ED132 /* lost_empire-Alpha.png */,
+				3EC468FB2A047E26005ED132 /* lost_empire-RGB.png */,
+				3EC468FD2A047E26005ED132 /* lost_empire-RGBA.png */,
+				3EC468FA2A047E26005ED132 /* lost_empire.mtl */,
+				3EC468F92A047E26005ED132 /* lost_empire.obj */,
+			);
+			path = lostEmpire;
 			sourceTree = "<group>";
 		};
 		3ED7C0692A00DA1800550CA6 /* SMG */ = {
@@ -300,6 +345,7 @@
 				3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */,
 				3E76CD7229876E7600178E19 /* model.metal in Sources */,
 				3E07A62229CE8FFC00B174A6 /* light.metal in Sources */,
+				3EBE18552A05D36C00877C36 /* model.cpp in Sources */,
 				3E6DC92C29A81BE000C097E2 /* AAPLMathUtilities.cpp in Sources */,
 				3E56AB67297E0E6E00DB5F4F /* main.mm in Sources */,
 				3E5C802729EA21D500DB49E7 /* mesh.cpp in Sources */,

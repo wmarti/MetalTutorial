@@ -11,9 +11,7 @@ void MTLEngine::init() {
     
     createCommandQueue();
     loadMeshes();
-    createBuffers();
     createDefaultLibrary();
-//    createCommandQueue();
     createRenderPipeline();
     createLightSourceRenderPipeline();
     createDepthAndMSAATextures();
@@ -32,7 +30,8 @@ void MTLEngine::run() {
 
 void MTLEngine::cleanup() {
     glfwTerminate();
-    delete mesh;
+//    delete mesh;
+    delete model;
     msaaRenderTargetTexture->release();
     depthTexture->release();
     renderPassDescriptor->release();
@@ -91,9 +90,14 @@ void MTLEngine::initWindow() {
 }
 
 void MTLEngine::loadMeshes() {
+//    mesh = new Mesh("assets/chiefobj/chief.obj", metalDevice);
 //    mesh = new Mesh("assets/backpack/backpack.obj", metalDevice);
-    mesh = new Mesh("assets/SMG/smg.obj", metalDevice);
+//    model = new Model("assets/San_Miguel/san-miguel-low-poly.obj", metalDevice);
+    model = new Model("assets/SMG/smg.obj", metalDevice);
+//    mesh = new Mesh("assets/lostEmpire/lost_empire.obj", metalDevice);
     
+    std::cout << "Mesh Count: " << model->meshes.size() << std::endl;
+
     VertexData lightSource[] = {
         // Front face               // Normals
          {{ 0.5, -0.5, -0.5, 1.0f}, {0.0, 0.0,-1.0, 1.0}},// bottom-right 2
@@ -140,10 +144,6 @@ void MTLEngine::loadMeshes() {
     };
     
     lightVertexBuffer = metalDevice->newBuffer(&lightSource, sizeof(lightSource), MTL::ResourceStorageModeShared);
-}
-
-void MTLEngine::createBuffers() {
-    // ...
 }
 
 void MTLEngine::createDefaultLibrary() {
@@ -199,7 +199,7 @@ void MTLEngine::createLightSourceRenderPipeline() {
     assert(vertexShader);
     MTL::Function* fragmentShader = metalDefaultLibrary->newFunction(NS::String::string("lightFragmentShader", NS::ASCIIStringEncoding));
     assert(fragmentShader);
-    
+        
     MTL::RenderPipelineDescriptor* renderPipelineDescriptor = MTL::RenderPipelineDescriptor::alloc()->init();
     renderPipelineDescriptor->setVertexFunction(vertexShader);
     renderPipelineDescriptor->setFragmentFunction(fragmentShader);
@@ -290,9 +290,11 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     //renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
     renderCommandEncoder->setDepthStencilState(depthStencilState);
-    renderCommandEncoder->setVertexBuffer(mesh->vertexBuffer, 0, 0);
-    matrix_float4x4 rotationMatrix = matrix4x4_rotation(-125 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
-    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0f, 0.0f, -3.2f) * rotationMatrix;
+    
+    
+//    matrix_float4x4 rotationMatrix = matrix4x4_rotation((M_PI / 180.0f) * 90.0f, 0.0, 0.0, 1.0);
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation( glfwGetTime() * 5 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
+    matrix_float4x4 modelMatrix = matrix4x4_translation(0.0, 0.0, -5.0) * rotationMatrix;
     // Aspect ratio should match the ratio between the window width and height,
     // otherwise the image will look stretched.
     float aspectRatio = (metalDrawable->layer()->drawableSize().width /metalDrawable->layer()->drawableSize().height);
@@ -300,19 +302,27 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     float nearZ = 0.1f;
     float farZ = 100.0f;
     matrix_float4x4 perspectiveMatrix = matrix_perspective_right_hand(fov, aspectRatio, nearZ, farZ);
-    renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
-    renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
     simd_float4 cubeColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
     simd_float4 lightColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
-    renderCommandEncoder->setFragmentBytes(&cubeColor, sizeof(cubeColor), 0);
-    renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
     simd_float4 lightPosition = simd_make_float4(2 * cos(glfwGetTime()), 0.6,-0.5, 1);
-    renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
-    renderCommandEncoder->setFragmentTexture(mesh->diffuseTextures, 3);
-    renderCommandEncoder->setFragmentBuffer(mesh->diffuseTextureInfos, 0, 4);
-    
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
-    renderCommandEncoder->drawIndexedPrimitives(typeTriangle, mesh->indexCount, MTL::IndexTypeUInt32, mesh->indexBuffer, 0);
+
+    for (Mesh* mesh : model->meshes)
+    {
+        
+        renderCommandEncoder->setVertexBuffer(mesh->vertexBuffer, 0, 0);
+        renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
+        renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 2);
+        renderCommandEncoder->setFragmentBytes(&cubeColor, sizeof(cubeColor), 0);
+        renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
+        renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
+        renderCommandEncoder->setFragmentTexture(model->textures->textureArray, 3);
+        renderCommandEncoder->setFragmentBuffer(model->textures->textureInfosBuffer, 0, 4);
+        renderCommandEncoder->setFragmentBytes(&modelMatrix, sizeof(modelMatrix), 5);
+        
+        renderCommandEncoder->drawIndexedPrimitives(typeTriangle, mesh->indexCount, MTL::IndexTypeUInt32, mesh->indexBuffer, 0);
+    
+    }
 
     matrix_float4x4 scaleMatrix = matrix4x4_scale(0.3f, 0.3f, 0.3f);
     matrix_float4x4 translationMatrix = matrix4x4_translation(lightPosition.xyz);

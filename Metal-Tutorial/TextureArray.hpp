@@ -10,24 +10,19 @@
 
 #include "VertexData.hpp"
 
-enum TextureType {
-    DIFFUSE,
-    NORMAL,
-    SPECULAR,
-};
-
 class TextureArray {
 public:
-    TextureArray(std::vector<std::string>& diffuseFilePaths,
+    TextureArray(std::vector<std::string>& filePaths,
                  MTL::Device* metalDevice);
     ~TextureArray();
     
-    void loadTextures(std::vector<std::string>& filePaths,
-                      TextureType type);
+    void loadTextures(std::vector<std::string>& filePaths);
+    void createTextureInfosBuffer();
     
-    MTL::Texture* diffuseTextureArray;
+    MTL::Texture* textureArray;
     // Vectors to store texture info for each texture type
-    std::vector<TextureInfo> diffuseTextureInfos;
+    std::vector<TextureInfo> textureInfos;
+    MTL::Buffer* textureInfosBuffer;
 
 private:
     MTL::Device* device;

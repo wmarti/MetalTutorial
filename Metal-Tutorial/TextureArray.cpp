@@ -3,18 +3,23 @@
 //  Metal-Tutorial
 //
 #include <iostream>
+#include <cmath>
 
 #include "TextureArray.hpp"
 
-TextureArray::TextureArray(std::vector<std::string>& diffuseFilePaths,
+/*
+ TODO:
+    - Detect maximum texture array size for given GPU
+ */
+
+TextureArray::TextureArray(std::vector<std::string>& filePaths,
                            MTL::Device* metalDevice) {
     device = metalDevice;
-    
-    if (!diffuseFilePaths.empty())
-        loadTextures(diffuseFilePaths, TextureType::DIFFUSE);
+    loadTextures(filePaths);
+    createTextureInfosBuffer();
 }
 
-void TextureArray::loadTextures(std::vector<std::string> &filePaths, TextureType type) {
+void TextureArray::loadTextures(std::vector<std::string> &filePaths) {
     int maxImageWidth = 0, maxImageHeight = 0;
     std::vector<unsigned char*> images;
     unsigned char* image;
@@ -42,36 +47,55 @@ void TextureArray::loadTextures(std::vector<std::string> &filePaths, TextureType
                                            maxImageWidth,
                                            maxImageHeight,
                                            false);
+    int mipLevels = std::floor(std::log2(std::max(maxImageWidth, maxImageHeight))) + 1;
+    std::cout << "Mip Levels: " << mipLevels << std::endl;
     textureDescriptor->setArrayLength(images.size());
     textureDescriptor->setUsage(MTL::TextureUsageShaderRead);
     textureDescriptor->setTextureType(MTL::TextureType2DArray);
     textureDescriptor->setWidth(maxImageWidth);
     textureDescriptor->setHeight(maxImageHeight);
-    textureDescriptor->setMipmapLevelCount(1);
+    textureDescriptor->setMipmapLevelCount(mipLevels);
     textureDescriptor->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
-
-    MTL::Texture* textureArray = device->newTexture(textureDescriptor);
+    
+    textureArray = device->newTexture(textureDescriptor);
     assert(textureArray != nullptr);
     textureDescriptor->release();
-    std::string textureType = type == DIFFUSE ? "Diffuse " : "Normal ";
-    std::cout << textureType << "Texture Array Width: " << textureArray->width() << std::endl;
-    std::cout << textureType << "Texture Array Height: " << textureArray->height() << std::endl;
 
+    std::cout << "Texture Array Width: " << textureArray->width() << std::endl;
+    std::cout << "Texture Array Height: " << textureArray->height() << std::endl;
+
+    MTL::CommandQueue* commandQueue = device->newCommandQueue();
+    MTL::CommandBuffer* commandBuffer = commandQueue->commandBuffer();
+    
     for (int i = 0; i < images.size(); i++) {
-        if (type == DIFFUSE)
-            diffuseTextureInfos.push_back({widths[i], heights[i]});
+        textureInfos.push_back({widths[i], heights[i]});            
+            
         MTL::Region region = MTL::Region(0, 0, 0, widths[i], heights[i], 1);
         NS::UInteger bytesPerRow = 4 * widths[i];
         
         textureArray->replaceRegion(region, 0, i, images[i], bytesPerRow, 0);
+        
+        MTL::BlitCommandEncoder* blitEncoder = commandBuffer->blitCommandEncoder();
+        blitEncoder->generateMipmaps(textureArray);
+        blitEncoder->endEncoding();
         stbi_image_free(images[i]);
     }
-    
-    if (type == DIFFUSE)
-        diffuseTextureArray = textureArray;
+    commandBuffer->commit();
+    commandBuffer->waitUntilCompleted();
+    commandQueue->release();
+}
+
+void TextureArray::createTextureInfosBuffer() {
+    // Create Texture Info Buffer
+    size_t bufferSize = textureInfos.size() * sizeof(TextureInfo);
+    std::cout << "Texture Count: " << textureInfos.size() << std::endl;
+    std::cout << "TextureInfos size: " << bufferSize << std::endl;
+    textureInfosBuffer = device->newBuffer(textureInfos.data(), bufferSize, MTL::ResourceStorageModeShared);
+    textureInfosBuffer->setLabel(NS::String::string("Texture Info Array", NS::ASCIIStringEncoding));
 }
 
 TextureArray::~TextureArray() {
     std::cout << "TextureArray->release()" << std::endl;
-    diffuseTextureArray->release();
+    textureInfosBuffer->release();
+    textureArray->release();
 }
