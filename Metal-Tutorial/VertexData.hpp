@@ -17,6 +17,7 @@ struct Vertex {
     int diffuseTextureIndex;
     int specularTextureIndex;
     int normalMapIndex;
+    int emissiveMapIndex;
 };
 
 struct TextureInfo {

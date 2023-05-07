@@ -20,6 +20,7 @@ public:
     ~Model();
     std::vector<Mesh*> meshes;
     TextureArray* textures;
+    simd::float4x4 translationMatrix;
 
 private:
     void loadModel(std::string& filePath);

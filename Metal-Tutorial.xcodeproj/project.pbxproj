@@ -11,6 +11,7 @@
 		3E32487B29CFFB53009CDE34 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487729CFF9F4009CDE34 /* libglfw3.a */; };
 		3E32487E29CFFC3B009CDE34 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487D29CFFC3B009CDE34 /* Cocoa.framework */; };
 		3E32488129CFFC4D009CDE34 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487F29CFFC41009CDE34 /* IOKit.framework */; };
+		3E34D6082A0703BC00013F66 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E34D6062A0703BC00013F66 /* camera.cpp */; };
 		3E56AB67297E0E6E00DB5F4F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E56AB66297E0E6E00DB5F4F /* main.mm */; };
 		3E581F1629871D3000E5CDF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1529871D3000E5CDF6 /* QuartzCore.framework */; };
 		3E581F1829871D3400E5CDF6 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E581F1729871D3400E5CDF6 /* Metal.framework */; };
@@ -50,6 +51,8 @@
 		3E32487D29CFFC3B009CDE34 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3E32487F29CFFC41009CDE34 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		3E32488229CFFC86009CDE34 /* lib-universal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "lib-universal"; sourceTree = "<group>"; };
+		3E34D6062A0703BC00013F66 /* camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
+		3E34D6072A0703BC00013F66 /* camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
 		3E47CD272987185800938A41 /* metal-cpp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "metal-cpp"; sourceTree = "<group>"; };
 		3E56AB63297E0E6E00DB5F4F /* Metal-Tutorial */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Metal-Tutorial"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E56AB66297E0E6E00DB5F4F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -159,16 +162,18 @@
 				3E56AB66297E0E6E00DB5F4F /* main.mm */,
 				3E76CD6A298767CD00178E19 /* mtl_engine.mm */,
 				3E76CD6B298767CD00178E19 /* mtl_engine.hpp */,
+				3E34D6062A0703BC00013F66 /* camera.cpp */,
+				3E34D6072A0703BC00013F66 /* camera.hpp */,
 				3E5C802529EA21D500DB49E7 /* mesh.cpp */,
 				3E5C802629EA21D500DB49E7 /* mesh.hpp */,
 				3EBE18532A05D36C00877C36 /* model.cpp */,
 				3EBE18542A05D36C00877C36 /* model.hpp */,
-				3E76CD6D2987690700178E19 /* mtl_implementation.cpp */,
 				3E9847DA29F98D6A00209C3D /* TextureArray.cpp */,
 				3E9847DB29F98D6A00209C3D /* TextureArray.hpp */,
 				3E9F222029A04ED300383DCA /* VertexData.hpp */,
 				3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */,
 				3E6DC92B29A81BE000C097E2 /* AAPLMathUtilities.h */,
+				3E76CD6D2987690700178E19 /* mtl_implementation.cpp */,
 			);
 			path = "Metal-Tutorial";
 			sourceTree = "<group>";
@@ -309,7 +314,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					3E56AB62297E0E6E00DB5F4F = {
 						CreatedOnToolsVersion = 14.2;
@@ -343,6 +348,7 @@
 				3E9847DC29F98D6A00209C3D /* TextureArray.cpp in Sources */,
 				3E6B88E429A56CCD0087A2B1 /* stb_image.cpp in Sources */,
 				3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */,
+				3E34D6082A0703BC00013F66 /* camera.cpp in Sources */,
 				3E76CD7229876E7600178E19 /* model.metal in Sources */,
 				3E07A62229CE8FFC00B174A6 /* light.metal in Sources */,
 				3EBE18552A05D36C00877C36 /* model.cpp in Sources */,
@@ -389,6 +395,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -410,7 +417,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -448,6 +455,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -477,6 +485,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8E265M4P59;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -492,7 +501,7 @@
 					"$(PROJECT_DIR)/external/assimp/lib",
 					"$(PROJECT_DIR)/external/assimp/contrib/zlib",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -511,6 +520,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8E265M4P59;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -526,7 +536,7 @@
 					"$(PROJECT_DIR)/external/assimp/lib",
 					"$(PROJECT_DIR)/external/assimp/contrib/zlib",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";

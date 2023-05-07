@@ -43,6 +43,7 @@ void Model::loadTextures(const aiScene* scene) {
         mapTextureIndices(aiTextureType_DIFFUSE, material, textureIndex);
         mapTextureIndices(aiTextureType_SPECULAR, material, textureIndex);
         mapTextureIndices(aiTextureType_HEIGHT, material, textureIndex);
+        mapTextureIndices(aiTextureType_EMISSIVE, material, textureIndex);
     }
     if (textureFilePaths.size() == 0) {
         std::cerr << "Texture Files not found..." << std::endl;
@@ -84,11 +85,12 @@ Mesh* Model::processMesh(aiMesh* aiMesh, const aiScene* scene) {
     std::unordered_map<Vertex, uint32_t> uniqueVertices;
     
     // Get texture file names
-    aiString diffuseTextureName, specularTextureName, normalTextureName;
+    aiString diffuseTextureName, specularTextureName, normalTextureName, emissiveTextureName;
     aiMaterial* material = scene->mMaterials[aiMesh->mMaterialIndex];
     material->GetTexture(aiTextureType_DIFFUSE, 0, &diffuseTextureName);
     material->GetTexture(aiTextureType_SPECULAR, 0, &specularTextureName);
     material->GetTexture(aiTextureType_HEIGHT, 0, &normalTextureName);
+    material->GetTexture(aiTextureType_EMISSIVE, 0, &emissiveTextureName);
 
     // Extract Per-Vertex Data
     for (unsigned int i = 0; i < aiMesh->mNumFaces; i++) {
@@ -111,6 +113,7 @@ Mesh* Model::processMesh(aiMesh* aiMesh, const aiScene* scene) {
             vertex.diffuseTextureIndex = {textureIndexMap[diffuseTextureName.C_Str()]};
             vertex.specularTextureIndex = {textureIndexMap[specularTextureName.C_Str()]};
             vertex.normalMapIndex = {textureIndexMap[normalTextureName.C_Str()]};
+            vertex.emissiveMapIndex = {textureIndexMap[emissiveTextureName.C_Str()]};
             // Check if the vertex is unique or not
             if (uniqueVertices.count(vertex) == 0) {
                 uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());

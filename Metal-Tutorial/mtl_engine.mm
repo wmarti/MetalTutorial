@@ -82,11 +82,28 @@ void MTLEngine::processInput() {
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    
+    // Static preserves value across function calls :D
+    static bool altPressed = false;
+    if (!altPressed && glfwGetKey(glfwWindow, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) {
+        altPressed = true;
+        if (glfwGetInputMode(glfwWindow, GLFW_CURSOR) == GLFW_CURSOR_DISABLED) {
+            glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        } else {
+            glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            glfwSetCursorPos(glfwWindow, lastX, lastY);
+        }
+    }
+
+    if (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_ALT) == GLFW_RELEASE) {
+        altPressed = false;
+    }
 }
 
 void MTLEngine::cursorPositionCallback(GLFWwindow* window, double x, double y) {
     MTLEngine* engine = (MTLEngine*)glfwGetWindowUserPointer(window);
-    engine->updateMousePosition(x, y);
+    if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+        engine->updateMousePosition(x, y);
 }
 
 void MTLEngine::updateMousePosition(double x, double y) {
@@ -154,8 +171,11 @@ void MTLEngine::loadMeshes() {
 //    mesh = new Mesh("assets/chiefobj/chief.obj", metalDevice);
 //    mesh = new Mesh("assets/backpack/backpack.obj", metalDevice);
 //    model = new Model("assets/San_Miguel/san-miguel-low-poly.obj", metalDevice);
+//    model = new Model("assets/backpack/backpack.obj", metalDevice);
+//    model = new Model("assets/SMG/smg.obj", metalDevice);
     model = new Model("assets/SMG/smg.obj", metalDevice);
-//    model = new Model("assets/xeno-raven/source/XenoRaven.fbx", metalDevice);
+
+//    model = new Model("assets/ODST/odst.obj", metalDevice);
 //    mesh = new Mesh("assets/lostEmpire/lost_empire.obj", metalDevice);
     
     std::cout << "Mesh Count: " << model->meshes.size() << std::endl;
@@ -355,7 +375,7 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     
     
 //    matrix_float4x4 rotationMatrix = matrix4x4_rotation((M_PI / 180.0f) * 90.0f, 0.0, 0.0, 1.0);
-    matrix_float4x4 rotationMatrix = matrix4x4_rotation((M_PI / 180.0f), 0.0, 1.0, 0.0);
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation(90 * (M_PI / 180.0f), 0.0, 1.0, 0.0);
     matrix_float4x4 modelMatrix = matrix4x4_translation(0.0, 0.0, -5.0) * rotationMatrix;
     matrix_float4x4 viewMatrix = camera.GetViewMatrix();
     // Aspect ratio should match the ratio between the window width and height,
@@ -365,24 +385,27 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     float nearZ = 0.1f;
     float farZ = 100.0f;
     matrix_float4x4 perspectiveMatrix = matrix_perspective_right_hand(fov, aspectRatio, nearZ, farZ);
-    simd_float4 cubeColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
     simd_float4 lightColor = simd_make_float4(1.0, 1.0, 1.0, 1.0);
-    simd_float4 lightPosition = simd_make_float4(2 * cos(glfwGetTime()), 0.6,-0.5, 1);
+    simd_float4 lightPosition = simd_make_float4(2 * cos(glfwGetTime()), 0.6,0.0, 1);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
-
+    MTL::SamplerDescriptor* samplerDescriptor = MTL::SamplerDescriptor::alloc()->init();
+    samplerDescriptor->setMinFilter(MTL::SamplerMinMagFilterLinear);
+    samplerDescriptor->setMipFilter(MTL::SamplerMipFilterLinear);
+    MTL::SamplerState* samplerState = metalDevice->newSamplerState(samplerDescriptor);
+    
     for (Mesh* mesh : model->meshes)
     {
-        
         renderCommandEncoder->setVertexBuffer(mesh->vertexBuffer, 0, 0);
         renderCommandEncoder->setVertexBytes(&modelMatrix, sizeof(modelMatrix), 1);
         renderCommandEncoder->setVertexBytes(&viewMatrix, sizeof(viewMatrix), 2);
         renderCommandEncoder->setVertexBytes(&perspectiveMatrix, sizeof(perspectiveMatrix), 3);
-        renderCommandEncoder->setFragmentBytes(&cubeColor, sizeof(cubeColor), 0);
-        renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
-        renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
+        renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 0);
+        renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 1);
+        renderCommandEncoder->setFragmentBytes(&camera.Position, sizeof(camera.Position), 2);
         renderCommandEncoder->setFragmentTexture(model->textures->textureArray, 3);
         renderCommandEncoder->setFragmentBuffer(model->textures->textureInfosBuffer, 0, 4);
         renderCommandEncoder->setFragmentBytes(&modelMatrix, sizeof(modelMatrix), 5);
+        renderCommandEncoder->setFragmentSamplerState(samplerState, 6);
         
         renderCommandEncoder->drawIndexedPrimitives(typeTriangle, mesh->indexCount, MTL::IndexTypeUInt32, mesh->indexBuffer, 0);
     
