@@ -132,7 +132,7 @@ void MTLEngine::createCube() {
          {{ 0.5, -0.5,  0.5, 1.0f},   {1.0f, 1.0f}}, // bottom-right 6
          {{-0.5, -0.5, -0.5, 1.0f},   {0.0f, 0.0f}}, // bottom-left  0
          {{ 0.5, -0.5,  0.5, 1.0f},   {1.0f, 1.0f}}, // bottom-right 6
-         {{ 0.5, -0.5, -0.5, 1.0f},   {1.0f, 0.0f}} // bottom-right 2
+         {{ 0.5, -0.5, -0.5, 1.0f},   {1.0f, 0.0f}}  // bottom-right 2
     };
     
     cubeVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
@@ -172,7 +172,6 @@ void MTLEngine::createRenderPipeline() {
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
     renderPipelineDescriptor->setSampleCount(sampleCount);
     renderPipelineDescriptor->setDepthAttachmentPixelFormat(MTL::PixelFormatDepth32Float);
-    renderPipelineDescriptor->setTessellationOutputWindingOrder(MTL::WindingClockwise);
     
     NS::Error* error;
     metalRenderPSO = metalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
@@ -259,9 +258,9 @@ void MTLEngine::sendRenderCommand() {
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
-    matrix_float4x4 translationMatrix = matrix4x4_translation(0, 0, 2);
+    matrix_float4x4 translationMatrix = matrix4x4_translation(0, 0, -2);
     
-    float angleInDegrees = glfwGetTime() * 90;
+    float angleInDegrees = glfwGetTime() * -90;
     float angleInRadians = angleInDegrees * M_PI / 180.0f;
     matrix_float4x4 rotationMatrix = matrix4x4_rotation(angleInRadians, 0.0, -1.0, 0.0);
 
@@ -273,11 +272,11 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     float nearZ = 0.1f;
     float farZ = 100.0f;
     
-    matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
+    matrix_float4x4 perspectiveMatrix = matrix_perspective_right_hand(fov, aspectRatio, nearZ, farZ);
     TransformationData transformationData = { modelMatrix, perspectiveMatrix };
     memcpy(transformationBuffer->contents(), &transformationData, sizeof(transformationData));
     
-    renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
+    renderCommandEncoder->setFrontFacingWinding(MTL::WindingClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
 //    renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
@@ -286,7 +285,7 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     renderCommandEncoder->setVertexBuffer(transformationBuffer, 0, 1);
     MTL::PrimitiveType typeTriangle = MTL::PrimitiveTypeTriangle;
     NS::UInteger vertexStart = 0;
-    NS::UInteger vertexCount = 6 * 6;
+    NS::UInteger vertexCount = 36;
     renderCommandEncoder->setFragmentTexture(grassTexture->texture, 0);
     renderCommandEncoder->drawPrimitives(typeTriangle, vertexStart, vertexCount);
 }
