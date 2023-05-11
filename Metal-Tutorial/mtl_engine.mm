@@ -85,6 +85,8 @@ void MTLEngine::initWindow() {
     metalLayer.drawableSize = CGSizeMake(width, height);
     metalWindow.contentView.layer = metalLayer;
     metalWindow.contentView.wantsLayer = YES;
+    
+    metalDrawable = (__bridge CA::MetalDrawable*)[metalLayer nextDrawable];
 }
 
 void MTLEngine::createCube() {
