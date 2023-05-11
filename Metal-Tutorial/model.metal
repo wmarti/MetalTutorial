@@ -107,7 +107,7 @@ fragment float4 fragmentShader(OutData in [[stage_in]],
     float spec = pow(max(dot(float4(normal, 1.0), halfwayDirection), 0.0), 64);
     float4 specular = specularStrength * spec * specularSample;
     
-    float4 finalColor = (ambient + diffuse + specular + emissiveSample);
+    float4 finalColor = (ambient + diffuse + specular);
     
     return finalColor;
 }
