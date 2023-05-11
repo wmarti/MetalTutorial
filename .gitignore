@@ -224,3 +224,4 @@ assets/GhostTown/*
 assets/ODST/*
 Metal-Tutorial.xcodeproj/project.xcworkspace/xcuserdata/wmarti.xcuserdatad/UserInterfaceState.xcuserstate
 
+*.xcuserstate
