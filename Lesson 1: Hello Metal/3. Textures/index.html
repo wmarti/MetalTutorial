@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#handling-window-resizing" class="md-skip">
+        <a href="#basic-texturing-with-metal" class="md-skip">
           Skip to content
         </a>
       
@@ -334,9 +334,47 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3. Textures
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         3. Textures
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#handling-window-resizing" class="md-nav__link">
+    Handling Window Resizing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-textures-to-our-meshes" class="md-nav__link">
+    Applying Textures to our Meshes
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -507,6 +545,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#handling-window-resizing" class="md-nav__link">
+    Handling Window Resizing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-textures-to-our-meshes" class="md-nav__link">
+    Applying Textures to our Meshes
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -520,7 +580,8 @@
                   
 
 
-<h1 id="handling-window-resizing">Handling Window Resizing</h1>
+<h1 id="basic-texturing-with-metal">Basic Texturing with Metal</h1>
+<h2 id="handling-window-resizing">Handling Window Resizing</h2>
 <p>Before we jump into the fun of adding textures, there's one thing I'd like to add, and that is window resizing. Currently when we resize the window, the resolution of our <code>metalLayer.drawableSize</code> will not be updated. To handle this, we'll first define two new functions in our <code>MTLEngine</code> class:</p>
 <p><div class="highlight"><span class="filename">mtl_engine.hpp</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">MTLEngine</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">...</span>
@@ -548,7 +609,7 @@ And then we'll actually implement them:
 </code></pre></div>
 GLFW gives us the ability to define a callback function for when the window is resized. It populates the <code>GLFWwindow*</code>, <code>width</code>, and <code>height</code> automatically for us. One issue is that if the callback function is created as a member function in a class, it's required to be static. Normally, this would be an issue, as we want to update the <code>drawableSize</code> property of our <code>metalLayer</code> variable, which is non-static. We can solve this problem by using the <code>glfwSetWindowUserPointer()</code> and <code>glfwGetWindowUserPointer()</code> functions provided by GLFW. We can store a pointer to our <code>MTLEngine</code> instance in the GLFW window, then retrieve it in the static callback function to access our non-static <code>resizeFramebuffer()</code> function, where we actually resize the <code>metalLayer.drawableSize</code>.</p>
 <p>Now when we resize our window, it will resize the <code>metalLayer</code> accordingly!</p>
-<h1 id="applying-textures-to-our-meshes">Applying Textures to our Meshes</h1>
+<h2 id="applying-textures-to-our-meshes">Applying Textures to our Meshes</h2>
 <p>In order to apply a texture to our mesh, we're going to to need a texture image. You can choose any image you like, but I'll be going with <a href="/images/mc_grass.jpeg">this one</a>. Feel free to use it as well. Once you have your image, create an assets folder in your Xcode project and place your image inside it. Now that we have a texture, we'll need a way to load it in to memory. For this we'll use <code>stbi_image</code>, which is a lightweight header-only image loading library. In the <code>external</code> directory, create a new folder called <code>stb</code>, and right click <a href="https://raw.githubusercontent.com/nothings/stb/master/stb_image.h">this link</a> and save the header file there. Next, create an implementation file called <code>stbi_image.cpp</code> in the same folder and add this code:
 <div class="highlight"><span class="filename">stbi_image.cpp</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#define STB_IMAGE_IMPLEMENTATION</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;stb_image.h&quot;</span>
@@ -835,7 +896,7 @@ We'll set our <code>squareVertexBuffer</code>, update our vertex count to 6, and
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.fac441b0.min.js"></script>

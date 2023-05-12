@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#setting-up-xcode-for-use-with-metal-cpp" class="md-skip">
+        <a href="#metal-cpp-setup" class="md-skip">
           Skip to content
         </a>
       
@@ -254,9 +254,47 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Lesson 0: Setup
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Lesson 0: Setup
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-xcode-for-use-with-metal-cpp" class="md-nav__link">
+    Setting up Xcode for use with metal-cpp
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-glfw-for-window-creation" class="md-nav__link">
+    Setting up GLFW for Window Creation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -505,6 +543,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-xcode-for-use-with-metal-cpp" class="md-nav__link">
+    Setting up Xcode for use with metal-cpp
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-glfw-for-window-creation" class="md-nav__link">
+    Setting up GLFW for Window Creation
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -518,7 +578,8 @@
                   
 
 
-<h1 id="setting-up-xcode-for-use-with-metal-cpp">Setting up Xcode for use with <code>metal-cpp</code></h1>
+<h1 id="metal-cpp-setup">Metal-cpp Setup</h1>
+<h2 id="setting-up-xcode-for-use-with-metal-cpp">Setting up Xcode for use with <code>metal-cpp</code></h2>
 <p>In order to write Metal code, either for an iOS based device or MacOS, we're pretty much going to need Xcode. Development for Apple devices can be done in other editors, but it is not recommended, as Xcode is created by Apple specifically for development within its ecosystem. If you don't have it already, you can download it for free from the <a href="https://apps.apple.com/us/app/xcode/id497799835?mt=12">Mac App Store</a>. </p>
 <p><strong>If you don't want to go through the <code>metal-cpp</code> or GLFW setup process, head on over to the GitHub and clone <a href="https://github.com/wmarti/MetalTutorial/tree/Lesson_0">Lesson 0</a> where I've configured the project already. Otherwise, read on!</strong></p>
 <p>Metal is designed to be written in a programming language called Objective-C. Objective-C, along with Apple's Swift programming language, are the languages typically used to write macOS and iOS applications. In this tutorial series, however, we're going to be writing our application primarily in C++, as this is the industry standard for writing Computer Graphics related applications, whether it be for real-time rendering in video games, or for CAD software. I say "primarily" because we'll actually be using a bit of "Objective-C++", which allows us to mix Objective-C code with C++ to make things a little easier for us. Even though Metal is typically written in pure Objective-C, for convenience Apple has released a set of C++ bindings that act as an interface to the the Metal Graphics API, allowing us to write high-performance graphics and compute applications for Apple devices in (almost) pure C++. This wrapper is very light-weight, and acts as a one-to-one translation between the native Objective-C functions calls and C++. You're going to need to download the library <a href="https://developer.apple.com/metal/cpp/">here</a>.</p>
@@ -557,7 +618,7 @@
 Now, you can build and run:
 <img alt="ready" src="/images/ready.png" /></p>
 <p>If everything went smoothly, you should see some output in the Xcode console mentioning Metal API Validation and what not. If you don't, make sure you followed all of the steps correctly.</p>
-<h1 id="setting-up-glfw-for-window-creation">Setting up GLFW for Window Creation</h1>
+<h2 id="setting-up-glfw-for-window-creation">Setting up GLFW for Window Creation</h2>
 <p>To use the graphics rendering aspect of Metal, we're going to need a window to render our application to. This is where a cross platform windowing library called <code>GLFW</code> comes in. Typically, it's used in conjunction with the OpenGL graphics API, but we can disable this functionality to be able to use it with Metal. In short, it's going to make window creation, as well as keyboard/mouse/controller input handling really easy for us. MacOS has it's own windowing library that's part of the Cocoa framework, but I'm not familiar with how to use it, and we'll able to setup GLFW and get it to expose the part of Cocoa windowing that we <em>will</em> need in about 5 lines of code.</p>
 <p>There's a couple of different ways to get GLFW. One way is to download the <a href="https://www.glfw.org/download.html">macOS pre-compiled binaries</a> on the glfw website. This is the way I've set it up on the GitHub repository, starting with <a href="https://github.com/wmarti/MetalTutorial/tree/Lesson_0">Lesson 0</a>. You can head over there and clone that project if you'd like to use GLFW's pre-compiled universal binaries, supported on Intel as well as M1 and later Macs.</p>
 <p>Alternatively, you can get it via the <code>brew</code> package manager, which is what I'll show here. If you don't have <code>brew</code>, you can get it here: <a href="https://brew.sh/">brew.sh</a>. It's a very useful tool to have for software development on Mac. It's essentially like <code>apt-get</code> on Debian Linux distros, if you're familiar with that.</p>
@@ -671,7 +732,7 @@ Select <code>libglfw.3.3.dylib</code>:
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.indexes"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.indexes", "toc.follow"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.fac441b0.min.js"></script>
