@@ -26,7 +26,7 @@ vertex VertexOut vertexShader(uint vertexID [[vertex_id]],
              constant TransformationData* transformationData)
 {
     VertexOut out;
-    out.position = transformationData->perspectiveMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
+    out.position = transformationData->perspectiveMatrix * transformationData->viewMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
     out.textureCoordinate = vertexData[vertexID].textureCoordinate;
     return out;
 }
