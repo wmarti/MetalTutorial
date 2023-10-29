@@ -90,50 +90,58 @@ void MTLEngine::initWindow() {
 }
 
 void MTLEngine::createCube() {
+    // Cube for use in a right-handed coordinate system with triangle faces
+    // specified with a Counter-Clockwise winding order.
     VertexData cubeVertices[] = {
-        // Back face
-        {{-0.5, -0.5,  0.5, 1.0f},  {1.0f, 0.0f}}, // bottom-left  4
-        {{ 0.5, -0.5,  0.5, 1.0f},  {0.0f, 0.0f}}, // bottom-right 6
-        {{-0.5,  0.5,  0.5, 1.0f},  {1.0f, 1.0f}}, // top-left     5
-        {{ 0.5, -0.5,  0.5, 1.0f},  {0.0f, 0.0f}}, // bottom-right 6
-        {{ 0.5,  0.5,  0.5, 1.0f},  {0.0f, 1.0f}}, // top-right    7
-        {{-0.5,  0.5,  0.5, 1.0f},  {1.0f, 1.0f}}, // top-left     5
-        // Right face
-        {{0.5, -0.5,  0.5, 1.0f},  {1.0f, 0.0f}}, // bottom-right 6
-        {{0.5, -0.5, -0.5, 1.0f},  {0.0f, 0.0f}}, // bottom-right 2
-        {{0.5,  0.5,  0.5, 1.0f},  {1.0f, 1.0f}}, // top-right    7
-        {{0.5, -0.5, -0.5, 1.0f},  {0.0f, 0.0f}}, // bottom-right 2
-        {{0.5,  0.5, -0.5, 1.0f},  {0.0f, 1.0f}}, // bottom-right 6
-        {{0.5,  0.5,  0.5, 1.0f},  {1.0f, 1.0f}}, // top-right    3
         // Front face
-        {{ 0.5, -0.5, -0.5, 1.0f},  {1.0f, 0.0f}}, // bottom-right 2
-        {{-0.5, -0.5, -0.5, 1.0f},  {0.0f, 0.0f}}, // bottom-left  0
-        {{ 0.5,  0.5, -0.5, 1.0f},  {1.0f, 1.0f}}, // top-right    3
-        {{-0.5, -0.5, -0.5, 1.0f},  {0.0f, 0.0f}}, // bottom-left  0
-        {{-0.5,  0.5, -0.5, 1.0f},  {0.0f, 1.0f}}, // top-left     1
-        {{ 0.5,  0.5, -0.5, 1.0f},  {1.0f, 1.0f}}, // top-right    3
-        // Left face
-        {{-0.5, -0.5, -0.5, 1.0f},  {1.0f, 0.0f}}, // bottom-left  0
-        {{-0.5, -0.5,  0.5, 1.0f},  {0.0f, 0.0f}}, // top-left     1
-        {{-0.5,  0.5, -0.5, 1.0f},  {1.0f, 1.0f}}, // top-left     5
-        {{-0.5, -0.5,  0.5, 1.0f},  {0.0f, 0.0f}}, // bottom-left  0
-        {{-0.5,  0.5,  0.5, 1.0f},  {0.0f, 1.0f}}, // top-left     5
-        {{-0.5,  0.5, -0.5, 1.0f},  {1.0f, 1.0f}}, // bottom-left  4
+        {{-0.5, -0.5, 0.5, 1.0}, {0.0, 0.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 0.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {1.0, 1.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {1.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {0.0, 1.0}},
+        {{-0.5, -0.5, 0.5, 1.0}, {0.0, 0.0}},
+        
+        // Back face
+        {{0.5, -0.5, -0.5, 1.0}, {0.0, 0.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {1.0, 0.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {1.0, 1.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {1.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {0.0, 1.0}},
+        {{0.5, -0.5, -0.5, 1.0}, {0.0, 0.0}},
+
         // Top face
-        {{ 0.5,  0.5, -0.5, 1.0f},  {1.0f, 0.0f}}, // top-left     5
-        {{-0.5,  0.5, -0.5, 1.0f},  {0.0f, 0.0f}}, // top-left     1
-        {{ 0.5,  0.5,  0.5, 1.0f},  {1.0f, 1.0f}}, // top-right    3
-        {{-0.5,  0.5, -0.5, 1.0f},  {0.0f, 0.0f}}, // top-left     5
-        {{-0.5,  0.5,  0.5, 1.0f},  {0.0f, 1.0f}}, // top-right    3
-        {{ 0.5,  0.5,  0.5, 1.0f},  {1.0f, 1.0f}}, // top-right    7
+        {{-0.5, 0.5, 0.5, 1.0}, {0.0, 0.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {1.0, 0.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 1.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {0.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {0.0, 0.0}},
+
         // Bottom face
-        {{ 0.5, -0.5,  0.5, 1.0f},   {1.0f, 0.0f}}, // bottom-left  0
-        {{-0.5, -0.5,  0.5, 1.0f},   {0.0f, 0.0f}}, // bottom-left  4
-        {{ 0.5, -0.5, -0.5, 1.0f},   {1.0f, 1.0f}}, // bottom-right 6
-        {{-0.5, -0.5,  0.5, 1.0f},   {0.0f, 0.0f}}, // bottom-left  0
-        {{-0.5, -0.5, -0.5, 1.0f},   {0.0f, 1.0f}}, // bottom-right 6
-        {{ 0.5, -0.5, -0.5, 1.0f},   {1.0f, 1.0f}}  // bottom-right 2
+        {{-0.5, -0.5, -0.5, 1.0}, {0.0, 0.0}},
+        {{0.5, -0.5, -0.5, 1.0}, {1.0, 0.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 1.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 1.0}},
+        {{-0.5, -0.5, 0.5, 1.0}, {0.0, 1.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {0.0, 0.0}},
+
+        // Left face
+        {{-0.5, -0.5, -0.5, 1.0}, {0.0, 0.0}},
+        {{-0.5, -0.5, 0.5, 1.0}, {1.0, 0.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {1.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {1.0, 1.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {0.0, 1.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {0.0, 0.0}},
+
+        // Right face
+        {{0.5, -0.5, 0.5, 1.0}, {0.0, 0.0}},
+        {{0.5, -0.5, -0.5, 1.0}, {1.0, 0.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 1.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {0.0, 1.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {0.0, 0.0}},
     };
+
     
     cubeVertexBuffer = metalDevice->newBuffer(&cubeVertices, sizeof(cubeVertices), MTL::ResourceStorageModeShared);
 
@@ -258,27 +266,39 @@ void MTLEngine::sendRenderCommand() {
 }
 
 void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEncoder) {
-    matrix_float4x4 translationMatrix = matrix4x4_translation(0, 0.0, 0);
+    // Moves the Cube 1 unit down the negative Z-axis
+    matrix_float4x4 translationMatrix = matrix4x4_translation(0, 0.0,-1.0);
     
-    float angleInDegrees = glfwGetTime()/2.0 * 90;
+    float angleInDegrees = glfwGetTime()/2.0 * 45;
     float angleInRadians = angleInDegrees * M_PI / 180.0f;
-    matrix_float4x4 rotationMatrix = matrix4x4_rotation(angleInRadians, 0.0, -1.0, 0.0);
+    matrix_float4x4 rotationMatrix = matrix4x4_rotation(angleInRadians, 0.0, 1.0, 0.0);
 
-    matrix_float4x4 modelMatrix = matrix_identity_float4x4;
-    modelMatrix = simd_mul(translationMatrix, rotationMatrix);
+    matrix_float4x4 modelMatrix = simd_mul(translationMatrix, rotationMatrix);
     
-    matrix_float4x4 viewMatrix = matrix4x4_translation(0.0, 0.0, 2.0);
+    float time = glfwGetTime();
+    float oscillation = sin(time);  // oscillates between -1 and 1
+    float zPosition = 1.5 + 1.5 * oscillation;  // maps oscillation to range [0, 3]
+
+    simd::float3 R = simd::float3 {1, 0, 0}; // Unit-Right
+    simd::float3 U = simd::float3 {0, 1, 0}; // Unit-Up
+    simd::float3 F = simd::float3 {0, 0,-1}; // Unit-Forward
+    simd::float3 P = simd::float3 {0, 0, 1}; // Camera Position in World Space
+    
+    matrix_float4x4 viewMatrix = matrix_make_rows(R.x, R.y, R.z, dot(-R, P),
+                                                  U.x, U.y, U.z, dot(-U, P),
+                                                 -F.x,-F.y,-F.z, dot( F, P),
+                                                  0, 0, 0, 1);
     
     float aspectRatio = (metalLayer.frame.size.width / metalLayer.frame.size.height);
     float fov = 90 * (M_PI / 180.0f);
     float nearZ = 0.1f;
     float farZ = 100.0f;
     
-    matrix_float4x4 perspectiveMatrix = matrix_perspective_left_hand(fov, aspectRatio, nearZ, farZ);
+    matrix_float4x4 perspectiveMatrix = matrix_perspective_right_hand(fov, aspectRatio, nearZ, farZ);
     TransformationData transformationData = { modelMatrix, viewMatrix, perspectiveMatrix };
     memcpy(transformationBuffer->contents(), &transformationData, sizeof(transformationData));
     
-    renderCommandEncoder->setFrontFacingWinding(MTL::WindingClockwise);
+    renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
 //    renderCommandEncoder->setTriangleFillMode(MTL::TriangleFillModeLines);
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO);
