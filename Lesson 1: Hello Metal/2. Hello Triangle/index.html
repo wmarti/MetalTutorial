@@ -940,7 +940,7 @@ We're first going to grab our two Metal functions from our <code>metalDefaultLib
 </code></pre></div>
 <p>The first thing to note is the addition of our <code>@autoreleasepool</code>. The <strong>metal-cpp</strong> <code>README.md</code> describes the purpose of this better than I can, so i'll quote them here:</p>
 <blockquote>
-<p><strong>AutoreleasePools and Objects</strong></p>
+<p><strong>Autorelease Pools and Objects</strong></p>
 <p>Several methods that create temporary objects in <strong><em>*</em></strong><em>metal-cpp</em><strong><em>**</em>* add them to an <code>AutoreleasePool</code> to help manage their lifetimes. In these situations, after </strong><em>*</em><strong><em>metal-cpp</em></strong><strong>*</strong> creates the object, it adds it to an <code>AutoreleasePool</code>, which will release its objects when you release (or drain) it.</p>
 <p>By adding temporary objects to an AutoreleasePool, you do not need to explicitly call <code>release()</code> to deallocate them. Instead, you can rely on the <code>AutoreleasePool</code> to implicitly manage those lifetimes.</p>
 <p>If you create an object with a method that does not begin with <code>alloc</code>, <code>new</code>, <code>copy</code>, <code>mutableCopy</code>, or <code>Create</code>, the creating method adds the object to an autorelease pool.</p>
@@ -1108,10 +1108,16 @@ With this, our <code>metalLayer</code> size should now be set to the internal fr
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.indexes", "toc.follow", "content.tooltips"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.fac441b0.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
