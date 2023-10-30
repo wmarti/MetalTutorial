@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3E07A62229CE8FFC00B174A6 /* light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E07A62129CE8FFC00B174A6 /* light.metal */; };
-		3E32487B29CFFB53009CDE34 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487729CFF9F4009CDE34 /* libglfw3.a */; };
 		3E32487E29CFFC3B009CDE34 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487D29CFFC3B009CDE34 /* Cocoa.framework */; };
 		3E32488129CFFC4D009CDE34 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487F29CFFC41009CDE34 /* IOKit.framework */; };
 		3E56AB67297E0E6E00DB5F4F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E56AB66297E0E6E00DB5F4F /* main.mm */; };
@@ -20,6 +19,7 @@
 		3E76CD6C298767CD00178E19 /* mtl_engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6A298767CD00178E19 /* mtl_engine.mm */; };
 		3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6D2987690700178E19 /* mtl_implementation.cpp */; };
 		3E76CD7229876E7600178E19 /* cube.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD7129876E7600178E19 /* cube.metal */; };
+		3E93B7F92AF0581200E448E2 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487429CFF97D009CDE34 /* libglfw3.a */; };
 		3E9F222B29A06F6500383DCA /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F222929A06F6500383DCA /* Texture.cpp */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +54,6 @@
 		3E6B88E329A56CCD0087A2B1 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AAPLMathUtilities.cpp; sourceTree = "<group>"; };
 		3E6DC92B29A81BE000C097E2 /* AAPLMathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMathUtilities.h; sourceTree = "<group>"; };
-		3E76CD672987671200178E19 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../opt/homebrew/Cellar/glfw/3.3.8/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
 		3E76CD692987675300178E19 /* Metal-Tutorial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Metal-Tutorial.entitlements"; sourceTree = "<group>"; };
 		3E76CD6A298767CD00178E19 /* mtl_engine.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mtl_engine.mm; sourceTree = "<group>"; };
 		3E76CD6B298767CD00178E19 /* mtl_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mtl_engine.hpp; sourceTree = "<group>"; };
@@ -71,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E32487B29CFFB53009CDE34 /* libglfw3.a in Frameworks */,
+				3E93B7F92AF0581200E448E2 /* libglfw3.a in Frameworks */,
 				3E32488129CFFC4D009CDE34 /* IOKit.framework in Frameworks */,
 				3E32487E29CFFC3B009CDE34 /* Cocoa.framework in Frameworks */,
 				3E581F1A29871D4300E5CDF6 /* Foundation.framework in Frameworks */,
