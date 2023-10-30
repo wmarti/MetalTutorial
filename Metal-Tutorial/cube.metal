@@ -19,20 +19,20 @@ struct OutData {
 
 vertex OutData vertexShader(uint vertexID [[vertex_id]],
              constant VertexData* vertexData,
-             constant float4x4& modelMatrix,
-             constant float4x4& perspectiveMatrix)
+             constant TransformationData* transformationData)
 {
     OutData out;
-    out.position = perspectiveMatrix * modelMatrix * vertexData[vertexID].position;
+    out.position = transformationData->perspectiveMatrix * transformationData->viewMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
     out.normal = vertexData[vertexID].normal;
-    out.fragmentPosition = modelMatrix * vertexData[vertexID].position;
+    out.fragmentPosition = transformationData->modelMatrix * vertexData[vertexID].position;
     return out;
 }
 
 fragment float4 fragmentShader(OutData in [[stage_in]],
-                               constant float4& cubeColor     [[buffer(0)]],
-                               constant float4& lightColor    [[buffer(1)]],
-                               constant float4& lightPosition [[buffer(2)]])
+                               constant float4& cubeColor      [[buffer(0)]],
+                               constant float4& lightColor     [[buffer(1)]],
+                               constant float4& lightPosition  [[buffer(2)]],
+                               constant float4& cameraPosition [[buffer(3)]])
 {
     // Ambient
     float ambientStrength = 0.2f;
@@ -46,9 +46,9 @@ fragment float4 fragmentShader(OutData in [[stage_in]],
     
     // Specular
     float specularStrength = 0.5f;
-    float4 viewDir = normalize(float4(0.0,0.0,0.0,1.0) - in.fragmentPosition);
+    float4 viewDir = normalize(cameraPosition - in.fragmentPosition);
     float4 reflectDir = reflect(-lightDir, float4(norm, 1));
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     float4 specular = specularStrength * spec * lightColor;
     
     float4 finalColor = (ambient + diffuse + specular) * cubeColor;

@@ -14,6 +14,7 @@ struct VertexData {
 };
 
 struct TransformationData {
-    float4x4 translationMatrix;
+    float4x4 modelMatrix;
+    float4x4 viewMatrix;
     float4x4 perspectiveMatrix;
 };

@@ -69,7 +69,8 @@ private:
     MTL::RenderPassDescriptor* renderPassDescriptor;
     MTL::Buffer* cubeVertexBuffer;
     MTL::Buffer* lightVertexBuffer;
-    MTL::Buffer* transformationBuffer;
+    MTL::Buffer* cubeTransformationBuffer;
+    MTL::Buffer* lightTransformationBuffer;
     MTL::DepthStencilState* depthStencilState;
     MTL::Texture* msaaRenderTargetTexture;
     MTL::Texture* depthTexture;
