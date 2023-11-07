@@ -49,8 +49,9 @@ fragment float4 sphereFragmentShader(OutData in [[stage_in]],
     // Specular
     float specularStrength = 1.0f;
     float4 viewDir = normalize(cameraPosition - in.fragmentPosition);
-    float4 reflectDir = reflect(-lightDir, float4(norm, 1));
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
+    float4 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(float4(norm, 1.0), halfwayDir), 0.0), 32);
+    
     float4 specular = specularStrength * spec * lightColor;
     
     float4 finalColor = (ambient + diffuse + specular) * sphereColor;
