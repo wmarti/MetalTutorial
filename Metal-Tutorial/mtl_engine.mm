@@ -359,10 +359,10 @@ void MTLEngine::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandEnco
     simd_float4 lightPosition = simd_make_float4(-2.5, 1.5, 1, 1);
     simd_float4 cameraPosition = simd_make_float4(P.xyz, 1.0);
 
-    renderCommandEncoder->setVertexBytes(&sphereColor, sizeof(sphereColor), 2);
-    renderCommandEncoder->setVertexBytes(&lightColor, sizeof(lightColor), 3);
-    renderCommandEncoder->setVertexBytes(&lightPosition, sizeof(lightPosition), 4);
-    renderCommandEncoder->setVertexBytes(&cameraPosition, sizeof(cameraPosition), 5);
+    renderCommandEncoder->setFragmentBytes(&sphereColor, sizeof(sphereColor), 0);
+    renderCommandEncoder->setFragmentBytes(&lightColor, sizeof(lightColor), 1);
+    renderCommandEncoder->setFragmentBytes(&lightPosition, sizeof(lightPosition), 2);
+    renderCommandEncoder->setFragmentBytes(&cameraPosition, sizeof(cameraPosition), 3);
     
     renderCommandEncoder->setFrontFacingWinding(MTL::WindingCounterClockwise);
     renderCommandEncoder->setCullMode(MTL::CullModeBack);
