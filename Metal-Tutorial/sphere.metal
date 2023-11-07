@@ -43,10 +43,10 @@ vertex OutData sphereVertexShader(uint vertexID [[vertex_id]],
     float4 diffuse = diff * lightColor;
     
     // Specular
-    float specularStrength = 0.5f;
+    float specularStrength = 1.0f;
     float4 viewDir = normalize(cameraPosition - out.fragmentPosition);
     float4 reflectDir = reflect(-lightDir, float4(norm, 1));
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
     float4 specular = specularStrength * spec * lightColor;
     
     out.finalColor = (ambient + diffuse + specular) * sphereColor;

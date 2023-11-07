@@ -99,6 +99,7 @@ void MTLEngine::createSphere(int numLatitudeLines, int numLongitudeLines) {
         for (int lon = 0; lon < numLongitudeLines; ++lon) {
             // Define the corners of the square
             std::array<simd::float4, 4> squareVertices;
+            std::array<simd::float4, 4> normals;
             
             for (int i = 0; i < 4; ++i) {
                 float theta = (lat + (i / 2)) * PI / numLatitudeLines;
@@ -109,23 +110,19 @@ void MTLEngine::createSphere(int numLatitudeLines, int numLongitudeLines) {
                 float cosPhi = cosf(phi);
 
                 squareVertices[i] = {cosPhi * sinTheta, cosTheta, sinPhi * sinTheta, 1.0f};
+                
+                // Normal of the vertex, same as its position on a unit sphere
+                normals[i] = simd::normalize(squareVertices[i]);
             }
 
-            // Calculate the normal for the square (use the first triangle to compute it)
-            simd::float3 edge1 = squareVertices[1].xyz - squareVertices[0].xyz;
-            simd::float3 edge2 = squareVertices[3].xyz - squareVertices[0].xyz;
-            simd::float3 faceNormal = simd::cross(edge1, edge2);
-            faceNormal = simd::normalize(faceNormal);
-            simd::float4 normal = {faceNormal.x, faceNormal.y, faceNormal.z, 0.0f};
-
             // Create two triangles for the square face with counter-clockwise winding order
-            vertices.push_back(VertexData{squareVertices[0], normal}); // First triangle
-            vertices.push_back(VertexData{squareVertices[1], normal});
-            vertices.push_back(VertexData{squareVertices[2], normal});
+            vertices.push_back(VertexData{squareVertices[0], normals[0]}); // First triangle
+            vertices.push_back(VertexData{squareVertices[1], normals[1]});
+            vertices.push_back(VertexData{squareVertices[2], normals[2]});
 
-            vertices.push_back(VertexData{squareVertices[1], normal}); // Second triangle
-            vertices.push_back(VertexData{squareVertices[3], normal});
-            vertices.push_back(VertexData{squareVertices[2], normal});
+            vertices.push_back(VertexData{squareVertices[1], normals[1]}); // Second triangle
+            vertices.push_back(VertexData{squareVertices[3], normals[3]});
+            vertices.push_back(VertexData{squareVertices[2], normals[2]});
         }
     }
     sphereVertexBuffer = metalDevice->newBuffer(vertices.data(), sizeof(VertexData) * vertices.size(), MTL::ResourceStorageModeShared);
