@@ -1,5 +1,5 @@
 //
-//  cube.metal
+//  sphere.metal
 //  MetalTutorial
 //
 
@@ -15,42 +15,47 @@ struct OutData {
     float4 position [[position]];
     float4 normal;
     float4 fragmentPosition;
+    float4 finalColor;
 };
 
-vertex OutData vertexShader(uint vertexID [[vertex_id]],
-             constant VertexData* vertexData,
-             constant TransformationData* transformationData)
+vertex OutData sphereVertexShader(uint vertexID [[vertex_id]],
+             constant VertexData* vertexData                 [[buffer(0)]],
+             constant TransformationData* transformationData [[buffer(1)]],
+             constant float4& sphereColor                      [[buffer(2)]],
+             constant float4& lightColor                     [[buffer(3)]],
+             constant float4& lightPosition                  [[buffer(4)]],
+             constant float4& cameraPosition                 [[buffer(5)]])
 {
     OutData out;
     out.position = transformationData->perspectiveMatrix * transformationData->viewMatrix * transformationData->modelMatrix * vertexData[vertexID].position;
     out.normal = vertexData[vertexID].normal;
     out.fragmentPosition = transformationData->modelMatrix * vertexData[vertexID].position;
-    return out;
-}
-
-fragment float4 fragmentShader(OutData in [[stage_in]],
-                               constant float4& cubeColor      [[buffer(0)]],
-                               constant float4& lightColor     [[buffer(1)]],
-                               constant float4& lightPosition  [[buffer(2)]],
-                               constant float4& cameraPosition [[buffer(3)]])
-{
+    
+    
     // Ambient
     float ambientStrength = 0.2f;
     float4 ambient = ambientStrength * lightColor;
     
     // Diffuse
-    float3 norm = normalize(in.normal.xyz);
-    float4 lightDir = normalize(lightPosition - in.fragmentPosition);
+    float3 norm = normalize(out.normal.xyz);
+    float4 lightDir = normalize(lightPosition - out.fragmentPosition);
     float diff = max(dot(norm, lightDir.xyz), 0.0);
     float4 diffuse = diff * lightColor;
     
     // Specular
     float specularStrength = 0.5f;
-    float4 viewDir = normalize(cameraPosition - in.fragmentPosition);
+    float4 viewDir = normalize(cameraPosition - out.fragmentPosition);
     float4 reflectDir = reflect(-lightDir, float4(norm, 1));
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     float4 specular = specularStrength * spec * lightColor;
     
-    float4 finalColor = (ambient + diffuse + specular) * cubeColor;
-    return finalColor;
+    out.finalColor = (ambient + diffuse + specular) * sphereColor;
+    
+    return out;
+}
+
+fragment float4 sphereFragmentShader(OutData in [[stage_in]])
+{
+
+    return in.finalColor;
 }

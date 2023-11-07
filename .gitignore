@@ -32,8 +32,8 @@
 # OS X temporary files that should never be committed
 #
 # c.f. http://www.westwind.com/reference/os-x/invisibles.html
-
 .DS_Store
+*.DS_Store
 
 # c.f. http://www.westwind.com/reference/os-x/invisibles.html
 

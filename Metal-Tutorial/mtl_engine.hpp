@@ -17,7 +17,6 @@
 #include <QuartzCore/QuartzCore.hpp>
 #include <simd/simd.h>
 
-
 #include "VertexData.hpp"
 #include "Texture.hpp"
 #include <stb/stb_image.h>
@@ -36,7 +35,8 @@ private:
     void initDevice();
     void initWindow();
     
-    void createCube();
+    void createSphere(int numLatitudeLines=34, int numLongitudeLines=34);
+    void createLight();
     void createBuffers();
     void createDefaultLibrary();
     void createCommandQueue();
@@ -67,12 +67,13 @@ private:
     MTL::RenderPipelineState* metalRenderPSO;
     MTL::RenderPipelineState* metalLightSourceRenderPSO;
     MTL::RenderPassDescriptor* renderPassDescriptor;
-    MTL::Buffer* cubeVertexBuffer;
+    MTL::Buffer* sphereVertexBuffer;
     MTL::Buffer* lightVertexBuffer;
-    MTL::Buffer* cubeTransformationBuffer;
+    MTL::Buffer* sphereTransformationBuffer;
     MTL::Buffer* lightTransformationBuffer;
     MTL::DepthStencilState* depthStencilState;
     MTL::Texture* msaaRenderTargetTexture;
     MTL::Texture* depthTexture;
     int sampleCount = 4;
+    NS::UInteger vertexCount = 0;
 };

@@ -18,9 +18,11 @@
 		3E6DC92C29A81BE000C097E2 /* AAPLMathUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6DC92A29A81BE000C097E2 /* AAPLMathUtilities.cpp */; };
 		3E76CD6C298767CD00178E19 /* mtl_engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6A298767CD00178E19 /* mtl_engine.mm */; };
 		3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD6D2987690700178E19 /* mtl_implementation.cpp */; };
-		3E76CD7229876E7600178E19 /* cube.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E76CD7129876E7600178E19 /* cube.metal */; };
 		3E93B7F92AF0581200E448E2 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E32487429CFF97D009CDE34 /* libglfw3.a */; };
 		3E9F222B29A06F6500383DCA /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9F222929A06F6500383DCA /* Texture.cpp */; };
+		3EB5C2512AF9E533002B26F9 /* sphere.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3EB5C2502AF9E533002B26F9 /* sphere.metal */; };
+		3ED187EF2AF491E60090B542 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED187EE2AF491E60090B542 /* MetalKit.framework */; };
+		3ED187F12AF491EA0090B542 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED187F02AF491EA0090B542 /* ModelIO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,11 +60,13 @@
 		3E76CD6A298767CD00178E19 /* mtl_engine.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mtl_engine.mm; sourceTree = "<group>"; };
 		3E76CD6B298767CD00178E19 /* mtl_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mtl_engine.hpp; sourceTree = "<group>"; };
 		3E76CD6D2987690700178E19 /* mtl_implementation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mtl_implementation.cpp; sourceTree = "<group>"; };
-		3E76CD7129876E7600178E19 /* cube.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = cube.metal; sourceTree = "<group>"; };
 		3E9F222029A04ED300383DCA /* VertexData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexData.hpp; sourceTree = "<group>"; };
 		3E9F222429A060BA00383DCA /* mc_grass.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mc_grass.jpeg; sourceTree = "<group>"; };
 		3E9F222929A06F6500383DCA /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		3E9F222A29A06F6500383DCA /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		3EB5C2502AF9E533002B26F9 /* sphere.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = sphere.metal; sourceTree = "<group>"; };
+		3ED187EE2AF491E60090B542 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		3ED187F02AF491EA0090B542 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				3E32487E29CFFC3B009CDE34 /* Cocoa.framework in Frameworks */,
 				3E581F1A29871D4300E5CDF6 /* Foundation.framework in Frameworks */,
 				3E581F1829871D3400E5CDF6 /* Metal.framework in Frameworks */,
+				3ED187EF2AF491E60090B542 /* MetalKit.framework in Frameworks */,
+				3ED187F12AF491EA0090B542 /* ModelIO.framework in Frameworks */,
 				3E581F1629871D3000E5CDF6 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,7 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				3E76CD692987675300178E19 /* Metal-Tutorial.entitlements */,
-				3E76CD7129876E7600178E19 /* cube.metal */,
+				3EB5C2502AF9E533002B26F9 /* sphere.metal */,
 				3E07A62129CE8FFC00B174A6 /* light.metal */,
 				3E56AB66297E0E6E00DB5F4F /* main.mm */,
 				3E76CD6A298767CD00178E19 /* mtl_engine.mm */,
@@ -133,12 +139,13 @@
 		3E581F1429871D3000E5CDF6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3ED187F02AF491EA0090B542 /* ModelIO.framework */,
+				3ED187EE2AF491E60090B542 /* MetalKit.framework */,
 				3E32487F29CFFC41009CDE34 /* IOKit.framework */,
 				3E32487D29CFFC3B009CDE34 /* Cocoa.framework */,
 				3E32487929CFFB2A009CDE34 /* libglfw.3.dylib */,
 				3E32487429CFF97D009CDE34 /* libglfw3.a */,
 				3E32487729CFF9F4009CDE34 /* libglfw3.a */,
-				3E76CD672987671200178E19 /* libglfw.3.3.dylib */,
 				3E581F1929871D4300E5CDF6 /* Foundation.framework */,
 				3E581F1729871D3400E5CDF6 /* Metal.framework */,
 				3E581F1529871D3000E5CDF6 /* QuartzCore.framework */,
@@ -231,8 +238,8 @@
 			files = (
 				3E6B88E429A56CCD0087A2B1 /* stb_image.cpp in Sources */,
 				3E76CD6E2987690700178E19 /* mtl_implementation.cpp in Sources */,
-				3E76CD7229876E7600178E19 /* cube.metal in Sources */,
 				3E9F222B29A06F6500383DCA /* Texture.cpp in Sources */,
+				3EB5C2512AF9E533002B26F9 /* sphere.metal in Sources */,
 				3E07A62229CE8FFC00B174A6 /* light.metal in Sources */,
 				3E6DC92C29A81BE000C097E2 /* AAPLMathUtilities.cpp in Sources */,
 				3E56AB67297E0E6E00DB5F4F /* main.mm in Sources */,
@@ -358,6 +365,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Metal-Tutorial/Metal-Tutorial.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -383,6 +391,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Metal-Tutorial/Metal-Tutorial.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
