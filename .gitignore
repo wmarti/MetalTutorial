@@ -225,3 +225,8 @@ assets/ODST/*
 Metal-Tutorial.xcodeproj/project.xcworkspace/xcuserdata/wmarti.xcuserdatad/UserInterfaceState.xcuserstate
 
 *.xcuserstate
+*.xcscheme
+*.xcbkptlist
+Breakpoints_v2.xcbkptlist
+Metal-Tutorial.xcodeproj/xcuserdata/wmarti.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+*Breakpoints_v2.xcbkptlist*
