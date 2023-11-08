@@ -1,0 +1,21 @@
+/* :root > * {
+  --md-code-hl-string-color: #0FF1CE;
+}
+
+.highlight .nc {
+  color: #89ddfb,
+  
+}
+.highlight .nn {
+  color: #b8ede1
+}
+
+.highlight :is(.k, .kd, .kn, .kp, .kr, .kt) {
+  color: #ee81b0
+}
+
+color: #89ddfb */
+
+/* :root {
+  --md-tooltip-width: 900px;
+} */

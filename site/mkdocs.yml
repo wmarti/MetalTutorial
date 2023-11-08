@@ -1,0 +1,68 @@
+site_name: Metal Tutorial
+theme:
+  name: material
+  logo: images/metal-logo-dall-e.png
+  favicon: images/metal-logo-dall-e.png
+  custom_dir: overrides                                 # The build's language
+  features:
+    - content.code.copy
+    - navigation.indexes
+    - toc.follow
+    - content.tooltips
+  font:
+    code: "SF Mono"
+  palette: 
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: teal
+      accent: light blue
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.keys
+  - footnotes
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
+      
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - css/xcode-dark.css
+
+extra:
+  analytics:
+    provider: google
+    property: G-9B3546Q8FY
+
+repo_url: https://github.com/wmarti/MetalTutorial
+repo_name: MetalTutorial
+
+
+edit_uri: edit/Lesson_0/gh-pages/
+
+plugins:
+  - social
+  - search
+
+nav:
+  # - index.html
+  - index.md
+  - Setup.md
+  - "Lesson 1: Hello Metal":
+    - 1. Hello Window: "Lesson 1: Hello Metal/1. Hello Window.md"
+    - 2. Hello Triangle: "Lesson 1: Hello Metal/2. Hello Triangle.md"
+    - 3. Textures: "Lesson 1: Hello Metal/3. Textures.md"
+  - "Lesson 2: Lets Go 3D!":
+    - 1. 3D Cube: "Lesson 2: Lets Go 3D!/1. 3D Cube.md"
+    - 2. Basic Lighting: "Lesson 2: Lets Go 3D!/2. Basic Lighting.md"
+    - 3. Loading 3D Models: "Lesson 2: Lets Go 3D!/3. Loading 3D Models.md"
+  - "Advanced Chapters":
+    - Compute Shaders: "Extra Chapters/Compute Shaders.md"
