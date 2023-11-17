@@ -1,0 +1,1236 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../1.%203D%20Cube/">
+      
+      
+        <link rel="next" href="../3.%20Loading%203D%20Models/">
+      
+      
+      <link rel="icon" href="../../images/metal-logo-dall-e.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.8">
+    
+    
+      
+        <title>2. Lighting - Metal Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4b4a2bd9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CSF+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"SF Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/xcode-dark.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-9B3546Q8FY"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-9B3546Q8FY",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-9B3546Q8FY",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="2. Lighting - Metal Tutorial" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="./assets/images/social/Lesson 2: Lets Go 3D!/2. Lighting.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="2. Lighting - Metal Tutorial" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/Lesson 2: Lets Go 3D!/2. Lighting.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="light-blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lighting-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Metal Tutorial" class="md-header__button md-logo" aria-label="Metal Tutorial" data-md-component="logo">
+      
+  <img src="../../images/metal-logo-dall-e.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Metal Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Lighting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wmarti/MetalTutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MetalTutorial
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Metal Tutorial" class="md-nav__button md-logo" aria-label="Metal Tutorial" data-md-component="logo">
+      
+  <img src="../../images/metal-logo-dall-e.png" alt="logo">
+
+    </a>
+    Metal Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wmarti/MetalTutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MetalTutorial
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to Metal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lesson 0: Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lesson 1: Hello Metal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lesson 1: Hello Metal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Lesson%201%3A%20Hello%20Metal/1.%20Hello%20Window/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Hello Window
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Lesson%201%3A%20Hello%20Metal/2.%20Hello%20Triangle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Hello Triangle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Lesson%201%3A%20Hello%20Metal/3.%20Textures/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Textures
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lesson 2: Lets Go 3D!
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Lesson 2: Lets Go 3D!
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%203D%20Cube/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. 3D Cube
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2. Lighting
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2. Lighting
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-components-of-lighting-models" class="md-nav__link">
+    Basic Components of Lighting Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Components of Lighting Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emissive-example" class="md-nav__link">
+    Emissive Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-shading-models" class="md-nav__link">
+    Basic Shading Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Shading Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flat-shading" class="md-nav__link">
+    Flat Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gouraud-shading" class="md-nav__link">
+    Gouraud Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phong-shading" class="md-nav__link">
+    Phong Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flat-vs-gouraud-vs-phong-shading" class="md-nav__link">
+    Flat vs Gouraud vs Phong Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blinn-phong-shading" class="md-nav__link">
+    Blinn-Phong Shading
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-shading-models" class="md-nav__link">
+    Advanced Shading Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Shading Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deferred-shading" class="md-nav__link">
+    Deferred Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physically-based-rendering-pbr" class="md-nav__link">
+    Physically Based Rendering (PBR)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raytracing" class="md-nav__link">
+    Raytracing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-code-phong-and-blinn-phong-shading" class="md-nav__link">
+    The Code - Phong and Blinn-Phong Shading
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.%20Loading%203D%20Models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Loading 3D Models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Advanced Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Extra%20Chapters/Compute%20Shaders/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compute Shaders
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-components-of-lighting-models" class="md-nav__link">
+    Basic Components of Lighting Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Components of Lighting Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emissive-example" class="md-nav__link">
+    Emissive Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-shading-models" class="md-nav__link">
+    Basic Shading Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Shading Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flat-shading" class="md-nav__link">
+    Flat Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gouraud-shading" class="md-nav__link">
+    Gouraud Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phong-shading" class="md-nav__link">
+    Phong Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flat-vs-gouraud-vs-phong-shading" class="md-nav__link">
+    Flat vs Gouraud vs Phong Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blinn-phong-shading" class="md-nav__link">
+    Blinn-Phong Shading
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-shading-models" class="md-nav__link">
+    Advanced Shading Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Shading Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deferred-shading" class="md-nav__link">
+    Deferred Shading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physically-based-rendering-pbr" class="md-nav__link">
+    Physically Based Rendering (PBR)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raytracing" class="md-nav__link">
+    Raytracing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-code-phong-and-blinn-phong-shading" class="md-nav__link">
+    The Code - Phong and Blinn-Phong Shading
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="lighting-overview">Lighting Overview</h1>
+<p>Lighting in Computer Graphics is a fascinating and deep topic. To approximate lighting in a digital 3D environment, we have a variety of shading "models". A shading model, or shading algorithm, is just a method used to simulate the appearance of surfaces under light sources. It defines how the color of each pixel on the surface is calculated based on the lighting model (the mathetatical framework that describes how light interacts with surfaces) and the material properties of the surface. It typically takes into account things like the geometry of the surface, the viewer's perspective, and the lighting environment to compute the final color displayed on the screen. </p>
+<p>To start off, and before we jump into the code, I'd like to briefly discuss some of the most basic components that our lighting models can made up of, and then give a general overview of some of the most common shading models:</p>
+<h3 id="basic-components-of-lighting-models">Basic Components of Lighting Models</h3>
+<p>Components such as ambient, diffuse, specular, emissive, and others are used within lighting models to aproximate how light interacts with objects. These components are the building blocks of a lighting model. In particular, we'll cover these four in code as we discuss and implement 3 of the most basic lighting models later in this chapter.</p>
+<ol>
+<li><strong>Ambient</strong> light simulates indirect light that illuminates all objects evenly, regardless of their location and orientation. The ambient light component is crucial in rendering because it simulates indirect light - the light that has bounced off other surfaces in the environment, providing a baseline illumination. This helps to avoid completely dark areas in the rendered scene that would be unrealistic in most real-world scenarios, where light tends to scatter and bounce around. It provides a base level of light so that all objects are minimally visible even if they are not directly lit by a primary light source. It doesn't produce shadows or highlights, and is generally constant and uniform across the entire scene.
+<div class="highlight"><span class="filename">Ambient Component</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Ambient</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kt">float</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kt">float4</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">surfaceColor</span><span class="p">;</span>
+</code></pre></div></li>
+<li><strong>Diffuse</strong> light simulates the light that is scattered in all directions when it hits rough surfaces. It simulates the light that comes from a specific direction, like the sun or a lamp, hits a rough surface, and is reflected equally in all directions. It's used to model the color and intensity of surfaces under direct light without the influence of shiny reflections or glossiness. Dependent on the angle between the light  direction and the surface normal.
+<div class="highlight"><span class="filename">Diffuse Component</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Diffuse</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kt">float</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">surfaceNormal</span><span class="p">,</span><span class="w"> </span><span class="n">lightDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kt">float4</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">surfaceColor</span><span class="p">;</span>
+</code></pre></div></li>
+<li><strong>Specular</strong> light represents the bright, mirror-like reflections that occur on shiny surfaces that are the result of direct reflection, like the glint off of a shiny surface. It's used to simulate the reflective properties of materials and to create highlights that change based on the viewer's perspective. It's dependent upon the viewer's position and the surface's shininess or glossiness, typically using the Phong or Blinn-Phong reflection model.
+<div class="highlight"><span class="filename">Specular Component</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Specular</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kt">float</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">viewDirection</span><span class="p">,</span><span class="w"> </span><span class="n">reflectDirection</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">shininess</span><span class="p">);</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kt">float4</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">specularStrength</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+</code></pre></div></li>
+<li><strong>Emissive</strong> light represents objects that emit their own light, like a monitor screen, or a firefly. Its usually implemented through a special "emissive" texture that defines which parts of the model emit light and what color the light should be. It's not affected by other sources of light or the viewer's perspective.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><strong>Ambient</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/images/ambient.png" /></td>
+</tr>
+<tr>
+<td><strong>Ambient + Diffuse</strong></td>
+</tr>
+<tr>
+<td><img alt="" src="/images/ambient_diffuse.png" /></td>
+</tr>
+<tr>
+<td><strong>Ambient + Diffuse + Specular</strong></td>
+</tr>
+<tr>
+<td><img alt="" src="/images/ambient_diffuse_specular.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>Above you can see 3 different examples, combining 3 of the basic lighting components, ambient, diffuse, and specular. Below you can see various examples of emissive lighting used in Halo 3. Notice that the light source at the top of the frame is affecting the lighting of the surrounding area as well. Typically this is an expensive effect that is usually approximated or pre-computed in real-time engines.</p>
+<h4 id="emissive-example">Emissive Example</h4>
+<p><img alt="" src="/images/emissive_example.png" /></p>
+<p>Now, let's briefly discuss some of the major shading models that exist within Computer Graphics, as well as the differences between them, roughly ordered in increasing complexity:</p>
+<ol>
+<li>Flat Shading</li>
+<li>Gouraud Shading</li>
+<li>Phong Shading</li>
+<li>Blinn-Phong Shading</li>
+<li>Deferred Shading</li>
+<li>Phsyically Based Rendering (PBR)</li>
+<li>Ray-Tracing</li>
+</ol>
+<h2 id="basic-shading-models">Basic Shading Models</h2>
+<p>In summary, a lighting model is the overarching concept that dictates how different types of light and material interactions are simulated. The components like ambient, diffuse, specular, and others are the individual <em>effects</em> that the lighting model uses to compute the final appearance of surfaces in the scene.</p>
+<h3 id="flat-shading">Flat Shading</h3>
+<p>Flat shading is the most basic form of shading used within Computer Graphics, and is often used when performance is a priority over visual quality or for a stylistic choice to give a low-poly retro look. It is typically done by calculating the lighting by using just one normal vector per face, the normal that is perpendicular to the face. As you can see from the image below, each polygon of the 3D model is shaded with just a single color, leading to this sort of faceted look. Flat shading combines the ambient and diffuse components to produce the final color of each face.</p>
+<div class="highlight"><span class="filename">flat.metal</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">fragment</span><span class="w"> </span><span class="kt">float4</span><span class="w"> </span><span class="n">sphereFragmentShader</span><span class="p">(</span><span class="n">FragmentData</span><span class="w"> </span><span class="n">fragment</span><span class="p">,</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">                                     </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">sphereColor</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">                                     </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lightColor</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">                                     </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lightPosition</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="c1">// Ambient</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="c1">// Diffuse</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="kt">float3</span><span class="w"> </span><span class="n">norm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">fragment</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xyz</span><span class="p">);</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">lightDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">lightPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fragment</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span><span class="w"> </span><span class="n">lightDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">finalColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sphereColor</span><span class="p">;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">finalColor</span><span class="p">;</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="p">}</span>
+</code></pre></div>
+<p><img alt="flat-shading" src="/images/flat_shading.png" /></p>
+<h3 id="gouraud-shading">Gouraud Shading</h3>
+<p>Gouraud shading combines the ambient, diffuse, and specular lighting components, calculated at each vertex, and then interpolates these colors over the faces of the polygons. While this creates smoother transitions between light and dark areas, it can result in innacurate shading within the polygon, in particular for specular highlights.  </p>
+<div class="highlight"><span class="filename">gouraud.metal</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">vertex</span><span class="w"> </span><span class="n">OutData</span><span class="w"> </span><span class="n">sphereVertexShader</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="n">vertexID</span><span class="w"> </span><span class="p">[[</span><span class="n">vertex_id</span><span class="p">]],</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">             </span><span class="n">constant</span><span class="w"> </span><span class="n">VertexData</span><span class="o">*</span><span class="w"> </span><span class="n">vertexData</span><span class="w">                 </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mo">0</span><span class="p">)]],</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">             </span><span class="n">constant</span><span class="w"> </span><span class="n">TransformationData</span><span class="o">*</span><span class="w"> </span><span class="n">transformationData</span><span class="w"> </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">1</span><span class="p">)]],</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">             </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">sphereColor</span><span class="w">                      </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">2</span><span class="p">)]],</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">             </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lightColor</span><span class="w">                     </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">3</span><span class="p">)]],</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">             </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lightPosition</span><span class="w">                  </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">4</span><span class="p">)]],</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">             </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cameraPosition</span><span class="w">                 </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">5</span><span class="p">)]])</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">{</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="n">OutData</span><span class="w"> </span><span class="k">out</span><span class="p">;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="k">out</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transformationData</span><span class="o">-&gt;</span><span class="n">perspectiveMatrix</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">transformationData</span><span class="o">-&gt;</span><span class="n">viewMatrix</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">transformationData</span><span class="o">-&gt;</span><span class="n">modelMatrix</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vertexData</span><span class="p">[</span><span class="n">vertexID</span><span class="p">].</span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="k">out</span><span class="p">.</span><span class="n">normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vertexData</span><span class="p">[</span><span class="n">vertexID</span><span class="p">].</span><span class="n">normal</span><span class="p">;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="k">out</span><span class="p">.</span><span class="n">fragmentPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transformationData</span><span class="o">-&gt;</span><span class="n">modelMatrix</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vertexData</span><span class="p">[</span><span class="n">vertexID</span><span class="p">].</span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="c1">// Ambient</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">;</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="c1">// Diffuse</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="kt">float3</span><span class="w"> </span><span class="n">norm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="k">out</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xyz</span><span class="p">);</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">lightDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">lightPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">out</span><span class="p">.</span><span class="n">fragmentPosition</span><span class="p">);</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span><span class="w"> </span><span class="n">lightDir</span><span class="p">.</span><span class="n">xyz</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="c1">// Specular</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">specularStrength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">;</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">viewDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">cameraPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">out</span><span class="p">.</span><span class="n">fragmentPosition</span><span class="p">);</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">reflectDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">lightDir</span><span class="p">,</span><span class="w"> </span><span class="kt">float4</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">viewDir</span><span class="p">,</span><span class="w"> </span><span class="n">reflectDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">specularStrength</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">    </span><span class="k">out</span><span class="p">.</span><span class="n">finalColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sphereColor</span><span class="p">;</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">out</span><span class="p">;</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="p">}</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="n">fragment</span><span class="w"> </span><span class="kt">float4</span><span class="w"> </span><span class="n">sphereFragmentShader</span><span class="p">(</span><span class="n">OutData</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[[</span><span class="n">stage_in</span><span class="p">]])</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="p">{</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">in</span><span class="p">.</span><span class="n">finalColor</span><span class="p">;</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="p">}</span>
+</code></pre></div>
+<p><img alt="gouraud-shading" src="/images/gouraud_shading.png" /></p>
+<h3 id="phong-shading">Phong Shading</h3>
+<p>Phong shading is very similar to Gouraud shading, combinging the same ambient, diffuse, and specular lighting components, but instead of interpolating the color between vertices, the normals are interpolated between the vertices and the light is evaluated per-pixel. This essentially produces an effect where the diffuse component and the specular highlights are calculated much more accurately that in the Gouraud shading model. The visual differences should be quite significant when comparing them.</p>
+<div class="highlight"><span class="filename">phong.metal</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">fragment</span><span class="w"> </span><span class="kt">float4</span><span class="w"> </span><span class="n">sphereFragmentShader</span><span class="p">(</span><span class="n">OutData</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[[</span><span class="n">stage_in</span><span class="p">]],</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">                                     </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">sphereColor</span><span class="w">                      </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mo">0</span><span class="p">)]],</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">                                     </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lightColor</span><span class="w">                     </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">1</span><span class="p">)]],</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">                                     </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lightPosition</span><span class="w">                  </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">2</span><span class="p">)]],</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">                                     </span><span class="n">constant</span><span class="w"> </span><span class="kt">float4</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cameraPosition</span><span class="w">                 </span><span class="p">[[</span><span class="n">buffer</span><span class="p">(</span><span class="mi">3</span><span class="p">)]])</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">{</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">// Ambient</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">;</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">ambient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ambientStrength</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="c1">// Diffuse</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="kt">float3</span><span class="w"> </span><span class="n">norm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="k">in</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xyz</span><span class="p">);</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">lightDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">lightPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">in</span><span class="p">.</span><span class="n">fragmentPosition</span><span class="p">);</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span><span class="w"> </span><span class="n">lightDir</span><span class="p">.</span><span class="n">xyz</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="c1">// Specular</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">specularStrength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">;</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">viewDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">cameraPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">in</span><span class="p">.</span><span class="n">fragmentPosition</span><span class="p">);</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">reflectDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">lightDir</span><span class="p">,</span><span class="w"> </span><span class="kt">float4</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">viewDir</span><span class="p">,</span><span class="w"> </span><span class="n">reflectDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">specularStrength</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="kt">float4</span><span class="w"> </span><span class="n">finalColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sphereColor</span><span class="p">;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">finalColor</span><span class="p">;</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="p">}</span>
+</code></pre></div>
+<p><img alt="phong-shading" src="/images/phong_shading.png" /></p>
+<h3 id="flat-vs-gouraud-vs-phong-shading">Flat vs Gouraud vs Phong Shading</h3>
+<p><img alt="shading comparisons" src="/images/shading_comparison.png" /></p>
+<h3 id="blinn-phong-shading">Blinn-Phong Shading</h3>
+<p>Phong Shading and Blinn-Phong Shading are both techniques that are used to simulate the way light interects with surfaces, specifically how light reflects to create specular highlights. Blinn-Phong is a modification to the Phong model that simplifies the specular calculation by using what is know as the <strong><em>halfway vector</em></strong>, i.e. the vector that lies halfway between the view and the light-source vectors.</p>
+<p>Let's first break down the vectors for calculating the Phong and Blinn-Phong shading models.</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(L\)</span> is the normalized vector pointing in the direction of the light source.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N\)</span> is the vector normal to the surface at the fragment we are operating on.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(V\)</span> is the normalized view direction vector, pointing in the direction of the "view" or camera position.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(R\)</span> is the normalized <strong><em>reflection</em></strong> vector, which represents the direction a perfectly reflected light ray would take from our light source after hitting the surface of our object.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(H\)</span> is the normalized <strong><em>halfway</em></strong> vector, and it is the vector that lies halfway between the light direction vector, <span class="arithmatex">\(L\)</span>, and the view direction vector <span class="arithmatex">\(V\)</span>.</p>
+</li>
+</ul>
+<p><img alt="halfway" src="/images/halfway.png" /></p>
+<p>Let's compare the code snippets for calculating the specular component of the Phong and Blinn-Phong Models:</p>
+<p><div class="highlight"><span class="filename">Phong</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">float3</span><span class="w"> </span><span class="n">reflection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="nb">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">lightDirection</span><span class="p">,</span><span class="w"> </span><span class="n">normal</span><span class="p">));</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kt">float</span><span class="w"> </span><span class="n">specularIntensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">reflection</span><span class="p">,</span><span class="w"> </span><span class="n">viewDirection</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">shininess</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kt">float3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">specularIntensity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+</code></pre></div>
+In the Phong model, we calculate the specular intensity like so:</p>
+<ul>
+<li><span class="arithmatex">\(R = N \cdot 2*(L \cdot N) - L\)</span></li>
+<li><span class="arithmatex">\(S_{Phong} = max(R \cdot V, 0)^a\)</span></li>
+</ul>
+<p>We clamp the dot product between <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(V\)</span> to 0 to avoid negative values, which would not make physical sense.</p>
+<p><div class="highlight"><span class="filename">Blinn-Phong</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">float3</span><span class="w"> </span><span class="n">halfway</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">lightDirection</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">viewDirection</span><span class="p">);</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kt">float</span><span class="w"> </span><span class="n">specularIntensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="n">halfway</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">shininess</span><span class="p">);</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kt">float3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">specularIntensity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">lightColor</span><span class="p">;</span>
+</code></pre></div>
+In the Blinn-Phong model:</p>
+<ul>
+<li><span class="arithmatex">\(H\)</span> = <span class="arithmatex">\(\dfrac{V+L}{||V+L||}\)</span></li>
+<li><span class="arithmatex">\(S_{Phong} = max(N \cdot H, 0)^a\)</span></li>
+</ul>
+<p>The big difference to note here, is that in Phong shading the calculation of the reflection vector is <em>not</em> free, and requires two dot products:</p>
+<ul>
+<li><span class="arithmatex">\(R = N \cdot 2*(L \cdot N) - L\)</span></li>
+</ul>
+<p>Calculation of the halfway vector in the Blinn-Phong model is more computationally efficient, as it's only an addition between two vectors, and overall it represents light more realistically than Phong for many types of surfaces.</p>
+<p><img alt="blinn-phong" src="/images/blinn-phong_shading.png" /></p>
+<p>Everything up until now will be covered in the code section of this chapter. For the following shading models which are much more complicated, I will simply give an overview of them and we will get to a more indepth discussion of them in the Advanced Chapters.</p>
+<h2 id="advanced-shading-models">Advanced Shading Models</h2>
+<h3 id="deferred-shading">Deferred Shading</h3>
+<p>Deferred shading is a technique used in computer graphics to efficiently render complex scenes with multiple (or many) light sources by decoupling the lighting calculations from the geometry rendering process. The rendering we've done up until now is what's called <strong>foward rendering</strong>. In forward rendering, a fragment that isn't influenced by a light source still undergoes calculations for that light, wasting computational resources. Deferred rendering fixes this problem, and ensures that lighting calculations are only performed for fragments that are actually affected by each light source. A deferred shading pipeline splits rendering into two stages:</p>
+<ol>
+<li>
+<p>In the <strong>Geometry Pass</strong>, the scene's geometry gets rendered to a series of textures called the "G-Buffer" or "Geometry Buffer", where each texture is responsible for storing different types of data, such as the world-space coordinates, normal, diffuse, specular, depth, texture coordinates, etc.</p>
+</li>
+<li>
+<p>Then, in the <strong>Lighting Pass</strong>, the scene is rendered again, but now each light is applied individually to the scene. For each light source, the shader will read the relevant data from the G-buffer and calculate the light's effect. Importantly, these calculations are only performed for pixels <strong><em>within the light's influence</em></strong>. How do figure that out? Well, this is typically done by rendering some sort of geometric volume that encompasses the light's effect range, like a sphere for a point light, or a cone for a spot-light, and then applying lighting calculations only within that volume.</p>
+</li>
+</ol>
+<p>The main benefit of deferred shading is that it significantly reduces the number of redundant lighting calculations. However, just like everything there are some downsides to consider:</p>
+<ol>
+<li>The <strong>Geometry Buffer</strong> requires storing a significant amount of data for each pixel, which can lead to high memory usage that only get sworse as resolution increases, and can become a limiting factor due to memory bandwith limitations, particularly on lower end hardware.</li>
+<li>Deferred rendering doesn't support <strong>Multi-Sample Anti-Aliasing</strong> (MSAA), one of the more common and efficient techniques to reduce aliasing, and in particular the one we discussed and implemented in the previous chapter. MSAA requires multiple samples per pixel to be stored before shading, which conflicts with this two-pass approach to rendering. If we wanted to use MSAA in a deferred renderer, we would have to store multiple samples per pixel for each texture in the G-buffer, which would greatly increase the memory usage and basically negate the performance benefits of deferred shading. To address aliasing, you have to rely on post-processing anti-aliasing techniques like <strong>Fast Approximate Anti-Aliasing</strong> (FXAA) or <strong>Temporal Anti-aliasing</strong> (TAA) which usually aren't as effective as standard MSAA.</li>
+</ol>
+<p>Below, I've included an example of a game scene that has many lights in it, which should give you an idea of what kind of environment it might be useful for.</p>
+<p>If your interested in the specifics of how to create a deferred rendering pipeline, I'll be covering this soon in the Advanced Chapters. Stay tuned!</p>
+<!-- ![](/images/minecraft_deferred.jpg) -->
+<p><img alt="" src="/images/deferred-rendering.jpg" /></p>
+<h3 id="physically-based-rendering-pbr">Physically Based Rendering (PBR)</h3>
+<p><strong>Physically Based Rendering</strong> (PBR) is a rendering technique that aims to render things as realistically as possible by simulating the phsyical interaction between light and materials. It relies on theories of light reflection and material properties rooted in phsyics to ensure that materials behave consisetently under various conditions. PBR is a complex topic, and will require at least an entire chapters worth (or more) of explanation to get right, so I won't cover it in detail here. To give you a taste of what it's capable of, take a look at the same object rendered in our engine using Blinn-Phong Shading, versus the same object rendered in a PBR-based engine. </p>
+<table>
+<thead>
+<tr>
+<th><strong>Non-PBR</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/images/non-pbr-smg.jpg" /></td>
+</tr>
+<tr>
+<td><strong>PBR</strong></td>
+</tr>
+<tr>
+<td><img alt="" src="/images/pbr-smg.jpg" /></td>
+</tr>
+</tbody>
+</table>
+<h3 id="raytracing">Raytracing</h3>
+<p><strong>Raytracing</strong> is a rendering technique that simulates the physical behaviour of light to create realistic images in our 3D graphics environments. The core principle involves casting rays of light from the camera into the scene to determine what is visible on the screen. For each pixel on the screen, we'll cast <strong><em>at least</em></strong> one ray. The more rays cast or "samples" we use per pixel, the more realistic our image will be.</p>
+<p>When we cast a ray into the scene, we need to determine whether it will intersect with the geometry in our scene. This is called an intersection test, which is one of the fundamental operations done in ray-tracing. Although it sounds relatively simple, we have all sorts of techniques for speeding up this calculation, like <strong>Bounding Volume Hierarchies</strong>, which spatially sorts our geometry so rays can quickly discard large volumes of space of <em>irrelevant</em> geometry to perform an intersection test with. When a ray hits a surface, it can bounce around in different directions, dependent on the surface it encounters. Again, to achieve a more realistic result, we would usually want to have each ray bounce around multiple times. You can start to undestand why ray-tracing can get very computationally expensive. Imagine for each pixel on a 4k monitor, 3840 x 2160 = 8,294,400 pixels. If we bounce each ray off of our surfaces one time, that's over 160 million intersection tests <em>per frame</em>. When playing a game, we usually want to render more than 30 frames every second, so until recently ray-tracing in real time hasn't been feasible due to the limitations of our graphics hardware. This is starting to change of course, but we still have to use all sorts of fancy denoising algorithms to clean up our image. We also have image Super Sampling technique's like NVIDIA's <strong>Deep Learning Super Sampling</strong> (DLSS) allows us to render our game at a lower internal resolution and uses machine learning to upscale the final image to our monitor resolution as a way to improve rendering performance.  And even then, most real-time raytracing applications are going to use a hybrid approach that combines traditional rasterization techniques like the one's we've discussed up until now with raytracing, where raytracing might only be used to render key visual elements like reflections, shadows, and global illumination.</p>
+<p>Below are some example screenshots I took from the gold standard for real-time raytracing in a videogame, Cyberpunk 2077. Pretty incredible, isn't it?</p>
+<p><strong>Raytracing</strong> </p>
+<table>
+<thead>
+<tr>
+<th><strong>Cyberpunk 2077 (rendered in real time)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="/images/V.png" /></td>
+</tr>
+<tr>
+<td><img alt="" src="/images/Cyberpunk.jpg" /></td>
+</tr>
+</tbody>
+</table>
+<!-- ### Spherical Harmonics
+| **Halo 3** |
+|---------------------------|
+|![](/images/SH-Halo.png)|
+|![](/images/SH-Halo-2.png)| -->
+
+<h2 id="the-code-phong-and-blinn-phong-shading">The Code - Phong and Blinn-Phong Shading</h2>
+<p>We're going to skip implementing Flat and Gouraud shading, because they're pretty lame. We'll start by implementing the Phong Shading model, and then we'll do the quick modification using the halfway vector to get Blinn-Phong shading.</p>
+<p>...</p>
+<p>Full write-up soon to come! For now, the code is accessible on the <a href="https://github.com/wmarti/MetalTutorial/">GitHub repository</a> under branch Lesson_2_2, and here is the finished product:</p>
+<p><img alt="basic-lighting" src="/images/basic-lighting.png" /></p>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.indexes", "toc.follow", "content.tooltips"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.81fa17fe.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

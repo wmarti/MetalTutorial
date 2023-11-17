@@ -1,0 +1,82 @@
+/* xcode-dark.css */
+/* General background */
+
+/* Keyword */
+
+
+@media (prefers-color-scheme: dark) {
+
+  .highlight .k, .highlight .kt, .highlight .nb {
+    color: #ee81b1; /* Replace with the actual XCode keyword color */
+    font-weight: bold;
+  }
+
+  /* Class names */
+  .highlight .nc {
+    color: #89dcfb; /* Light blue color for class names */
+    font-weight: bold; /* Makes class names bold */
+  }
+
+  /* Namespace names */
+  .highlight .nn {
+    color: #89dcfb; /* Light blue color for namespace names */
+    font-weight: bold;
+  }
+
+  /* Preprocessor directives */
+  .highlight .cp {
+    color: #f2a65f; /* Warm orange color for preprocessor directives */
+    font-weight: bold; /* Makes preprocessor directives bold */
+  }
+
+  /* Included library names within include statements */ 
+  /* String */
+  .highlight .cpf, .highlight .s {
+    color: #ef8876; /* Coral color for library paths */
+    font-weight: bold; /* Makes preprocessor directives bold */
+  }
+
+  /* Comment */
+  .highlight .c, .highlight .cm, .highlight .c1 {
+    color: #7f8c98;
+    font-weight: bold; /* Makes comments bold */
+  }
+
+  .highlight .n {
+    /* color: #d5bbfb; */
+    color: #78c2b3;
+    font-weight: bold; /* Makes variable names bold */
+  }
+
+  /* Function and method names */
+  .highlight .nf {
+    color: #bbf0e4; /* Replace with the actual XCode function name color */
+    font-weight: bold;
+  }
+
+  /* Add more styles for other token types like operators, numbers, etc. */
+  /* Parenthesis, semicolons, etc. */
+  .highlight .p, .highlight .o {
+    color: #dfdfe0;
+    font-weight: bold;
+  }
+  /* Numbers */
+  .highlight .mf, .highlight .mi {
+    color: #d9ca7c;
+    font-weight: bold;
+  }
+
+  body {
+    color: #dfdfe0;
+  }
+
+
+
+table {
+  border-collapse: collapse;
+}
+table, th, td {
+  border: none;
+}
+
+}
