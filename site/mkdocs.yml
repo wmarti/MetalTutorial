@@ -62,7 +62,7 @@ nav:
     - 3. Textures: "Lesson 1: Hello Metal/3. Textures.md"
   - "Lesson 2: Lets Go 3D!":
     - 1. 3D Cube: "Lesson 2: Lets Go 3D!/1. 3D Cube.md"
-    - 2. Basic Lighting: "Lesson 2: Lets Go 3D!/2. Basic Lighting.md"
+    - 2. Lighting: "Lesson 2: Lets Go 3D!/2. Lighting.md"
     - 3. Loading 3D Models: "Lesson 2: Lets Go 3D!/3. Loading 3D Models.md"
   - "Advanced Chapters":
     - Compute Shaders: "Extra Chapters/Compute Shaders.md"
